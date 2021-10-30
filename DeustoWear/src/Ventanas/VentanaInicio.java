@@ -61,6 +61,10 @@ public class VentanaInicio extends JFrame {
 
 	public VentanaInicio() {
 		con = BD.initBD("baseDeDatos.db");
+		
+		Usuario u = new Usuario("Alberto","1");
+		BD.intertarUsuarioBBDD(con, u);
+		
 		BD.crearTablas(con);
 		BD.closeBD(con);
 		ventanaActual = this;
@@ -120,7 +124,7 @@ public class VentanaInicio extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaRegistro(ventanaActual);
+				new VentanaRegistroo(ventanaActual);
 				//new VentantaRegistro(ventanaActual);
 			}
 		});

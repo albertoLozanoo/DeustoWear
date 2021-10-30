@@ -12,9 +12,9 @@ public class Sudadera extends Articulo {
 		super();
 	}
 	
-	public Sudadera(int id,String name, Talla talla,double precio, Color color, Sexo sexo,boolean cap,ImageIcon imagen) {
+	public Sudadera(int id,String name, Talla talla,double precio, Color color, Sexo sexo,boolean capucha,ImageIcon imagen) {
 		super(id, name,talla, precio, color,sexo,imagen);
-		cap = capucha;
+		this.capucha = capucha;
 	}
 
 	public Talla getTalla() {

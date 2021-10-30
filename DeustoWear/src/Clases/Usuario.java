@@ -12,9 +12,9 @@ public class Usuario {
 	public Usuario() {
 	}
 	
-	public Usuario(String nick,String con) {
+	public Usuario(String nick,String contraseya) {
 		this.nick = nick;
-		con = contraseya;
+		this.contraseya = contraseya;
 	}
 
 	public String getNick() {

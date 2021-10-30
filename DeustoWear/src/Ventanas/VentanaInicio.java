@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import Clases.Articulo;
+import Clases.BD;
 import Clases.Usuario;
 
 import javax.swing.JLabel;
@@ -21,7 +22,9 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
+import java.sql.Connection;
 import java.util.HashMap;
+import java.util.TreeMap;
 
 import javax.swing.JTextPane;
 import java.awt.Font;
@@ -35,9 +38,10 @@ public class VentanaInicio extends JFrame {
 	private JLabel lblNombre,lblContraseya;
 	private JButton btnIniciarSesion,btnRegistrarse;
 	private JFrame ventanaActual;
+	public static Connection con;
 	
-	public static HashMap<String, Usuario> hmUsuarios;
-	public static HashMap<Integer,Articulo> hmArticulos;
+	public static TreeMap<String, Usuario> tmUsuarios;
+	public static TreeMap<Integer,Articulo> tmArticulos;
 
 	/**
 	 * Launch the application.
@@ -56,9 +60,12 @@ public class VentanaInicio extends JFrame {
 	}
 
 	public VentanaInicio() {
+		con = BD.initBD("baseDeDatos.db");
+		BD.crearTablas(con);
+		BD.closeBD(con);
 		ventanaActual = this;
-		hmUsuarios = new HashMap<>();
-		hmArticulos = new HashMap<>();
+		tmUsuarios = new TreeMap<>();
+		tmArticulos = new TreeMap<>();
 		setTitle("Bienvenido a DeustoWear");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 750, 500);
@@ -113,6 +120,7 @@ public class VentanaInicio extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
+				new VentanaRegistro(ventanaActual);
 				//new VentantaRegistro(ventanaActual);
 			}
 		});

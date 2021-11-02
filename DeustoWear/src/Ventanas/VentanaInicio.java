@@ -12,6 +12,8 @@ import Clases.BD;
 import Clases.Usuario;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.FlowLayout;
 
 import javax.swing.Action;
@@ -32,10 +34,10 @@ import java.awt.Font;
 public class VentanaInicio extends JFrame {
 
 	private JPanel contentPane,panelCentro,panelNorte,panelSur;
-	private JTextField txtNombre;
+	private JTextField txtNick;
 	private JTextField txtContraseya;
 	private JTextPane txtpnRegistrado;
-	private JLabel lblNombre,lblContraseya;
+	private JLabel lblNick,lblContraseya;
 	private JButton btnIniciarSesion,btnRegistrarse;
 	private JFrame ventanaActual;
 	public static Connection con;
@@ -61,10 +63,6 @@ public class VentanaInicio extends JFrame {
 
 	public VentanaInicio() {
 		con = BD.initBD("baseDeDatos.db");
-		
-		Usuario u = new Usuario("Alberto","1");
-		BD.intertarUsuarioBBDD(con, u);
-		
 		BD.crearTablas(con);
 		BD.closeBD(con);
 		ventanaActual = this;
@@ -90,13 +88,13 @@ public class VentanaInicio extends JFrame {
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
 		
-		lblNombre = new JLabel("Nombre:");
-		panelCentro.add(lblNombre);
+		lblNick = new JLabel("Nombre:");
+		panelCentro.add(lblNick);
 		
 		
-		txtNombre = new JTextField();
-		panelCentro.add(txtNombre);
-		txtNombre.setColumns(10);
+		txtNick = new JTextField();
+		panelCentro.add(txtNick);
+		txtNick.setColumns(10);
 		lblContraseya = new JLabel("Contrasenya:");
 		panelCentro.add(lblContraseya);
 		txtContraseya = new JTextField();
@@ -132,7 +130,22 @@ public class VentanaInicio extends JFrame {
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				// TODO Auto-generated method stub
+				String nick = txtNick.getText();
+				String c = txtContraseya.getText();
+				if(!nick.equals("") && !c.equals("")) {
+					Connection con = BD.initBD("newton.db");
+					int resul = BD.obtenerUsuario(con, nick, c);
+					if(resul == 0) {
+						JOptionPane.showMessageDialog(null, "Todavia no te has registrado");
+					}else if(resul==1) {
+						JOptionPane.showMessageDialog(null, "La contraseña no es correcta");
+					}else {
+						JOptionPane.showMessageDialog(null, "Cargando WearHome, bienvenido "+ nick);
+					}
+				}
+				txtNick.setText("");
+				txtContraseya.setText("");
 			}
 		});
 	}

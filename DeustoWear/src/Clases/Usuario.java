@@ -41,6 +41,13 @@ public class Usuario {
 		Usuario.carrito = carrito;
 	}
 	
+	/*Este método devolverá:
+	 
+	  - Un valor negativo, si la Persona this es menor que la Persona o
+	  - Un valor positivo, si la Persona this es mayor que la Persona o
+	  - Un 0, Persona this es igual que la Persona o
+	 * */
+	
 	public int compareTo(Usuario u) {
 		return u.nick.compareTo(this.nick);
 	}
@@ -52,5 +59,9 @@ public class Usuario {
 	public static void setFavoritos(ArrayList<Articulo> favoritos) {
 		Usuario.favoritos = favoritos;
 	}
+	
+	
+	
+	
 	
 }

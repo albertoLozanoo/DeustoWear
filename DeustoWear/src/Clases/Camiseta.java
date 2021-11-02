@@ -1,5 +1,5 @@
 package Clases;
-import javax.swing.ImageIcon;
+
 
 import Enum.Color;
 import Enum.Sexo;
@@ -19,7 +19,7 @@ public class Camiseta extends Articulo{
 		this.talla = talla;
 	}
 
-	public Camiseta(int id, String name,Talla talla, double precio, Color color,Sexo sexo, ImageIcon imagen) {
+	public Camiseta(int id, String name,Talla talla, double precio, Color color,Sexo sexo, String imagen) {
 		super(id,name,talla,precio,color,sexo,imagen);
 		
 		

@@ -2,8 +2,11 @@ package Clases;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.TreeMap;
 
 
 public class BD {
@@ -58,6 +61,89 @@ public class BD {
 			}
 		}
 	}
+	/**
+	 * Método que recibe los datos de un Usuario y comprueba que está registrado en la BBDD
+	 * @param nom nombre del usuario
+	 * @param con contraseña del usuario
+	 * @return 0 si el usuario no está registrado
+	 * 		   1 si el usuario está registrado pero la contraseña no es correcta
+	 * 		   2 si el usuario está registrado y la contraseña es correcta
+	 */
+	public static int obtenerUsuario(Connection con, String nick, String c) {
+		String sentencia = "SELECT Contraseña FROM Usuarios WHERE 	Nick ='"+nick+"'";
+		Statement st = null;
+		int resul=0;
+		try {
+			st = con.createStatement();
+			ResultSet rs = st.executeQuery(sentencia);
+			if(rs.next()) { //Hemos encontrado una tupla que cumple la condición
+				if(rs.getString("Contraseña").equals(c)) {
+					resul = 2;
+				}else {
+					resul = 1;
+				}
+			}else {
+				resul = 0;
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return resul;
+	}
+	
+	/**
+	 * Método que recibe los datos de un Usuario y comprueba que está registrado en la BBDD
+	 * @param nom nombre del usuario
+	 * @param con contraseña del usuario
+	 * @return 0 si el usuario no está registrado
+	 * 		   1 si el usuario está registrado pero la contraseña no es correcta
+	 * 		   2 si el usuario está registrado y la contraseña es correcta
+	 */
+	public static int obtenerArticulo(Connection con, int ID, String name) {
+		String sentencia = "SELECT ID FROM Articulos WHERE 	Name ='"+name+"'";
+		Statement st = null;
+		int resul=0;
+		try {
+			st = con.createStatement();
+			ResultSet rs = st.executeQuery(sentencia);
+			if(rs.next()) { //Hemos encontrado una tupla que cumple la condición
+				if(rs.getString("ID").equals(ID)) {
+					resul = 2;
+				}else {
+					resul = 1;
+				}
+			}else {
+				resul = 0;
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return resul;
+	}
+	
+	
 	
 	public static void intertarUsuarioBBDD(Connection con,Usuario u) {
 		String sent = "INSERT INTO Usuarios VALUES('"+u.getNick()+"','"+u.getContraseya()+"')";
@@ -65,15 +151,19 @@ public class BD {
 		
 		try {
 			st = con.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		try {
 			st.executeUpdate(sent);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
 	}
 	
@@ -129,5 +219,69 @@ public class BD {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Método que obtiene un mapa con los Usuarios de la BBDD
+	 * @param con Conexión con la BBDD
+	 * @return TreeMap<String,Usuario>
+	 */
+	public static TreeMap<String, Usuario> obtenerMapaUsuarios(Connection con){
+		TreeMap<String, Usuario> tmUsuario = new TreeMap<>();
+		
+		String sentSQL = "SELECT * FROM Usuarios";
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sentSQL);
+			while(rs.next()) { //Mientras no hayamos llegado al final del conjunto de resultados
+				String nick = rs.getString("Nick");
+				String contraseya = rs.getString("Contraseña");
+				Usuario u = new Usuario(nick,contraseya);
+				tmUsuario.put(nick, u);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return tmUsuario;
+	}
+	
+	
+	/**
+	 * Método que obtiene un mapa con los Articulos de la BBDD
+	 * @param con Conexión con la BBDD
+	 * @return TreeMap<String,Articulo>
+	 */
+	public static TreeMap<String, Articulo> obtenerMapaArticulos(Connection con){
+		TreeMap<String, Articulo> tmArticulo = new TreeMap<>();
+		
+		String sentSQL = "SELECT * FROM Articulos";
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sentSQL);
+			while(rs.next()) { //Mientras no hayamos llegado al final del conjunto de resultados
+				String ID = rs.getString("ID");
+				String name = rs.getString("Name");
+				String talla = rs.getString("Talla");
+				int precio = rs.getInt("Precio");
+				String color = rs.getString("Color");
+				String sexo = rs.getString("Sexo");
+				String imagen = rs.getString("Imagen");
+			
+				Articulo a = new Articulo(ID,name,talla,precio,color,sexo,imagen);
+				
+				tmArticulo.put(ID, a);
+			}
+			rs.close();
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return tmArticulo;
 	}
 }

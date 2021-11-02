@@ -10,6 +10,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.DimensionUIResource;
 
+import Clases.BD;
 import Clases.Usuario;
 
 import java.awt.Color;
@@ -21,6 +22,10 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -38,7 +43,6 @@ public class VentanaRegistroo extends JFrame {
 	private JTextField txtNick;
 	private JTextField txtContraseya;
 	public JFrame ventanaActual,ventanaAnterior;
-	private JTextField txtRepetirContraseya;
 
 	public VentanaRegistroo(JFrame va) {
 		ventanaAnterior=va;
@@ -110,13 +114,6 @@ public class VentanaRegistroo extends JFrame {
 		panelCentroDerechaInput.add(lblContraseya);
 		panelCentroDerechaInput.add(txtContraseya);
 		
-		JLabel lblRepetirContraseya = new JLabel("Repetir contraseya");
-		panelCentroDerechaInput.add(lblRepetirContraseya);
-		
-		txtRepetirContraseya = new JTextField();
-		panelCentroDerechaInput.add(txtRepetirContraseya);
-		txtRepetirContraseya.setColumns(10);
-		
 		JButton btnRegistrarse = new JButton("Registrarme");
 		panelCentroDerechaInput.add(btnRegistrarse);
 		
@@ -138,28 +135,24 @@ public class VentanaRegistroo extends JFrame {
 		
 		/**EVENTOS**/
 		
+		
+		
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				String ERnick = "[A-Za-z]{1,15}";
 				String nick = txtNick.getText();
-				String con = txtContraseya.getText();
-				String con2 = txtRepetirContraseya.getText();
-				
-				if(con.equals(con2) && nombreRepetido(nick)==0) {
-					Usuario u = new Usuario(nick,con);
+				boolean correctoNick = Pattern.matches(ERnick, nick);
+				if(correctoNick) {
+					String contraseya = txtContraseya.getText();
+					Usuario u = new Usuario(nick, contraseya);
 					VentanaInicio.tmUsuarios.put(u.getNick(), u);
-					JOptionPane.showMessageDialog(null, "Persona registrada correctamente", "REGISTRO CORRECTO", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Usuario registrada correctamente", "REGISTRO CORRECTO", JOptionPane.INFORMATION_MESSAGE);
 					vaciarCampos();
-				
-				}else if(!con.equals(con2) && nombreRepetido(nick)==0){
-					JOptionPane.showMessageDialog(null, "Las contraseyas no coinciden", "REGISTRO CORRECTO", JOptionPane.ERROR_MESSAGE);
-					txtRepetirContraseya.setText("");
-						
-				}else if(nombreRepetido(nick)==1) {
-					JOptionPane.showMessageDialog(null, "El nombre ya esta existente", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
-					vaciarCampos();
+				}else {
+					JOptionPane.showMessageDialog(null, "La contraseya no es correcta, intentelo de nuevo", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
-		});
+		});	
 		
 		btnLogo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -174,31 +167,11 @@ public class VentanaRegistroo extends JFrame {
 	public void vaciarCampos() {
 		txtNick.setText("");
 		txtContraseya.setText("");
-		txtRepetirContraseya.setText("");
-	}
-	
-	
-	/**
-	 * Metodo que comprueba si el nombre del usuario ya esta registrado
-	 * @param nick, nombre del usuario que introducira a la hora de registrarse
-	 * @return
-	 * 		0: Si el nombre no esta repetido
-	 * 		1: Si el nombre esta repetido
-	 */
-	public int nombreRepetido(String nick) {
-		int solucion = 0;
-		for(String clave: VentanaInicio.tmUsuarios.keySet()) {
-			Usuario valor = VentanaInicio.tmUsuarios.get(clave);
-			if(valor.getNick().equals(nick)) {
-				solucion = 1;
-			}else {
-				solucion = 0;
-			}
-		}
-		System.out.println(solucion);
-		return solucion;
 	}
 }
+	
+	
+	
 
 
 

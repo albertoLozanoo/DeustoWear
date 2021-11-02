@@ -1,6 +1,6 @@
 package Clases;
 
-import javax.swing.ImageIcon;
+
 
 import Enum.Color;
 import Enum.Sexo;
@@ -13,12 +13,12 @@ public abstract class Articulo {
 	double precio;
 	Color color;
 	Sexo sexo;
-	ImageIcon imagen;
+	String imagen;
 	
 	public Articulo() {
 		super();
 	}
-	public Articulo(int id, String name,Talla talla, double precio, Color color,Sexo sexo,ImageIcon imagen) {
+	public Articulo(int id, String name,Talla talla, double precio, Color color,Sexo sexo,String imagen) {
 		ID = id;
 		this.name = name;
 		this.talla = talla;
@@ -56,10 +56,11 @@ public abstract class Articulo {
 	public void setColor(Color color) {
 		this.color = color;
 	}
-	public ImageIcon getImagen() {
+	
+	public String getImagen() {
 		return imagen;
 	}
-	public void setImagen(ImageIcon imagen) {
+	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
 	public String getName() {

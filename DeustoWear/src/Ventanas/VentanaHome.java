@@ -20,13 +20,17 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 
 public class VentanaHome extends JFrame {
 
 	private JPanel contentPane;
-	private JComboBox<String> comboTalla, comboPrenda; 
+	private JComboBox<String> comboTalla, comboPrenda;
+	private JFrame ventanaActual;
 	/**
 	 * Launch the application.
 	 */
@@ -149,6 +153,16 @@ public class VentanaHome extends JFrame {
 		panelCentro.setBackground(new Color(255, 153, 102));
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 3, 0, 0));
+		
+		
+		btnPerfil.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaActual.dispose();
+				new VentanaPerfil(ventanaActual);
+			}
+		});
 	}
 	
 	

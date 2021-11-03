@@ -185,6 +185,37 @@ public class BD {
 	}
 	
 	/**
+	 * Método que permite al usuario cambiar su contraseña y se actualiza su info en la BD
+	 * @param con Conexion
+	 * @param nick El nick del usuario al que le vamos a cambiar la contraseña
+	 * @param c La nueva contraseña
+	 */
+	
+	public static void cambiarContrasenya(Connection con, String nick, String c) {
+		
+		String sent = "UPDATE Usuario SET contraseya = '"+c+"' WHERE nick = '"+nick+"'";
+		Statement st = null;
+		
+		try {
+			st = con.createStatement();
+			st.executeUpdate(sent);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+	}
+	
+	/**
 	 * Metodo que inserta un articulo pasado por parametro en la tabla de Articulos de la BBDD
 	 * @param con Conexion
 	 * @param a Articulo ha introducir en la BBDD

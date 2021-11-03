@@ -3,8 +3,8 @@ package Clases;
 import java.util.ArrayList;
 
 public class Usuario {
-	private String nick;
-	private String contraseya;
+	private static String nick;
+	private static String contraseya;
 	public static ArrayList<Articulo> carrito;
 	public static ArrayList<Articulo> favoritos;
 	
@@ -25,7 +25,7 @@ public class Usuario {
 		this.contraseya = contraseya;
 	}
 
-	public String getNick() {
+	public static String getNick() {
 		return nick;
 	}
 
@@ -33,7 +33,7 @@ public class Usuario {
 		this.nick = nick;
 	}
 
-	public String getContraseya() {
+	public static String getContraseya() {
 		return contraseya;
 	}
 

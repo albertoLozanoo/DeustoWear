@@ -9,9 +9,17 @@ public class Usuario {
 	public static ArrayList<Articulo> favoritos;
 	
 
+	/**
+	 * Constructor por defecto de la clase Usuario
+	 */
 	public Usuario() {
 	}
 	
+	/**
+	 * Constructor especifico de la clase Usuario
+	 * @param nick Nombre del usuario (Primary Key)
+	 * @param contraseya Constrseya del usuario
+	 */
 	public Usuario(String nick,String contraseya) {
 		this.nick = nick;
 		this.contraseya = contraseya;
@@ -41,11 +49,11 @@ public class Usuario {
 		Usuario.carrito = carrito;
 	}
 	
-	/*Este método devolverá:
+	/*Metodo compareTo que devuelve; 
 	 
-	  - Un valor negativo, si la Persona this es menor que la Persona o
-	  - Un valor positivo, si la Persona this es mayor que la Persona o
-	  - Un 0, Persona this es igual que la Persona o
+	  - Un valor negativo, si la Usuario this es menor que la Usuario u
+	  - Un valor positivo, si la Usuario this es mayor que la Usuario u
+	  - Un 0, Usuario this es igual que la Usuario u
 	 * */
 	
 	public int compareTo(Usuario u) {
@@ -59,6 +67,12 @@ public class Usuario {
 	public static void setFavoritos(ArrayList<Articulo> favoritos) {
 		Usuario.favoritos = favoritos;
 	}
+
+	@Override
+	public String toString() {
+		return "Usuario [nick=" + nick + ", contraseya=" + contraseya + "]";
+	}
+	
 	
 	
 	

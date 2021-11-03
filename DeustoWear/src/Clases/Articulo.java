@@ -15,9 +15,23 @@ public abstract class Articulo {
 	Sexo sexo;
 	String imagen;
 	
+	/**
+	 * Constructor por defecto de la clase Articulo
+	 */
 	public Articulo() {
 		super();
 	}
+	
+	/**
+	 * Constructor de la clase Articulo 
+	 * @param id Id del articulo (Primary Key)
+	 * @param name Nombre del articulo
+	 * @param talla Talla del articulo (S,M,L,XL,XXL)
+	 * @param precio Precio del articulo
+	 * @param color Color del articulo
+	 * @param sexo Masculino / Femenino
+	 * @param imagen URL img del articulo
+	 */
 	public Articulo(int id, String name,Talla talla, double precio, Color color,Sexo sexo,String imagen) {
 		ID = id;
 		this.name = name;
@@ -27,8 +41,6 @@ public abstract class Articulo {
 		this.sexo = sexo;
 		this.imagen = imagen;
 	}
-	
-	
 	
 	public int getID() {
 		return ID;
@@ -74,6 +86,12 @@ public abstract class Articulo {
 	}
 	public void setSexo(Sexo sexo) {
 		this.sexo = sexo;
+	}
+
+	@Override
+	public String toString() {
+		return "Articulo [ID=" + ID + ", name=" + name + ", talla=" + talla + ", precio=" + precio + ", color=" + color
+				+ ", sexo=" + sexo + ", imagen=" + imagen + "]";
 	}
 	
 

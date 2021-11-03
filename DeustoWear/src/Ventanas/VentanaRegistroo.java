@@ -136,7 +136,9 @@ public class VentanaRegistroo extends JFrame {
 		/**EVENTOS**/
 		
 		
-		
+		/**
+		 * Boton que al activarse verifica los campos de nick y contraseña para ver si es correcto e introducir la informacion en la BBDD
+		 */
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String ERnick = "[A-Za-z]{1,15}";
@@ -154,6 +156,9 @@ public class VentanaRegistroo extends JFrame {
 			}
 		});	
 		
+		/**
+		 * Boton que al activarse cierra la ventana actual y abre la ventanaInicio
+		 */
 		btnLogo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.setVisible(false);
@@ -163,7 +168,9 @@ public class VentanaRegistroo extends JFrame {
 		
 	}
 	
-	
+	/**
+	 * Metodo que limpia el contenido en los textFields
+	 */
 	public void vaciarCampos() {
 		txtNick.setText("");
 		txtContraseya.setText("");

@@ -117,6 +117,9 @@ public class VentanaInicio extends JFrame {
 		
 		/*EVENTOS*/
 		
+		/**
+		 * Boton que al activarse cierra la ventana actual y abre la ventanaRegistro
+		 */
 		btnRegistrarse.addActionListener(new ActionListener() {
 			
 			@Override
@@ -127,6 +130,9 @@ public class VentanaInicio extends JFrame {
 			}
 		});
 		
+		/**
+		 * Boton que al activarse verifica si el usuario esta registrado ya en la BBDD
+		 */
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

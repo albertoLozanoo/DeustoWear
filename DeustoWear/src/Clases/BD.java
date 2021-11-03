@@ -11,6 +11,11 @@ import java.util.TreeMap;
 
 public class BD {
 	
+	/**
+	 * Crea la conexion con la BBDD
+	 * @param baseDeDatos
+	 * @return deuvelve la cionexion si ha sido exitosa la comunicacion
+	 */
 	public static Connection initBD(String baseDeDatos) {
 		Connection con = null;
 		
@@ -27,6 +32,10 @@ public class BD {
 		return con;
 	}
 	
+	/**
+	 * Cierra la BBDD
+	 * @param con Conexion
+	 */
 	public static void closeBD(Connection con) {
 		if(con!=null) {
 			try {
@@ -38,6 +47,10 @@ public class BD {
 		}
 	}
 	
+	/**
+	 * Metodo que crea las tablas necesarias en la BBDD
+	 * @param con Conexion
+	 */
 	public static void crearTablas(Connection con) {
 		String sent1 = "CREATE TABLE IF NOT EXISTS Articulos(ID Integer,Name String, Talla String,Precio Double,Color String, Sexo String, Imagen String)";
 		String sent2 = "CREATE TABLE IF NOT EXISTS Usuarios(Nick String, Contraseña String)";
@@ -143,7 +156,11 @@ public class BD {
 		return resul;
 	}
 	
-	
+	/**
+	 * Metodo que introduce un Usuario pasado por parametro en la tabla de Usuarios de la BBDD
+	 * @param con Conexion
+	 * @param u Usuario ha introducir
+	 */
 	
 	public static void intertarUsuarioBBDD(Connection con,Usuario u) {
 		String sent = "INSERT INTO Usuarios VALUES('"+u.getNick()+"','"+u.getContraseya()+"')";
@@ -167,6 +184,11 @@ public class BD {
 		}
 	}
 	
+	/**
+	 * Metodo que inserta un articulo pasado por parametro en la tabla de Articulos de la BBDD
+	 * @param con Conexion
+	 * @param a Articulo ha introducir en la BBDD
+	 */
 	public static void intertarArticuloBBDD(Connection con,Articulo a) {
 		String sent = "INSERT INTO Articulos VALUES('"+a.getID()+"','"+a.getName()+"','"+a.getPrecio()+"','"+a.getColor()+"','"+a.getSexo()+"','"+a.getImagen()+"')";
 		Statement st = null;
@@ -185,6 +207,12 @@ public class BD {
 		}
 	}
 	
+	/**
+	 * Metodo que elimina a un usurio pasado por parametro de la tabla de Usuarios de la BBDD 
+	 * @param con Conexion
+	 * @param nick Nombre del usuario a eliminar 
+	 */
+	
 	public static void eliminarUsuarioBBDD(Connection con,String nick){
 		String sent ="DELETE FROM Usuarios WHERE nick='"+nick+"'";
 		Statement st = null;
@@ -202,6 +230,12 @@ public class BD {
 			e.printStackTrace();
 		}
 	}
+	
+	/**
+	 * Metodo que elimina un Articulo pasado por paremtro de la tabla de Articulos de la BBDD
+	 * @param con Conexion
+	 * @param ID ID del articulo a eliminar 
+	 */
 	
 	public static void eliminarArticuloBBDD(Connection con,int ID){
 		String sent ="DELETE FROM Articulos WHERE ID='"+ID+"'";
@@ -224,7 +258,7 @@ public class BD {
 	/**
 	 * Método que obtiene un mapa con los Usuarios de la BBDD
 	 * @param con Conexión con la BBDD
-	 * @return TreeMap<String,Usuario>
+	 * @return TreeMap<String,Usuario> tmUsuario
 	 */
 	public static TreeMap<String, Usuario> obtenerMapaUsuarios(Connection con){
 		TreeMap<String, Usuario> tmUsuario = new TreeMap<>();

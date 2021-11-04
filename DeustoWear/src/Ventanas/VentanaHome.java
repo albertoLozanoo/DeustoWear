@@ -31,29 +31,13 @@ public class VentanaHome extends JFrame {
 	private JPanel contentPane;
 	private JComboBox<String> comboTalla, comboPrenda;
 	private JFrame ventanaActual;
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VentanaHome frame = new VentanaHome();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
-	
 	
 	/**
 	 * Create the frame.
 	 */
 	public VentanaHome() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1176, 660);
+		setBounds(100, 100, 1046, 593);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -160,7 +144,7 @@ public class VentanaHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaPerfil(ventanaActual);
+				//new VentanaPerfil(ventanaActual);
 			}
 		});
 	}

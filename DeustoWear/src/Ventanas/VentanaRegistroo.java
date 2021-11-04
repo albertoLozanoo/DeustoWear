@@ -44,11 +44,14 @@ public class VentanaRegistroo extends JFrame {
 	private JTextField txtContraseya;
 	public JFrame ventanaActual,ventanaAnterior;
 
+	/**
+	 * Create the frame.
+	 */
 	public VentanaRegistroo(JFrame va) {
 		ventanaAnterior=va;
 		ventanaActual = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 956, 585);
+		setBounds(100, 100, 992, 544);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

@@ -13,6 +13,7 @@ import javax.swing.plaf.DimensionUIResource;
 import javax.swing.text.html.ImageView;
 
 import Clases.Articulo;
+import Clases.Usuario;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -42,7 +43,7 @@ public class VentanaHome extends JFrame {
 	
 	
 	
-	public VentanaHome(JFrame va) {
+	public VentanaHome(JFrame va,Usuario u) {
 		ventanaAnterior = va;
 		ventanaActual = this;
 		setVisible(true);
@@ -68,7 +69,7 @@ public class VentanaHome extends JFrame {
 		
 		panelNorte.add(btnLogo, "cell 0 0");
 		
-		JLabel lblTitulo = new JLabel("DeustoWear Shop");
+		JLabel lblTitulo = new JLabel("DeustoWear Shop " + u.getNick() );
 		lblTitulo.setBackground(new Color(255, 255, 255));
 		lblTitulo.setFont(new Font("Lato", Font.BOLD, 28));
 		lblTitulo.setForeground(new Color(255, 255, 255));
@@ -89,6 +90,7 @@ public class VentanaHome extends JFrame {
 		lblComboPrenda.setForeground(new Color(255, 255, 255));
 		lblComboPrenda.setFont(new Font("Lato", Font.PLAIN, 18));
 		panelWest.add(lblComboPrenda, "cell 0 5,alignx center,aligny center");
+		
 		
 		comboPrenda = new JComboBox<String>();
 		comboPrenda.setToolTipText("");
@@ -171,7 +173,7 @@ public class VentanaHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaHome(ventanaActual);
+				new VentanaHome(ventanaActual,u);
 				//new VentanaPerfil(ventanaActual);
 			}
 		});

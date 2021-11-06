@@ -275,8 +275,9 @@ public class VentanaInicio extends JFrame {
 						
 						txtContraseya.setText("");
 					}else {
-						JOptionPane.showMessageDialog(null, "Cargando WearHome, bienvenida "+ nick,"WELCOME", JOptionPane.INFORMATION_MESSAGE);
-						new VentanaHome(ventanaActual);
+						JOptionPane.showMessageDialog(null, "Cargando WearHome, bienvenid@ "+ nick,"WELCOME", JOptionPane.INFORMATION_MESSAGE);
+						Usuario u = new Usuario(nick,c);
+						new VentanaHome(ventanaActual, u);
 						ventanaActual.dispose();
 					}
 				}

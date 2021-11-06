@@ -26,6 +26,8 @@ import java.awt.event.ActionListener;
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
 
+
+
 public class VentanaHome extends JFrame {
 
 	private JPanel contentPane;
@@ -49,9 +51,10 @@ public class VentanaHome extends JFrame {
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new MigLayout("", "[59.00][372.00,grow,center]", "[]"));
 		
-		JLabel lblLogo = new JLabel("");
-		lblLogo.setHorizontalAlignment(SwingConstants.CENTER);
-		panelNorte.add(lblLogo, "cell 0 0,alignx center,aligny center");
+		
+		JButton btnLogo = new JButton(new ImageIcon("imagenes/logo.jpg"));
+		btnLogo.setPreferredSize(new DimensionUIResource(400, 400));
+		panelNorte.add(btnLogo, "cell 0 0");
 		
 		JLabel lblTitulo = new JLabel("DeustoWear Shop");
 		lblTitulo.setBackground(new Color(255, 255, 255));
@@ -106,11 +109,6 @@ public class VentanaHome extends JFrame {
 		btnBuscar.setBackground(new Color(255, 102, 0));
 		btnBuscar.setFont(new Font("Lato", Font.PLAIN, 15));
 		panelWest.add(btnBuscar, "cell 0 18 2 1,alignx center,aligny center");
-		
-		
-		JPanel panelEste = new JPanel();
-		panelEste.setBackground(new Color(0, 153, 255));
-		contentPane.add(panelEste, BorderLayout.EAST);
 		
 		JPanel panelSur = new JPanel();
 		panelSur.setBackground(new Color(255, 102, 51));

@@ -37,6 +37,7 @@ import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 import javax.swing.SwingConstants;
 import java.awt.Font;
+import javax.swing.border.MatteBorder;
 
 public class VentanaRegistroo extends JFrame {
 
@@ -45,7 +46,6 @@ public class VentanaRegistroo extends JFrame {
 	private JTextField txtNick;
 	private JTextField txtContraseya;
 	public JFrame ventanaActual,ventanaAnterior;
-	private JPanel panelDecorativoInsideNorte;
 	private JButton btnVolver;
 
 	/**
@@ -101,10 +101,6 @@ public class VentanaRegistroo extends JFrame {
 		panelCentroDerecha.add(panelCentroDerechalblRegistro);
 		panelCentroDerechalblRegistro.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		panelDecorativoInsideNorte = new JPanel();
-		panelDecorativoInsideNorte.setBackground(new Color(255, 153, 0));
-		panelCentroDerechalblRegistro.add(panelDecorativoInsideNorte);
-		
 		JLabel lblRegistro = new JLabel("REGISTRO");
 		lblRegistro.setForeground(new Color(255, 255, 255));
 		lblRegistro.setBackground(new Color(204, 102, 0));
@@ -143,7 +139,7 @@ public class VentanaRegistroo extends JFrame {
 		panelCentroDerechaInput.add(txtContraseya, "cell 0 3,growx,aligny center");
 		
 		
-		panelCentroDerecha.setBorder(BorderFactory.createMatteBorder(15, 35, 15, 15, new Color(255, 153, 0)));
+		panelCentroDerecha.setBorder(new MatteBorder(15, 35, 15, 15, (Color) new Color(255, 153, 0)));
 		
 		panelCentroDerechaInput.setBorder(BorderFactory.createMatteBorder(0, 15, 15, 15,  new Color(255, 255, 255)));
 		
@@ -158,14 +154,11 @@ public class VentanaRegistroo extends JFrame {
 		panelNorte.setPreferredSize(new Dimension(100,100));
 		panelNorte.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JTextField txtRegistrarseEsGratis = new JTextField();
-		txtRegistrarseEsGratis.setHorizontalAlignment(SwingConstants.CENTER);
-		txtRegistrarseEsGratis.setFont(new Font("Lato", Font.BOLD, 31));
-		txtRegistrarseEsGratis.setForeground(new Color(255, 255, 255));
-		txtRegistrarseEsGratis.setBackground(new Color(255, 153, 0));
-		txtRegistrarseEsGratis.setText("Registrate aqui, solo te llevara un minuto...");
-		panelNorte.add(txtRegistrarseEsGratis);
-		txtRegistrarseEsGratis.setColumns(10);
+		JLabel lblRegistroGratis = new JLabel("Registrate aqui, solo te llevara un minuto...");
+		lblRegistroGratis.setForeground(new Color(255, 255, 255));
+		lblRegistroGratis.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRegistroGratis.setFont(new Font("Lato", Font.BOLD, 31));
+		panelNorte.add(lblRegistroGratis);
 		panelSur.setPreferredSize(new Dimension(100,50));
 		panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		

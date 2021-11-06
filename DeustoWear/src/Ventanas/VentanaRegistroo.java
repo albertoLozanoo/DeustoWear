@@ -47,6 +47,7 @@ public class VentanaRegistroo extends JFrame {
 	private JTextField txtContraseya;
 	public JFrame ventanaActual,ventanaAnterior;
 	private JButton btnVolver;
+	
 
 	/**
 	 * Create the frame.
@@ -185,17 +186,26 @@ public class VentanaRegistroo extends JFrame {
 				String ERnick = "[A-Za-z]{1,15}";
 				String nick = txtNick.getText();
 				boolean correctoNick = Pattern.matches(ERnick, nick);
-				if(correctoNick) {
+				
+				if(correctoNick ) {
 					String contraseya = txtContraseya.getText();
-					Usuario u = new Usuario(nick, contraseya);
-					VentanaInicio.tmUsuarios.put(u.getNick(), u);
-					JOptionPane.showMessageDialog(null, "Usuario registrada correctamente", "REGISTRO CORRECTO", JOptionPane.INFORMATION_MESSAGE);
 					Connection con = BD.initBD("baseDeDatos");
-					BD.intertarUsuarioBBDD(con,u);
-					BD.closeBD(con);
-					vaciarCampos();
+					int valor = BD.estaRegistrado(con, nick);
+					if(valor == 0) {
+						Usuario u = new Usuario(nick, contraseya);
+						VentanaInicio.tmUsuarios.put(u.getNick(), u);
+						JOptionPane.showMessageDialog(null, "Usuario registrado correctamente", "REGISTRO CORRECTO", JOptionPane.INFORMATION_MESSAGE);
+						Connection con2 = BD.initBD("baseDeDatos");
+						BD.intertarUsuarioBBDD(con2,u);
+						BD.closeBD(con2);
+						vaciarCampos();
+					}else {
+						JOptionPane.showMessageDialog(null, "Nick ya en uso, prueba con otro distinto", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+						txtNick.setText("");
+					}
 				}else {
-					JOptionPane.showMessageDialog(null, "La contraseya no es correcta, intentelo de nuevo", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "El nombre no es correcto, recuerda que tu nick no puede contener numeros, vuelve a intentarlo", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+					txtNick.setText("");
 				}
 			}
 		});	

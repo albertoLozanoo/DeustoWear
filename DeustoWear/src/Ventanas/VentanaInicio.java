@@ -267,17 +267,20 @@ public class VentanaInicio extends JFrame {
 					Connection con = BD.initBD("baseDeDatos.db");
 					int resul = BD.obtenerUsuario(con, nick, c);
 					if(resul == 0) {
-						JOptionPane.showMessageDialog(null, "Todavia no te has registrado");
+						JOptionPane.showMessageDialog(null, "Todavia no te has registrado","¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+						txtNick.setText("");
+						txtContraseya.setText("");
 					}else if(resul==1) {
-						JOptionPane.showMessageDialog(null, "La contraseña no es correcta");
+						JOptionPane.showMessageDialog(null, "La contraseña no es correcta","¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+						
+						txtContraseya.setText("");
 					}else {
-						JOptionPane.showMessageDialog(null, "Cargando WearHome, bienvenido "+ nick);
+						JOptionPane.showMessageDialog(null, "Cargando WearHome, bienvenida "+ nick,"WELCOME", JOptionPane.INFORMATION_MESSAGE);
 						new VentanaHome(ventanaActual);
 						ventanaActual.dispose();
 					}
 				}
-				txtNick.setText("");
-				txtContraseya.setText("");
+				
 			}
 		});
 	}

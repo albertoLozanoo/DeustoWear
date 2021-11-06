@@ -74,6 +74,49 @@ public class BD {
 			}
 		}
 	}
+	
+	/**
+	 * Metodo que comprueba si el nickname del usario esta ya introducido en la BBDD
+	 * @param con Conexion
+	 * @param nick nick introducido por el usuario
+	 * @return resul 
+	 * 		
+	 * 		1. Si el nick ya esta regitrado y se debra escoger otro nick
+	 * 		0. Si el nick no esta en la BBDD
+	 */
+	public static int estaRegistrado(Connection con, String nick) {
+		String sentencia = "SELECT Nick FROM Usuarios WHERE Nick ='" + nick + "'";
+		Statement st = null;
+		int resul = 0;
+		
+		try {
+			st = con.createStatement();
+			ResultSet rs = st.executeQuery(sentencia);
+			if(rs.next()) {
+				if(rs.getString("Nick").equals(nick));
+				resul = 1;
+			}else {
+				resul = 0;
+			}
+			rs.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		
+		
+		return resul;
+		
+	}
 	/**
 	 * Método que recibe los datos de un Usuario y comprueba que está registrado en la BBDD
 	 * @param nom nombre del usuario
@@ -336,9 +379,9 @@ public class BD {
 				String sexo = rs.getString("Sexo");
 				String imagen = rs.getString("Imagen");
 			
-				Articulo a = new Articulo(ID,name,talla,precio,color,sexo,imagen);
+				//Articulo a = new Articulo(ID,name,talla,precio,color,sexo,imagen);
 				
-				tmArticulo.put(ID, a);
+				//tmArticulo.put(ID, a);
 			}
 			rs.close();
 			stmt.close();

@@ -190,6 +190,9 @@ public class VentanaRegistroo extends JFrame {
 					Usuario u = new Usuario(nick, contraseya);
 					VentanaInicio.tmUsuarios.put(u.getNick(), u);
 					JOptionPane.showMessageDialog(null, "Usuario registrada correctamente", "REGISTRO CORRECTO", JOptionPane.INFORMATION_MESSAGE);
+					Connection con = BD.initBD("baseDeDatos");
+					BD.intertarUsuarioBBDD(con,u);
+					BD.closeBD(con);
 					vaciarCampos();
 				}else {
 					JOptionPane.showMessageDialog(null, "La contraseya no es correcta, intentelo de nuevo", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);

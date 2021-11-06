@@ -264,7 +264,7 @@ public class VentanaInicio extends JFrame {
 				String nick = txtNick.getText();
 				String c = txtContraseya.getText();
 				if(!nick.equals("") && !c.equals("")) {
-					Connection con = BD.initBD("newton.db");
+					Connection con = BD.initBD("baseDeDatos.db");
 					int resul = BD.obtenerUsuario(con, nick, c);
 					if(resul == 0) {
 						JOptionPane.showMessageDialog(null, "Todavia no te has registrado");
@@ -272,6 +272,8 @@ public class VentanaInicio extends JFrame {
 						JOptionPane.showMessageDialog(null, "La contraseña no es correcta");
 					}else {
 						JOptionPane.showMessageDialog(null, "Cargando WearHome, bienvenido "+ nick);
+						new VentanaHome(ventanaActual);
+						ventanaActual.dispose();
 					}
 				}
 				txtNick.setText("");

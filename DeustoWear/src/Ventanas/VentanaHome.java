@@ -7,8 +7,10 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.DimensionUIResource;
+import javax.swing.text.html.ImageView;
 
 import Clases.Articulo;
 import net.miginfocom.swing.MigLayout;
@@ -32,12 +34,18 @@ public class VentanaHome extends JFrame {
 
 	private JPanel contentPane;
 	private JComboBox<String> comboTalla, comboPrenda;
-	private JFrame ventanaActual;
-	
+	private JFrame ventanaActual,ventanaAnterior;
+	private JButton btnLogo;
 	/**
 	 * Create the frame.
 	 */
-	public VentanaHome() {
+	
+	
+	
+	public VentanaHome(JFrame va) {
+		ventanaAnterior = va;
+		ventanaActual = this;
+		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1046, 593);
 		contentPane = new JPanel();
@@ -51,9 +59,13 @@ public class VentanaHome extends JFrame {
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new MigLayout("", "[59.00][372.00,grow,center]", "[]"));
 		
+		ImageIcon im = new ImageIcon("imagenes/logo.jpg");
+		ImageIcon imagenConDimensiones = new ImageIcon(im.getImage().getScaledInstance(70,70,ImageView.CENTER));
+		btnLogo = new JButton();
+		btnLogo.setBackground(new Color(255, 153, 0));
+		btnLogo.setPreferredSize(new DimensionUIResource(70, 70));
+		btnLogo.setIcon(imagenConDimensiones);
 		
-		JButton btnLogo = new JButton(new ImageIcon("imagenes/logo.jpg"));
-		btnLogo.setPreferredSize(new DimensionUIResource(400, 400));
 		panelNorte.add(btnLogo, "cell 0 0");
 		
 		JLabel lblTitulo = new JLabel("DeustoWear Shop");
@@ -153,7 +165,19 @@ public class VentanaHome extends JFrame {
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
+		
+		btnLogo.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaActual.dispose();
+				new VentanaHome(ventanaActual);
+				//new VentanaPerfil(ventanaActual);
+			}
+		});
 	}
+	
+	
 	
 	
 

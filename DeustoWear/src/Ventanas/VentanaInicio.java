@@ -1,11 +1,13 @@
 package Ventanas;
 
 import java.awt.BorderLayout;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.DimensionUIResource;
 
 import Clases.Articulo;
 import Clases.BD;
@@ -37,6 +39,10 @@ import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
 import java.awt.Color;
 import javax.swing.SwingConstants;
+import com.jgoodies.forms.layout.FormSpecs;
+import javax.swing.GroupLayout;
+import javax.swing.ImageIcon;
+import javax.swing.GroupLayout.Alignment;
 
 public class VentanaInicio extends JFrame {
 
@@ -53,20 +59,24 @@ public class VentanaInicio extends JFrame {
 	private JPanel panelCentroDerechaArriba;
 	private JPanel panelCentroDerechaAbajo;
 	private JLabel lblRegistrarEsGratis;
-	private JPanel panel_2;
 	private JLabel lblIzquierdaFrase1;
 	private JLabel lblIzquierdaFrase2;
 	private JLabel lblIzquierdaFrase3;
 	private JLabel lblDerechos;
 	private JPanel panelCentroInside;
-	private JPanel panelWestInside;
 	private JPanel panelNorteInside;
-	private JPanel panelEsteInside;
 	private JLabel lblIniciarSesionNorte;
 	private JLabel lblNick;
 	private JTextField txtNick;
 	private JLabel lblContraseya;
 	private JTextField txtContraseya;
+	private JPanel panelNorteInsideIzquierda;
+	private JPanel panelCentroInsideIzquierda;
+	private JPanel panelSurInsideIzquierda;
+	private JPanel panelWestInsideIzquierda;
+	private JPanel panelEsteInsideIzquierda;
+	private JButton btnLogo;
+	
 
 	/**
 	 * Launch the application.
@@ -93,13 +103,14 @@ public class VentanaInicio extends JFrame {
 		tmArticulos = new TreeMap<>();
 		setTitle("Bienvenido a DeustoWear");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1239, 639);
+		setBounds(100, 100, 1176, 639);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		panelNorte = new JPanel();
+		panelNorte.setBackground(new Color(51, 153, 255));
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
 		panelCentro = new JPanel();
@@ -107,65 +118,101 @@ public class VentanaInicio extends JFrame {
 		panelCentro.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		panelCentroIzquierda = new JPanel();
+		panelCentroIzquierda.setBackground(new Color(204, 102, 0));
 		panelCentro.add(panelCentroIzquierda);
-		panelCentroIzquierda.setLayout(new BorderLayout(0, 0));
+		panelCentroIzquierda.setLayout(new BorderLayout(10, 10));
 		
-		panel_2 = new JPanel();
-		panelCentroIzquierda.add(panel_2, BorderLayout.NORTH);
+		panelNorteInsideIzquierda = new JPanel();
+		panelNorteInsideIzquierda.setBackground(new Color(255, 153, 0));
+		panelCentroIzquierda.add(panelNorteInsideIzquierda, BorderLayout.NORTH);
 		
 		lblIzquierdaFrase1 = new JLabel("Confianza");
-		panel_2.add(lblIzquierdaFrase1);
+		lblIzquierdaFrase1.setFont(new Font("Lato", Font.BOLD, 18));
+		lblIzquierdaFrase1.setForeground(new Color(255, 255, 255));
+		panelNorteInsideIzquierda.add(lblIzquierdaFrase1);
 		
 		lblIzquierdaFrase2 = new JLabel("Perseverancia");
-		panel_2.add(lblIzquierdaFrase2);
+		lblIzquierdaFrase2.setForeground(new Color(255, 255, 255));
+		lblIzquierdaFrase2.setFont(new Font("Lato", Font.BOLD, 18));
+		panelNorteInsideIzquierda.add(lblIzquierdaFrase2);
 		
 		lblIzquierdaFrase3 = new JLabel("Constancia");
-		panel_2.add(lblIzquierdaFrase3);
+		lblIzquierdaFrase3.setForeground(new Color(255, 255, 255));
+		lblIzquierdaFrase3.setFont(new Font("Lato", Font.BOLD, 18));
+		panelNorteInsideIzquierda.add(lblIzquierdaFrase3);
+		
+		panelCentroInsideIzquierda = new JPanel();
+		panelCentroInsideIzquierda.setBackground(new Color(255, 255, 255));
+		panelCentroIzquierda.add(panelCentroInsideIzquierda, BorderLayout.CENTER);
+		panelCentroInsideIzquierda.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		btnLogo = new JButton(new ImageIcon("imagenes/logo.jpg"));
+		btnLogo.setPreferredSize(new DimensionUIResource(400, 450));
+		panelCentroInsideIzquierda.add(btnLogo);
+		
+		panelSurInsideIzquierda = new JPanel();
+		panelSurInsideIzquierda.setBackground(new Color(204, 102, 0));
+		panelCentroIzquierda.add(panelSurInsideIzquierda, BorderLayout.SOUTH);
+		
+		panelWestInsideIzquierda = new JPanel();
+		panelWestInsideIzquierda.setBackground(new Color(204, 102, 0));
+		panelCentroIzquierda.add(panelWestInsideIzquierda, BorderLayout.WEST);
+		
+		panelEsteInsideIzquierda = new JPanel();
+		panelEsteInsideIzquierda.setBackground(new Color(204, 102, 0));
+		panelCentroIzquierda.add(panelEsteInsideIzquierda, BorderLayout.EAST);
+		
 		
 		panelCentroDerecha = new JPanel();
+		panelCentroDerecha.setBackground(new Color(255, 153, 0));
 		panelCentro.add(panelCentroDerecha);
 		panelCentroDerecha.setLayout(new BoxLayout(panelCentroDerecha, BoxLayout.Y_AXIS));
 		
 		panelCentroDerechaArriba = new JPanel();
+		panelCentroDerechaArriba.setBackground(new Color(204, 102, 0));
 		panelCentroDerecha.add(panelCentroDerechaArriba);
-		panelCentroDerechaArriba.setLayout(new BorderLayout(20, 20));
+		panelCentroDerechaArriba.setLayout(new BorderLayout(10, 10));
 		
 		panelCentroInside = new JPanel();
-		panelCentroDerechaArriba.add(panelCentroInside, BorderLayout.CENTER);
+		panelCentroInside.setBackground(new Color(51, 153, 255));
+		panelCentroDerechaArriba.add(panelCentroInside, BorderLayout.SOUTH);
 		panelCentroInside.setLayout(new MigLayout("", "[160.00,grow]", "[][][][][][][][][][][]"));
 		
 		lblNick = new JLabel("Nick :");
+		lblNick.setForeground(new Color(0, 0, 153));
 		lblNick.setFont(new Font("Lato", Font.BOLD, 31));
 		panelCentroInside.add(lblNick, "cell 0 2,alignx center,aligny center");
 		
 		txtNick = new JTextField();
+		txtNick.setBackground(new Color(255, 153, 0));
 		txtNick.setHorizontalAlignment(SwingConstants.CENTER);
 		panelCentroInside.add(txtNick, "cell 0 4,alignx center,aligny center");
 		txtNick.setColumns(25);
 		
 		lblContraseya = new JLabel("Contrase\u00F1a :");
+		lblContraseya.setBackground(new Color(240, 240, 240));
+		lblContraseya.setForeground(new Color(0, 0, 153));
 		lblContraseya.setFont(new Font("Lato", Font.BOLD, 31));
 		panelCentroInside.add(lblContraseya, "cell 0 7,alignx center,aligny center");
 		
 		txtContraseya = new JTextField();
+		txtContraseya.setBackground(new Color(255, 153, 0));
 		txtContraseya.setHorizontalAlignment(SwingConstants.CENTER);
 		panelCentroInside.add(txtContraseya, "cell 0 9,alignx center,aligny center");
 		txtContraseya.setColumns(25);
 		
-		panelWestInside = new JPanel();
-		panelCentroDerechaArriba.add(panelWestInside, BorderLayout.WEST);
-		
 		panelNorteInside = new JPanel();
+		panelNorteInside.setForeground(new Color(255, 255, 255));
+		panelNorteInside.setBackground(new Color(255, 153, 0));
 		panelCentroDerechaArriba.add(panelNorteInside, BorderLayout.NORTH);
 		
 		lblIniciarSesionNorte = new JLabel("Inicia sesion aqui");
+		lblIniciarSesionNorte.setForeground(new Color(255, 255, 255));
 		lblIniciarSesionNorte.setFont(new Font("Lato", Font.BOLD, 42));
 		panelNorteInside.add(lblIniciarSesionNorte);
 		
-		panelEsteInside = new JPanel();
-		panelCentroDerechaArriba.add(panelEsteInside, BorderLayout.EAST);
-		
 		panelCentroDerechaAbajo = new JPanel();
+		panelCentroDerechaAbajo.setBackground(new Color(255, 153, 0));
 		panelCentroDerecha.add(panelCentroDerechaAbajo);
 		panelCentroDerechaAbajo.setLayout(new MigLayout("", "[318px,grow,right]", "[14px]"));
 		
@@ -176,6 +223,7 @@ public class VentanaInicio extends JFrame {
 		panelCentroDerechaAbajo.add(lblDerechos, "cell 0 0,alignx right,aligny bottom");
 		
 		panelSur = new JPanel();
+		panelSur.setBackground(new Color(255, 153, 0));
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		panelNorte.setLayout(new MigLayout("", "[936.00px,grow,center]", "[30px][][30px]"));
 		
@@ -189,6 +237,9 @@ public class VentanaInicio extends JFrame {
 		
 
 		btnIniciarSesion = new JButton("Iniciar Sesion");
+		btnIniciarSesion.setForeground(new Color(0, 0, 153));
+		btnIniciarSesion.setBackground(new Color(153, 255, 153));
+		btnIniciarSesion.setFont(new Font("Lato", Font.BOLD, 20));
 		panelSur.add(btnIniciarSesion);
 		
 		btnRegistrarse = new JButton("Haz click aqui para registrarte");

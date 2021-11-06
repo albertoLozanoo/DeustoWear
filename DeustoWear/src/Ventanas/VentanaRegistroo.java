@@ -35,6 +35,8 @@ import javax.swing.JButton;
 import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
+import javax.swing.SwingConstants;
+import java.awt.Font;
 
 public class VentanaRegistroo extends JFrame {
 
@@ -43,6 +45,8 @@ public class VentanaRegistroo extends JFrame {
 	private JTextField txtNick;
 	private JTextField txtContraseya;
 	public JFrame ventanaActual,ventanaAnterior;
+	private JPanel panelDecorativoInsideNorte;
+	private JButton btnVolver;
 
 	/**
 	 * Create the frame.
@@ -55,23 +59,23 @@ public class VentanaRegistroo extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setBackground(new Color(255, 153, 0));
+		contentPane.setBackground(new Color(51, 153, 255));
 		contentPane.setLayout(new BorderLayout(10, 10));
 		
 		JPanel panelNorte = new JPanel();
-		panelNorte.setBackground(new Color(255, 153, 0));
+		panelNorte.setBackground(new Color(102, 153, 204));
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
 		JPanel panelWest = new JPanel();
-		panelWest.setBackground(new Color(255, 153, 0));
+		panelWest.setBackground(new Color(51, 153, 255));
 		contentPane.add(panelWest, BorderLayout.WEST);
 		
 		JPanel panelEste = new JPanel();
-		panelEste.setBackground(new Color(255, 153, 0));
+		panelEste.setBackground(new Color(51, 153, 255));
 		contentPane.add(panelEste, BorderLayout.EAST);
 		
 		JPanel panelSur = new JPanel();
-		panelSur.setBackground(new Color(255, 153, 0));
+		panelSur.setBackground(new Color(51, 153, 255));
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
 		JPanel panelCentro = new JPanel();
@@ -88,47 +92,88 @@ public class VentanaRegistroo extends JFrame {
 		panelCentroIzquierda.add(btnLogo);
 		
 		JPanel panelCentroDerecha = new JPanel();
+		panelCentroDerecha.setBackground(new Color(102, 153, 204));
 		panelCentro.add(panelCentroDerecha);
 		panelCentroDerecha.setLayout(new GridLayout(2, 1, 0, 0));
 		
 		JPanel panelCentroDerechalblRegistro = new JPanel();
-		FlowLayout flowLayout = (FlowLayout) panelCentroDerechalblRegistro.getLayout();
-		flowLayout.setAlignment(FlowLayout.LEFT);
+		panelCentroDerechalblRegistro.setBackground(new Color(204, 102, 0));
 		panelCentroDerecha.add(panelCentroDerechalblRegistro);
+		panelCentroDerechalblRegistro.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		panelDecorativoInsideNorte = new JPanel();
+		panelDecorativoInsideNorte.setBackground(new Color(255, 153, 0));
+		panelCentroDerechalblRegistro.add(panelDecorativoInsideNorte);
 		
 		JLabel lblRegistro = new JLabel("REGISTRO");
+		lblRegistro.setForeground(new Color(255, 255, 255));
+		lblRegistro.setBackground(new Color(204, 102, 0));
+		lblRegistro.setHorizontalAlignment(SwingConstants.CENTER);
+		lblRegistro.setFont(new Font("Lato", Font.BOLD, 30));
 		panelCentroDerechalblRegistro.add(lblRegistro);
 		
 		JPanel panelCentroDerechaInput = new JPanel();
+		panelCentroDerechaInput.setBackground(new Color(255, 255, 255));
+		panelCentroDerechaInput.setForeground(new Color(255, 102, 51));
 		panelCentroDerecha.add(panelCentroDerechaInput);
 		
 		txtNick = new JTextField();
+		txtNick.setForeground(new Color(255, 255, 255));
+		txtNick.setBackground(new Color(204, 102, 51));
 		txtNick.setColumns(10);
 		
 		JLabel lblContraseya = new JLabel("Contraseya :");
+		lblContraseya.setForeground(new Color(0, 0, 153));
+		lblContraseya.setFont(new Font("Lato", Font.BOLD, 21));
 		
 		txtContraseya = new JTextField();
+		txtContraseya.setForeground(new Color(255, 255, 255));
+		txtContraseya.setBackground(new Color(204, 102, 51));
 		txtContraseya.setColumns(10);
-		panelCentroDerechaInput.setLayout(new BoxLayout(panelCentroDerechaInput, BoxLayout.Y_AXIS));
+		panelCentroDerechaInput.setLayout(new MigLayout("", "[212px]", "[26px][28px][26px][28px][23px][][][]"));
 		
 		JLabel lblNick = new JLabel("Nick :");
-		panelCentroDerechaInput.add(lblNick);
-		panelCentroDerechaInput.add(txtNick);
-		panelCentroDerechaInput.add(lblContraseya);
-		panelCentroDerechaInput.add(txtContraseya);
-		
-		JButton btnRegistrarse = new JButton("Registrarme");
-		panelCentroDerechaInput.add(btnRegistrarse);
+		lblNick.setForeground(new Color(0, 0, 153));
+		lblNick.setBackground(new Color(0, 0, 0));
+		lblNick.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNick.setFont(new Font("Lato", Font.BOLD, 21));
+		panelCentroDerechaInput.add(lblNick, "cell 0 0,alignx center,aligny center");
+		panelCentroDerechaInput.add(txtNick, "cell 0 1,growx,aligny center");
+		panelCentroDerechaInput.add(lblContraseya, "cell 0 2,alignx center,aligny center");
+		panelCentroDerechaInput.add(txtContraseya, "cell 0 3,growx,aligny center");
 		
 		
 		panelCentroDerecha.setBorder(BorderFactory.createMatteBorder(15, 35, 15, 15, new Color(255, 153, 0)));
 		
 		panelCentroDerechaInput.setBorder(BorderFactory.createMatteBorder(0, 15, 15, 15,  new Color(255, 255, 255)));
+		
+		JButton btnRegistrarse = new JButton("Registrarme");
+		btnRegistrarse.setForeground(new Color(255, 255, 255));
+		btnRegistrarse.setBackground(new Color(204, 102, 0));
+		btnRegistrarse.setFont(new Font("Lato", Font.BOLD, 12));
+		panelCentroDerechaInput.add(btnRegistrarse, "cell 0 5,alignx center,aligny center");
+		
 		panelCentroIzquierda.setBorder(BorderFactory.createLineBorder(new Color(0,10,250)));
 		
 		panelNorte.setPreferredSize(new Dimension(100,100));
+		panelNorte.setLayout(new GridLayout(0, 1, 0, 0));
+		
+		JTextField txtRegistrarseEsGratis = new JTextField();
+		txtRegistrarseEsGratis.setHorizontalAlignment(SwingConstants.CENTER);
+		txtRegistrarseEsGratis.setFont(new Font("Lato", Font.BOLD, 31));
+		txtRegistrarseEsGratis.setForeground(new Color(255, 255, 255));
+		txtRegistrarseEsGratis.setBackground(new Color(255, 153, 0));
+		txtRegistrarseEsGratis.setText("Registrate aqui, solo te llevara un minuto...");
+		panelNorte.add(txtRegistrarseEsGratis);
+		txtRegistrarseEsGratis.setColumns(10);
 		panelSur.setPreferredSize(new Dimension(100,50));
 		panelSur.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		btnVolver = new JButton("Volver");
+		btnVolver.setForeground(new Color(255, 255, 255));
+		btnVolver.setBackground(new Color(255, 51, 0));
+		btnVolver.setFont(new Font("Lato", Font.BOLD, 19));
+		panelSur.add(btnVolver);
 		panelEste.setPreferredSize(new Dimension(100,100));
 		panelWest.setPreferredSize(new Dimension(100,100));
 		
@@ -140,7 +185,7 @@ public class VentanaRegistroo extends JFrame {
 		
 		
 		/**
-		 * Boton que al activarse verifica los campos de nick y contraseña para ver si es correcto e introducir la informacion en la BBDD
+		 * Cuando el boton Registrar se active, se comparara los datos introducios con los existentes en la BBBDD y aceptara el registrao en caso exitoso
 		 */
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -159,16 +204,16 @@ public class VentanaRegistroo extends JFrame {
 			}
 		});	
 		
+		
 		/**
 		 * Boton que al activarse cierra la ventana actual y abre la ventanaInicio
 		 */
-		btnLogo.addActionListener(new ActionListener() {
+		btnVolver.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.setVisible(false);
 				ventanaAnterior.setVisible(true);
 			}
 		});
-		
 	}
 	
 	/**

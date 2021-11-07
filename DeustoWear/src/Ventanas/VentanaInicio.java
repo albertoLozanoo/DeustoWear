@@ -92,6 +92,7 @@ public class VentanaInicio extends JFrame {
 	}
 
 	public VentanaInicio() {
+		setVisible(true);
 		con = BD.initBD("baseDeDatos.db");
 		BD.crearTablas(con);
 		BD.closeBD(con);

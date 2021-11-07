@@ -173,7 +173,7 @@ public class VentanaHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaHome(ventanaActual,u);
+				new VentanaInicio();
 				//new VentanaPerfil(ventanaActual);
 			}
 		});

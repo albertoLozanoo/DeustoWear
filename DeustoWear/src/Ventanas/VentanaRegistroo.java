@@ -118,6 +118,7 @@ public class VentanaRegistroo extends JFrame {
 		txtNick.setForeground(new Color(255, 255, 255));
 		txtNick.setBackground(new Color(204, 102, 51));
 		txtNick.setColumns(10);
+		txtNick.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		JLabel lblContraseya = new JLabel("Contraseya :");
 		lblContraseya.setForeground(new Color(0, 0, 153));
@@ -127,6 +128,7 @@ public class VentanaRegistroo extends JFrame {
 		txtContraseya.setForeground(new Color(255, 255, 255));
 		txtContraseya.setBackground(new Color(204, 102, 51));
 		txtContraseya.setColumns(10);
+		txtContraseya.setHorizontalAlignment(SwingConstants.CENTER);
 		panelCentroDerechaInput.setLayout(new MigLayout("", "[212px]", "[26px][28px][26px][28px][23px][][][]"));
 		
 		JLabel lblNick = new JLabel("Nick :");
@@ -204,7 +206,7 @@ public class VentanaRegistroo extends JFrame {
 						txtNick.setText("");
 					}
 				}else {
-					JOptionPane.showMessageDialog(null, "El nombre no es correcto, recuerda que tu nick: \n\t 1. No puede contener numeros \n\t 2. No puedes crear cuenta con nick admin \n\t 3. Debe haber una contraseña escrita", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "El nombre no es correcto, recuerda que tu nick: \n\t 1. No puede contener numeros, solo letras \n\t 2. No puedes crear cuenta con nick 'admin' \n\t 3. El campo contraseña no puede estar vacio", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 					txtNick.setText("");
 				}
 			}

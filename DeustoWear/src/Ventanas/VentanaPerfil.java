@@ -8,6 +8,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.util.regex.Pattern;
 
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -122,11 +123,16 @@ public class VentanaPerfil extends JFrame {
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String contra = JOptionPane.showInputDialog("Introduzca la nueva contraseña:");
-				con = BD.initBD(nombreBD);
-				BD.cambiarContrasenya(con, u.getNick(), contra);
-				BD.closeBD(con);
-				JOptionPane.showMessageDialog(null, "Contraseña cambiada correctamente", "CAMBIO REALIZADO", JOptionPane.INFORMATION_MESSAGE);
-				
+				String ERcontraseya = "[0-9]{1,15}";
+				boolean correctoContra = Pattern.matches(ERcontraseya, contra);
+				if(correctoContra && !contra.equals(u.getContraseya())) {
+					con = BD.initBD(nombreBD);
+					BD.cambiarContrasenya(con, u.getNick(), contra);
+					BD.closeBD(con);
+					JOptionPane.showMessageDialog(null, "Contraseña cambiada correctamente", "CAMBIO REALIZADO", JOptionPane.INFORMATION_MESSAGE);
+				}else {
+					JOptionPane.showMessageDialog(null, "Loading...Error", "!!ERROR!!", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 
 		});

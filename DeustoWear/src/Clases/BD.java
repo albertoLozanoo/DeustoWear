@@ -236,7 +236,7 @@ public class BD {
 	
 	public static void cambiarContrasenya(Connection con, String nick, String c) {
 		
-		String sent = "UPDATE Usuario SET contraseya = '"+c+"' WHERE nick = '"+nick+"'";
+		String sent = "UPDATE Usuarios SET Contraseña = '"+c+"' WHERE Nick = '"+nick+"'";
 		Statement st = null;
 		
 		try {

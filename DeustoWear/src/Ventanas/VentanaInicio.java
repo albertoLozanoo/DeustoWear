@@ -256,6 +256,7 @@ public class VentanaInicio extends JFrame {
 		
 		/**
 		 * Boton que al activarse verifica si el usuario esta registrado ya en la BBDD
+		 * Ademas si los campos son rellenados con admin, entraremos en la VentanAdministrador
 		 */
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			@Override
@@ -263,10 +264,13 @@ public class VentanaInicio extends JFrame {
 				// TODO Auto-generated method stub
 				String nick = txtNick.getText();
 				String c = txtContraseya.getText();
-				if(!nick.equals("") && !c.equals("")) {
+				
+				
+				
+				if((!nick.equals("") && !c.equals("")) || (!nick.equals("admin") && !c.equals("admin"))) {
 					Connection con = BD.initBD("baseDeDatos.db");
 					int resul = BD.obtenerUsuario(con, nick, c);
-					if(resul == 0) {
+					if((resul == 0) && !nick.equals("admin") && !c.equals("admin")){
 						JOptionPane.showMessageDialog(null, "Todavia no te has registrado","¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 						txtNick.setText("");
 						txtContraseya.setText("");
@@ -275,14 +279,22 @@ public class VentanaInicio extends JFrame {
 						
 						txtContraseya.setText("");
 					}else {
-						JOptionPane.showMessageDialog(null, "Cargando WearHome, bienvenid@ "+ nick,"WELCOME", JOptionPane.INFORMATION_MESSAGE);
-						Usuario u = new Usuario(nick,c);
-						new VentanaHome(ventanaActual, u);
-						ventanaActual.dispose();
+						if((resul == 2) && (!nick.equals("admin") && !c.equals("admin"))){
+							JOptionPane.showMessageDialog(null, "Cargando WearHome, bienvenid@ "+ nick,"WELCOME", JOptionPane.INFORMATION_MESSAGE);
+							Usuario u = new Usuario(nick,c);
+							new VentanaHome(ventanaActual, u);
+							ventanaActual.dispose();
+						}else if(nick.equals("admin") && c.equals("admin")){
+							JOptionPane.showMessageDialog(null, "Cargando WearHome VISUAL admin web","WELCOME", JOptionPane.INFORMATION_MESSAGE);
+							Usuario admin = new Usuario("admin","admin");
+							new VentanaAdmin(ventanaActual, admin);
+							ventanaActual.dispose();
+						}
 					}
 				}
-				
 			}
+				
+			
 		});
 	}
 }

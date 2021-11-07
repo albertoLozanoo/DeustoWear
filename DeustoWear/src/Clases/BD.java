@@ -8,6 +8,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+import Enum.Color;
+import Enum.Sexo;
+import Enum.Talla;
+
 
 public class BD {
 	
@@ -371,17 +375,47 @@ public class BD {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sentSQL);
 			while(rs.next()) { //Mientras no hayamos llegado al final del conjunto de resultados
-				String ID = rs.getString("ID");
-				String name = rs.getString("Name");
-				String talla = rs.getString("Talla");
-				int precio = rs.getInt("Precio");
-				String color = rs.getString("Color");
-				String sexo = rs.getString("Sexo");
-				String imagen = rs.getString("Imagen");
-			
-				//Articulo a = new Articulo(ID,name,talla,precio,color,sexo,imagen);
+				if (rs instanceof Camiseta) {
+					String ID = rs.getString("ID");
+					String name = rs.getString("Name");
+					String talla = rs.getString("Talla");
+					int precio = rs.getInt("Precio");
+					String color = rs.getString("Color");
+					String sexo = rs.getString("Sexo");
+					String imagen = rs.getString("Imagen");
 				
-				//tmArticulo.put(ID, a);
+					//Camiseta c = new Camiseta(ID,name,talla,precio,color,sexo,imagen);
+					//tmArticulo.put(ID, c);		
+				}
+				
+				if(rs instanceof Pantalon) {
+					String ID = rs.getString("ID");
+					String name = rs.getString("Name");
+					String talla = rs.getString("Talla");
+					int precio = rs.getInt("Precio");
+					String color = rs.getString("Color");
+					String sexo = rs.getString("Sexo");
+					String imagen = rs.getString("Imagen");
+					String tipoPantalon = rs.getString("TipoPantalon");
+				
+					//Pantalon p = new Pantalon(ID,name,talla,precio,color,sexo,imagen,tipoPantalon);
+					//tmArticulo.put(ID, p);		
+				}
+				
+				if(rs instanceof Sudadera) {
+					String ID = rs.getString("ID");
+					String name = rs.getString("Name");
+					String talla = rs.getString("Talla");
+					int precio = rs.getInt("Precio");
+					String color = rs.getString("Color");
+					String sexo = rs.getString("Sexo");
+					String imagen = rs.getString("Imagen");
+					String capucha = rs.getString("Capucha");
+				
+					//Sudadera s = new Sudadera(ID,name,talla,precio,color,sexo,imagen,capucha);
+					//tmArticulo.put(ID, s);	
+				}
+			
 			}
 			rs.close();
 			stmt.close();

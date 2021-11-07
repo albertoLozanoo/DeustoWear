@@ -26,7 +26,7 @@ public class Sudadera extends Articulo {
 	 * @param capucha Con capucha / Sin capucha
 	 * @param imagen URL img de la sudadera
 	 */
-	public Sudadera(int id,String name, Talla talla,double precio, Color color, Sexo sexo,boolean capucha,String imagen) {
+	public Sudadera(int id,String name, Talla talla,double precio, Color color, Sexo sexo,String imagen,boolean capucha) {
 		super(id, name,talla, precio, color,sexo,imagen);
 		this.capucha = capucha;
 	}

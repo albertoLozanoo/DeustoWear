@@ -185,10 +185,10 @@ public class VentanaRegistroo extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String ERnick = "[A-Za-z]{1,15}";
 				String nick = txtNick.getText();
+				String contraseya = txtContraseya.getText();
 				boolean correctoNick = Pattern.matches(ERnick, nick);
 				
-				if(correctoNick ) {
-					String contraseya = txtContraseya.getText();
+				if((correctoNick) && (!nick.equals("admin")) && (!nick.equals("") && !contraseya.equals(""))) {
 					Connection con = BD.initBD("baseDeDatos");
 					int valor = BD.estaRegistrado(con, nick);
 					if(valor == 0) {
@@ -204,7 +204,7 @@ public class VentanaRegistroo extends JFrame {
 						txtNick.setText("");
 					}
 				}else {
-					JOptionPane.showMessageDialog(null, "El nombre no es correcto, recuerda que tu nick no puede contener numeros, vuelve a intentarlo", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "El nombre no es correcto, recuerda que tu nick: \n\t 1. No puede contener numeros \n\t 2. No puedes crear cuenta con nick admin \n\t 3. Debe haber una contraseña escrita", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 					txtNick.setText("");
 				}
 			}

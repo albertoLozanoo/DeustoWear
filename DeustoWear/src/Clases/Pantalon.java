@@ -27,7 +27,9 @@ public class Pantalon extends Articulo{
 	 * @param tipoPantalon  Largo / Corto
 	 * @param imagen URL img del pantalon
 	 */
-	public Pantalon(int id, String name,Talla talla, double precio, Color color,Sexo sexo, TipoPantalon tipoPantalon,String imagen) {
+	
+
+	public Pantalon(int id, String name,Talla talla, double precio, Color color,Sexo sexo,String imagen,TipoPantalon tipoPantalon) {
 		super(id,name,talla,precio,color,sexo,imagen);
 
 		this.tipoPantalon = tipoPantalon;

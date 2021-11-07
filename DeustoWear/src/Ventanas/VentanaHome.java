@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -37,6 +38,7 @@ public class VentanaHome extends JFrame {
 	private JComboBox<String> comboTalla, comboPrenda;
 	private JFrame ventanaActual,ventanaAnterior;
 	private JButton btnLogo;
+	private ButtonGroup bg;
 	/**
 	 * Create the frame.
 	 */
@@ -118,6 +120,10 @@ public class VentanaHome extends JFrame {
 		rdbtnMujer.setBackground(new Color(255, 153, 0));
 		panelWest.add(rdbtnMujer, "cell 0 13,alignx left,aligny center");
 		
+		bg = new ButtonGroup();
+		bg.add(rdbtnHombre);
+		bg.add(rdbtnMujer);
+		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.setForeground(new Color(255, 255, 255));
 		btnBuscar.setBackground(new Color(255, 102, 0));
@@ -194,6 +200,16 @@ public class VentanaHome extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
 				new VentanaFavoritos(ventanaActual,u);
+				//new VentanaPerfil(ventanaActual);
+			}
+		});
+		
+		btnCesta.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaActual.dispose();
+				new VentanaCesta(ventanaActual,u);
 				//new VentanaPerfil(ventanaActual);
 			}
 		});

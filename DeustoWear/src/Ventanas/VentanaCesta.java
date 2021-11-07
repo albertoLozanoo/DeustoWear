@@ -178,19 +178,14 @@ public class VentanaCesta extends JFrame {
 		JButton btnPagar = new JButton("Pagar\r\n");
 		btnPagar.setFont(new Font("Dialog", Font.PLAIN, 19));
 		btnPagar.setBackground(Color.GREEN);
-		btnPagar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
+		btnCesta.setEnabled(false);
 		panel.add(btnPagar);
 		
 		
-		btnPerfil.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				ventanaActual.dispose();
-				//new VentanaPerfil(ventanaActual);
+		/*EVENTOS*/
+		btnPagar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
 			}
 		});
 		
@@ -199,10 +194,10 @@ public class VentanaCesta extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaHome(ventanaActual,u);
-				//new VentanaPerfil(ventanaActual);
+				new VentanaInicio();
 			}
 		});
+		
 		
 		btnPerfil.addActionListener(new ActionListener() {
 			
@@ -210,7 +205,36 @@ public class VentanaCesta extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
 				new VentanaPerfil(ventanaActual,u);
-				//new VentanaPerfil(ventanaActual);
+				
+			}
+		});
+		
+		btnWearHome.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaActual.dispose();
+				new VentanaHome(ventanaActual,u);
+				
+			}
+		});
+		btnFavoritos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaActual.dispose();
+				new VentanaFavoritos(ventanaActual,u);
+				
+			}
+		});
+		
+		btnSeguirComprando.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaActual.dispose();
+				new VentanaHome(ventanaActual,u);
+				
 			}
 		});
 	}

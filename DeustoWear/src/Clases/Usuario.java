@@ -1,5 +1,12 @@
 package Clases;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 
 public class Usuario {
@@ -68,11 +75,105 @@ public class Usuario {
 		Usuario.favoritos = favoritos;
 	}
 
+	/**
+	 * ToString clase Usuario
+	 */
 	@Override
 	public String toString() {
 		return "Usuario [nick=" + nick + ", contraseya=" + contraseya + "]";
 	}
 	
+	
+	/**
+	 * Metodo que devuelve el numero de articulos favortios que tiene el usuario
+	 * @return
+	 */
+	public static int getNumFavoritos() {
+		return favoritos.size();
+	}
+	
+	/**
+	 * Metodo que añade un articulo a favoritos
+	 * @param f Articulo a añadir 
+	 * @return devuelve true si lo puede añaadir, false en caso contrario
+	 */
+	public static boolean addFavorito(Articulo f) {
+		boolean repetido;
+		
+		repetido = favoritos.contains(f.getID());
+		if(repetido==false) {
+			favoritos.add(f);
+			guardarFavoritosEnFichero();
+		}
+		return repetido;
+	}
+
+	
+	/**
+	 * Metodo que elimina un aritculo del array de favoritos del usuario
+	 * @param id del articulo a eliminar
+	 */
+	public static void eliminarFavorito(int id) {
+		Articulo f = favoritos.remove(id);
+		guardarFavoritosEnFichero();
+									  
+	}
+	
+	/**
+	 * Metodo que guarda en un fichero binario los articulos favoritos del usaurio
+	 */
+	public static void guardarFavoritosEnFichero() {
+		ObjectOutputStream oos = null;
+		
+		try {
+			oos = new ObjectOutputStream(new FileOutputStream(Usuario.getNick()+"FAVORITOS.DAT"));
+			oos.writeObject(favoritos);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if(oos!=null)
+				try {
+					oos.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+		}
+	}
+	
+	
+	/**
+	 * Metodo que carga el array de articulos favortios del usuario con la informacion del fichero favoritos
+	 */
+	public static void cargarFavoritosDelFichero() {
+		ObjectInputStream ois = null;
+		File f = new File(Usuario.getNick()+"FAVORITOS.DAT");
+		if(f.exists()) {
+			try {
+				ois = new ObjectInputStream(new FileInputStream(f));
+				favoritos = (ArrayList<Articulo>) ois.readObject();
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				if(ois!=null)
+					try {
+						ois.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+			}
+		}
+	}
+
 	
 	
 	

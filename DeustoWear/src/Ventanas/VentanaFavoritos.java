@@ -164,6 +164,27 @@ public class VentanaFavoritos extends JFrame {
 		
 		});
 		
+		btnWearHome.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaActual.dispose();
+				new VentanaHome(ventanaActual,u);
+				//new VentanaPerfil(ventanaActual);
+			}
+		});
+		btnPerfil.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaActual.dispose();
+				new VentanaPerfil(ventanaActual,u);
+				//new VentanaPerfil(ventanaActual);
+			}
+		});
+		
+	
+		
 	}
 
 

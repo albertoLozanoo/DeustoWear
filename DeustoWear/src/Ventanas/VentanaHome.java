@@ -187,6 +187,16 @@ public class VentanaHome extends JFrame {
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
+		
+		btnFavoritos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaActual.dispose();
+				new VentanaFavoritos(ventanaActual,u);
+				//new VentanaPerfil(ventanaActual);
+			}
+		});
 	}
 	
 	

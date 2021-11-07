@@ -137,6 +137,24 @@ public class VentanaPerfil extends JFrame {
 
 		});
 		
+		btnWearHome.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaActual.dispose();
+				new VentanaHome(ventanaActual,u);
+				//new VentanaPerfil(ventanaActual);
+			}
+		});
+		btnFavoritos.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				ventanaActual.dispose();
+				new VentanaFavoritos(ventanaActual,u);
+				//new VentanaPerfil(ventanaActual);
+			}
+		});
 		
 		
 	}

@@ -1,10 +1,10 @@
-package Enum;
+package enumeration;
 
 /**
  * Enumeracion de los tipos de colores a seleccionar en nuestra gama
  * @author Usuario
  *
  */
-public enum Color {AZUL,NEGRO,BLANCO,NARANJA,DEUSTO}
+public enum Colores {AZUL,NEGRO,BLANCO,NARANJA,DEUSTO}
 
 

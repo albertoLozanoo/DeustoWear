@@ -1,4 +1,4 @@
-package Ventanas;
+package ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -21,9 +21,9 @@ import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
-import Clases.BD;
-import Clases.Usuario;
-import Clases.Articulo;;
+import clases.Articulo;
+import clases.BD;
+import clases.Usuario;;
 
 public class VentanaFavoritos extends JFrame {
 

@@ -1,4 +1,4 @@
-package Clases;
+package clases;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -8,9 +8,9 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
-import Enum.Color;
-import Enum.Sexo;
-import Enum.Talla;
+import enumeration.Colores;
+import enumeration.Sexo;
+import enumeration.Talla;
 
 
 public class BD {
@@ -267,8 +267,8 @@ public class BD {
 	 * @param con Conexion
 	 * @param a Articulo ha introducir en la BBDD
 	 */
-	public static void intertarArticuloBBDD(Connection con,Articulo a) {
-		String sent = "INSERT INTO Articulos VALUES('"+a.getID()+"','"+a.getName()+"','"+a.getPrecio()+"','"+a.getColor()+"','"+a.getSexo()+"','"+a.getImagen()+"')";
+	public static void intertarCamisetaBBDD(Connection con,Articulo a) {
+		String sent = "INSERT INTO Articulos VALUES("+a.getID()+",'"+a.getName()+"','"+a.getTalla()+"',"+a.getPrecio()+",'"+a.getColor()+"','"+a.getSexo()+"','"+a.getImagen()+"')";
 		Statement st = null;
 		
 		try {
@@ -282,7 +282,17 @@ public class BD {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
 		}
+		
 	}
 	
 	/**

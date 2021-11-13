@@ -1,4 +1,4 @@
-package Enum;
+package enumeration;
 
 /**
  * Enumeracion de las tallas disponibles en nuestros articulos

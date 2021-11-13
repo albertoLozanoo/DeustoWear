@@ -1,4 +1,4 @@
-package Enum;
+package enumeration;
 
 /**
  * Enumarcion de los posibles tipos de pantalones ha escoger

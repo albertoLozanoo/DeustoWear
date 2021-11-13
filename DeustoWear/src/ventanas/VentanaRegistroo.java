@@ -1,4 +1,4 @@
-package Ventanas;
+package ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -10,8 +10,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.DimensionUIResource;
 
-import Clases.BD;
-import Clases.Usuario;
+import clases.BD;
+import clases.Usuario;
 
 import java.awt.Color;
 import java.awt.Dimension;

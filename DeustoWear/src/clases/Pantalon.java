@@ -1,10 +1,10 @@
-package Clases;
+package clases;
 
 
-import Enum.Color;
-import Enum.Sexo;
-import Enum.Talla;
-import Enum.TipoPantalon;
+import enumeration.Colores;
+import enumeration.Sexo;
+import enumeration.Talla;
+import enumeration.TipoPantalon;
 
 public class Pantalon extends Articulo{
 	TipoPantalon tipoPantalon;
@@ -29,7 +29,7 @@ public class Pantalon extends Articulo{
 	 */
 	
 
-	public Pantalon(int id, String name,Talla talla, double precio, Color color,Sexo sexo,String imagen,TipoPantalon tipoPantalon) {
+	public Pantalon(int id, String name,String talla, double precio, String color,String sexo,String imagen,TipoPantalon tipoPantalon) {
 		super(id,name,talla,precio,color,sexo,imagen);
 
 		this.tipoPantalon = tipoPantalon;

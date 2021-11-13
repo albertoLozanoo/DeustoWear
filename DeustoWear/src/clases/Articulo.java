@@ -1,18 +1,18 @@
-package Clases;
+package clases;
 
 
 
-import Enum.Color;
-import Enum.Sexo;
-import Enum.Talla;
+import enumeration.Colores;
+import enumeration.Sexo;
+import enumeration.Talla;
 
 public abstract class Articulo {
 	int ID;
 	String name;
-	Talla talla;
+	String talla;
 	double precio;
-	Color color;
-	Sexo sexo;
+	String color;
+	String sexo;
 	String imagen;
 	
 	/**
@@ -32,7 +32,7 @@ public abstract class Articulo {
 	 * @param sexo Masculino / Femenino
 	 * @param imagen URL img del articulo
 	 */
-	public Articulo(int id, String name,Talla talla, double precio, Color color,Sexo sexo,String imagen) {
+	public Articulo(int id, String name,String talla, double precio, String color,String sexo,String imagen) {
 		ID = id;
 		this.name = name;
 		this.talla = talla;
@@ -56,16 +56,16 @@ public abstract class Articulo {
 		this.precio = precio;
 	}
 	
-	public Talla getTalla() {
+	public String getTalla() {
 		return talla;
 	}
-	public void setTalla(Talla talla) {
+	public void setTalla(String talla) {
 		this.talla = talla;
 	}
-	public Color getColor() {
+	public String getColor() {
 		return color;
 	}
-	public void setColor(Color color) {
+	public void setColor(String color) {
 		this.color = color;
 	}
 	
@@ -81,10 +81,10 @@ public abstract class Articulo {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Sexo getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
-	public void setSexo(Sexo sexo) {
+	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 

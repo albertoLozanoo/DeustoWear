@@ -1,4 +1,4 @@
-package Ventanas;
+package ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -12,9 +12,12 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.text.html.ImageView;
 
-import Clases.Articulo;
-import Clases.Usuario;
+import clases.Articulo;
+import clases.BD;
+import clases.Usuario;
 import net.miginfocom.swing.MigLayout;
+import panel.panelArticuloHome;
+
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
@@ -26,6 +29,8 @@ import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.util.TreeMap;
 
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
@@ -35,17 +40,17 @@ import javax.swing.JRadioButton;
 public class VentanaHome extends JFrame {
 
 	private JPanel contentPane;
+	private JPanel panelCentro;
 	private JComboBox<String> comboTalla, comboPrenda;
 	private JFrame ventanaActual,ventanaAnterior;
 	private JButton btnLogo;
 	private ButtonGroup bg;
+	
 	/**
 	 * Create the frame.
 	 */
-	
-	
-	
 	public VentanaHome(JFrame va,Usuario u) {
+		this.cargarPaneles();
 		ventanaAnterior = va;
 		ventanaActual = this;
 		setVisible(true);
@@ -159,7 +164,7 @@ public class VentanaHome extends JFrame {
 		btnPerfil.setBackground(new Color(204, 102, 51));
 		panelSur.add(btnPerfil);
 		
-		JPanel panelCentro = new JPanel();
+		panelCentro = new JPanel();
 		panelCentro.setBackground(new Color(255, 153, 51));
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 3, 0, 0));
@@ -213,9 +218,19 @@ public class VentanaHome extends JFrame {
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
+		
+		
 	}
 	
-	
+	public void cargarPaneles() {
+		Connection con = BD.initBD("baseDeDato.db");
+		TreeMap<String , Articulo> tm = BD.obtenerMapaArticulos(con);
+		for(Articulo a: tm.values()) {
+			panelArticuloHome pi = new panelArticuloHome(a);
+			panelCentro.add(pi);
+		}
+		BD.closeBD(con);
+	}
 	
 	
 

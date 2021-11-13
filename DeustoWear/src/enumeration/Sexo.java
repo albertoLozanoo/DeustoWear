@@ -1,4 +1,4 @@
-package Enum;
+package enumeration;
 
 /**
  * Enumeracion de los dos tipos de ropa respecto al sexo

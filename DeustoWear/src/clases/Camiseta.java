@@ -1,9 +1,9 @@
-package Clases;
+package clases;
 
 
-import Enum.Color;
-import Enum.Sexo;
-import Enum.Talla;
+import enumeration.Colores;
+import enumeration.Sexo;
+import enumeration.Talla;
 
 public class Camiseta extends Articulo{
 	
@@ -24,16 +24,16 @@ public class Camiseta extends Articulo{
 	 * @param sexo
 	 * @param imagen
 	 */
-	public Camiseta(int id, String name,Talla talla, double precio, Color color,Sexo sexo, String imagen) {
+	public Camiseta(int id, String name,String talla, int precio, String color,String sexo, String imagen) {
 		super(id,name,talla,precio,color,sexo,imagen);
 		
 	}
 	
-	public Talla getTalla() {
+	public String getTalla() {
 		return talla;
 	}
 
-	public void setTalla(Talla talla) {
+	public void setTalla(String talla) {
 		this.talla = talla;
 	}
 

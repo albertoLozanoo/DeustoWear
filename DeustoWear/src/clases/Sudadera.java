@@ -1,9 +1,9 @@
-package Clases;
+package clases;
 
 
-import Enum.Color;
-import Enum.Sexo;
-import Enum.Talla;
+import enumeration.Colores;
+import enumeration.Sexo;
+import enumeration.Talla;
 
 public class Sudadera extends Articulo {
 	boolean capucha;
@@ -26,16 +26,16 @@ public class Sudadera extends Articulo {
 	 * @param capucha Con capucha / Sin capucha
 	 * @param imagen URL img de la sudadera
 	 */
-	public Sudadera(int id,String name, Talla talla,double precio, Color color, Sexo sexo,String imagen,boolean capucha) {
+	public Sudadera(int id,String name, String talla,double precio, String color, String sexo,String imagen,boolean capucha) {
 		super(id, name,talla, precio, color,sexo,imagen);
 		this.capucha = capucha;
 	}
 
-	public Talla getTalla() {
+	public String getTalla() {
 		return talla;
 	}
 
-	public void setTalla(Talla talla) {
+	public void setTalla(String talla) {
 		this.talla = talla;
 	}
 

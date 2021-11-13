@@ -1,4 +1,4 @@
-package Ventanas;
+package ventanas;
 
 import java.awt.BorderLayout;
 
@@ -8,11 +8,6 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.DimensionUIResource;
-
-import Clases.Articulo;
-import Clases.BD;
-import Clases.Usuario;
-
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -37,6 +32,15 @@ import java.awt.GridBagLayout;
 import com.jgoodies.forms.layout.FormLayout;
 import com.jgoodies.forms.layout.ColumnSpec;
 import com.jgoodies.forms.layout.RowSpec;
+
+import clases.Articulo;
+import clases.BD;
+import clases.Camiseta;
+import clases.Usuario;
+import enumeration.Sexo;
+import enumeration.Talla;
+import enumeration.Colores;
+
 import java.awt.Color;
 import javax.swing.SwingConstants;
 import com.jgoodies.forms.layout.FormSpecs;
@@ -92,9 +96,11 @@ public class VentanaInicio extends JFrame {
 	}
 
 	public VentanaInicio() {
+		Camiseta c = new Camiseta(12,"Articulo 1",Talla.S.toString(),120,Colores.AZUL.toString(),Sexo.HOMBRE.toString(),"/prueba.jpg");
 		setVisible(true);
 		con = BD.initBD("baseDeDatos.db");
 		BD.crearTablas(con);
+		BD.intertarCamisetaBBDD(con, c);
 		BD.closeBD(con);
 		ventanaActual = this;
 		tmUsuarios = new TreeMap<>();

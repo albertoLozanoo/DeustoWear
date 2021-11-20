@@ -14,6 +14,7 @@ public class Usuario {
 	private static String contraseya;
 	public static ArrayList<Articulo> carrito;
 	public static ArrayList<Articulo> favoritos;
+	public static String avatar;
 	
 
 	/**
@@ -31,7 +32,12 @@ public class Usuario {
 		this.nick = nick;
 		this.contraseya = contraseya;
 	}
-
+	
+	public Usuario(String nick,String contrseya, String avatar) {
+		this.nick = nick;
+		this.contraseya = contrseya;
+		this.avatar = avatar;
+	}
 	public static String getNick() {
 		return nick;
 	}
@@ -56,6 +62,15 @@ public class Usuario {
 		Usuario.carrito = carrito;
 	}
 	
+
+	public static String getLogoAvatar() {
+		return avatar;
+	}
+
+	public static void setLogoAvatar(String logoAvatar) {
+		Usuario.avatar = logoAvatar;
+	}
+
 	/*Metodo compareTo que devuelve; 
 	 
 	  - Un valor negativo, si la Usuario this es menor que la Usuario u

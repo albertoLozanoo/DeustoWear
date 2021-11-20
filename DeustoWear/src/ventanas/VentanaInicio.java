@@ -96,11 +96,9 @@ public class VentanaInicio extends JFrame {
 	}
 
 	public VentanaInicio() {
-		Camiseta c = new Camiseta(12,"Articulo 1",Talla.S.toString(),120,Colores.AZUL.toString(),Sexo.HOMBRE.toString(),"/prueba.jpg");
 		setVisible(true);
 		con = BD.initBD("baseDeDatos.db");
 		BD.crearTablas(con);
-		BD.intertarCamisetaBBDD(con, c);
 		BD.closeBD(con);
 		ventanaActual = this;
 		tmUsuarios = new TreeMap<>();
@@ -271,8 +269,6 @@ public class VentanaInicio extends JFrame {
 				// TODO Auto-generated method stub
 				String nick = txtNick.getText();
 				String c = txtContraseya.getText();
-				
-				
 				
 				if((!nick.equals("") && !c.equals("")) || (!nick.equals("admin") && !c.equals("admin"))) {
 					Connection con = BD.initBD("baseDeDatos.db");

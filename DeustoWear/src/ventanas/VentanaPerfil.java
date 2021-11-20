@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.util.regex.Pattern;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,6 +21,8 @@ import javax.swing.border.EmptyBorder;
 
 import clases.BD;
 import clases.Usuario;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.JList;
 
 public class VentanaPerfil extends JFrame {
 
@@ -35,13 +38,16 @@ public class VentanaPerfil extends JFrame {
 	 */
 	
 	public VentanaPerfil(JFrame va, Usuario u) {
+		
+		System.out.println("Este es el logo " + u.getLogoAvatar());
+		System.out.println(u.getContraseya());
 		ventanaAnterior = va;
 		ventanaActual = this;
 		setVisible(true);
 		ventanaActual = this;
 		setTitle("Su perfil");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1046, 593);
+		setBounds(100, 100, 1192, 781);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -76,9 +82,6 @@ public class VentanaPerfil extends JFrame {
 		btnPerfil.setBackground(new Color(204, 102, 51));
 		panelSur.add(btnPerfil);
 		
-		
-		
-		
 		JPanel panelNorte = new JPanel();
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setBackground(new Color(255, 102, 51));
@@ -94,30 +97,50 @@ public class VentanaPerfil extends JFrame {
 		JPanel panelCentral = new JPanel();
 		getContentPane().add(panelCentral, BorderLayout.CENTER);
 		panelCentral.setBackground(new Color(255, 153, 51));
-		panelCentral.setLayout(new GridLayout(4, 4, 0, 0));
+		panelCentral.setLayout(new GridLayout(1, 2, 0, 0));
 		
-		JLabel lblCabecera = new JLabel("Mi perfil");
-		lblCabecera.setHorizontalAlignment(SwingConstants.CENTER);
-		lblCabecera.setBackground(new Color(255, 255, 255));
-		lblCabecera.setFont(new Font("Lato", Font.BOLD, 28));
-		lblCabecera.setForeground(new Color(255, 255, 255));
-		panelCentral.add(lblCabecera, "cell 1 0,alignx center,aligny center");
-		panelCentral.add(lblCabecera);
+		JPanel panelCentroIzquierda = new JPanel();
+		panelCentroIzquierda.setForeground(new Color(255, 255, 255));
+		panelCentroIzquierda.setBackground(new Color(255, 153, 0));
+		panelCentral.add(panelCentroIzquierda);
+		panelCentroIzquierda.setLayout(new MigLayout("", "[378.00px,grow][1px]", "[93.00px][72.00][grow]"));
 		
+		JLabel lblMyProfile = new JLabel("MY PROFILE");
+		lblMyProfile.setHorizontalAlignment(SwingConstants.CENTER);
+		lblMyProfile.setForeground(new Color(255, 255, 255));
+		lblMyProfile.setFont(new Font("Lato", Font.BOLD, 42));
+		lblMyProfile.setBackground(Color.WHITE);
+		panelCentroIzquierda.add(lblMyProfile, "cell 0 0,alignx center,aligny bottom");
 		
-		JLabel lblNombreUsuario = new JLabel(Usuario.getNick());
+		JLabel lblNombreUsuario = new JLabel(u.getNick());
+		lblNombreUsuario.setForeground(new Color(255, 255, 255));
+		lblNombreUsuario.setFont(new Font("Lato", Font.BOLD, 28));
 		lblNombreUsuario.setHorizontalAlignment(SwingConstants.CENTER);
-		panelCentral.add(lblNombreUsuario);
+		panelCentroIzquierda.add(lblNombreUsuario, "cell 0 1,alignx center,aligny bottom");
 		
+		JLabel lblAvatar = new JLabel();
+		panelCentroIzquierda.add(lblAvatar, "cell 0 2,alignx center,aligny center");
 		
+		con = BD.initBD(nombreBD);
+		String avatar = BD.conseguirAvatar(con, u.getNick());
+		BD.closeBD(con);
 		
+		ImageIcon im = new ImageIcon(avatar);
+		lblAvatar.setIcon(im);
 		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 153, 0));
+		panelCentral.add(panel);
+		panel.setLayout(new MigLayout("", "[152px,grow]", "[155.00px][grow]"));
 		
-		JLabel lblEnunciado = new JLabel("	Pedidos realizados:");
-		lblEnunciado.setForeground(Color.BLACK);
+		JLabel lblEnunciado = new JLabel("\tPedidos realizados:");
 		lblEnunciado.setHorizontalAlignment(SwingConstants.LEFT);
-		lblEnunciado.setFont(new Font("Courier New", Font.BOLD | Font.ITALIC, 14));
-		panelCentral.add(lblEnunciado);
+		lblEnunciado.setForeground(new Color(255, 255, 255));
+		lblEnunciado.setFont(new Font("Lato", Font.BOLD, 24));
+		panel.add(lblEnunciado, "cell 0 0,alignx center,aligny bottom");
+		
+		JList list = new JList();
+		panel.add(list, "cell 0 1,grow");
 		
 		
 		btnEditar.addActionListener(new ActionListener() {

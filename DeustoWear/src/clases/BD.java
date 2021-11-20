@@ -57,7 +57,7 @@ public class BD {
 	 */
 	public static void crearTablas(Connection con) {
 		String sent1 = "CREATE TABLE IF NOT EXISTS Articulos(ID Integer,Name String, Talla String,Precio Double,Color String, Sexo String, Imagen String)";
-		String sent2 = "CREATE TABLE IF NOT EXISTS Usuarios(Nick String, Contraseña String)";
+		String sent2 = "CREATE TABLE IF NOT EXISTS Usuarios(Nick String, Contraseña String, Avatar String)";
 		Statement st = null;
 		
 		try {
@@ -163,11 +163,11 @@ public class BD {
 	}
 	
 	/**
-	 * Método que recibe los datos de un Usuario y comprueba que está registrado en la BBDD
-	 * @param nom nombre del usuario
-	 * @param con contraseña del usuario
-	 * @return 0 si el usuario no está registrado
-	 * 		   1 si el usuario está registrado pero la contraseña no es correcta
+	 * Método que recibe los datos de un Articulo y comprueba que está registrado en la BBDD
+	 * @param nom nombre del Artiuclo
+	 * @param con contraseña del Articulo
+	 * @return 0 si el Articulo no está registrado
+	 * 		   1 si el Articulo está registrado pero la contraseña no es correcta
 	 * 		   2 si el usuario está registrado y la contraseña es correcta
 	 */
 	public static int obtenerArticulo(Connection con, int ID, String name) {
@@ -210,7 +210,7 @@ public class BD {
 	 */
 	
 	public static void intertarUsuarioBBDD(Connection con,Usuario u) {
-		String sent = "INSERT INTO Usuarios VALUES('"+u.getNick()+"','"+u.getContraseya()+"')";
+		String sent = "INSERT INTO Usuarios VALUES('"+u.getNick()+"','"+u.getContraseya()+"','"+u.getLogoAvatar()+"')";
 		Statement st = null;
 		
 		try {
@@ -231,6 +231,32 @@ public class BD {
 		}
 	}
 	
+	public static String conseguirAvatar(Connection con,String nick) {
+		String sent = "SELECT Avatar FROM Usuarios WHERE Nick ='"+nick+"'";
+		Statement st = null;
+		try {
+			st = con.createStatement();
+			ResultSet rs = st.executeQuery(sent);
+			if(rs.next()) { //Hemos encontrado una tupla que cumple la condición
+				String avatar = rs.getString("Avatar");
+				rs.close();
+				return avatar;
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (SQLException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
+	}
 	/**
 	 * Método que permite al usuario cambiar su contraseña y se actualiza su info en la BD
 	 * @param con Conexion

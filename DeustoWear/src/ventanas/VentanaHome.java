@@ -50,9 +50,10 @@ public class VentanaHome extends JFrame {
 	 * Create the frame.
 	 */
 	public VentanaHome(JFrame va,Usuario u) {
-		this.cargarPaneles();
+		
 		ventanaAnterior = va;
 		ventanaActual = this;
+		this.cargarPaneles();
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1046, 593);

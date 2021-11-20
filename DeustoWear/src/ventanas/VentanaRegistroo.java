@@ -9,6 +9,7 @@ import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
 import javax.swing.plaf.DimensionUIResource;
+import javax.swing.text.html.ImageView;
 
 import clases.BD;
 import clases.Usuario;
@@ -187,9 +188,12 @@ public class VentanaRegistroo extends JFrame {
 		btnVolver.setFont(new Font("Lato", Font.BOLD, 19));
 		panelSur.add(btnVolver);
 		panelEste.setPreferredSize(new Dimension(100,100));
-		panelWest.setPreferredSize(new Dimension(100,100));
+		panelEste.setLayout(new GridLayout(0, 1, 0, 0));
 		
+		JLabel lblAvatarSeleccionado = new JLabel("");
+		panelEste.add(lblAvatarSeleccionado);
 		
+	
 		setVisible(true);
 		
 		/**EVENTOS**/
@@ -212,6 +216,10 @@ public class VentanaRegistroo extends JFrame {
 					
 					System.out.println("Ruta del fichero seleccionado: "+ ficheroSeleccionado.getAbsolutePath());	
 				}
+				ImageIcon im = new ImageIcon(ficheroSeleccionado.getAbsolutePath());
+				ImageIcon imagenConDimensiones = new ImageIcon(im.getImage().getScaledInstance(100,100,ImageView.CENTER));
+				lblAvatarSeleccionado.setIcon(imagenConDimensiones);
+				lblAvatarSeleccionado.setPreferredSize(new DimensionUIResource(100, 100));
 			}
 		});
 		

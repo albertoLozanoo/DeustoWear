@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.TreeMap;
 
 public class Usuario {
 	private static String nick;
@@ -16,6 +17,10 @@ public class Usuario {
 	public static ArrayList<Articulo> favoritos;
 	public static String avatar;
 	
+	
+	public static Venta ventaActual;
+	public static TreeMap<String, Venta> tmVentasUsuario;
+
 
 	/**
 	 * Constructor por defecto de la clase Usuario
@@ -70,7 +75,33 @@ public class Usuario {
 	public static void setLogoAvatar(String logoAvatar) {
 		Usuario.avatar = logoAvatar;
 	}
+	
+	public static String getAvatar() {
+		return avatar;
+	}
 
+	public static void setAvatar(String avatar) {
+		Usuario.avatar = avatar;
+	}
+
+	public static TreeMap<String, Venta> getTmVentasUsuario() {
+		return tmVentasUsuario;
+	}
+
+	public static void setTmVentasUsuario(TreeMap<String, Venta> tmVentasUsuario) {
+		Usuario.tmVentasUsuario = tmVentasUsuario;
+	}
+	
+	
+	public static Venta getVentaActual() {
+		return ventaActual;
+	}
+
+	public static void setVentaActual(Venta ventaActual) {
+		Usuario.ventaActual = ventaActual;
+	}
+
+	
 	/*Metodo compareTo que devuelve; 
 	 
 	  - Un valor negativo, si la Usuario this es menor que la Usuario u

@@ -4,15 +4,26 @@ import javax.swing.JPanel;
 import java.awt.BorderLayout;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.regex.Pattern;
+
 import javax.swing.JComboBox;
 import javax.swing.SwingConstants;
 
 import clases.Articulo;
+import clases.BD;
+import clases.Usuario;
+import clases.Venta;
 
 import javax.swing.JButton;
 
 public class panelArticuloHome extends JPanel {
+	
+	Usuario u;
 
 	/**
 	 * Create the panel.
@@ -55,7 +66,21 @@ public class panelArticuloHome extends JPanel {
 		
 		JComboBox comboBoxColor = new JComboBox();
 		panelSur.add(comboBoxColor, "cell 1 2,growx");
-
+		
+		/*EVENTOS*/
+		
+		btnComprar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				u.ventaActual.addArticuloAventaActual(a);
+			}
+		});
+		btnFavoritos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				u.addFavorito(a);
+			}
+		});
 	}
+	
+	
 
 }

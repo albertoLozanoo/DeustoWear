@@ -19,6 +19,7 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import java.awt.Font;
 
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -43,6 +44,8 @@ public class VentanaCesta extends JFrame {
 	private JComboBox<String> comboTalla, comboPrenda;
 	private JFrame ventanaActual,ventanaAnterior;
 	private JButton btnLogo;
+	
+	
 	
 	/**
 	 * Create the frame.
@@ -90,8 +93,6 @@ public class VentanaCesta extends JFrame {
 		JLabel lblComboPrenda = new JLabel("Prenda");
 		lblComboPrenda.setForeground(new Color(255, 255, 255));
 		lblComboPrenda.setFont(new Font("Lato", Font.PLAIN, 18));
-		
-		
 		
 		comboPrenda = new JComboBox<String>();
 		comboPrenda.setToolTipText("");
@@ -165,21 +166,21 @@ public class VentanaCesta extends JFrame {
 		JList listCesta = new JList();
 		panelCentro.add(listCesta, BorderLayout.CENTER);
 		
-		JPanel panel = new JPanel();
-		panelCentro.add(panel, BorderLayout.SOUTH);
-		panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		JPanel panelCentroSur = new JPanel();
+		panelCentro.add(panelCentroSur, BorderLayout.SOUTH);
+		panelCentroSur.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JButton btnSeguirComprando = new JButton("Seguir comprando\r\n");
 		btnSeguirComprando.setBackground(new Color(255, 140, 0));
 		btnSeguirComprando.setFont(new Font("Dialog", Font.PLAIN, 19));
 		btnSeguirComprando.setForeground(Color.BLACK);
-		panel.add(btnSeguirComprando);
+		panelCentroSur.add(btnSeguirComprando);
 		
 		JButton btnPagar = new JButton("Pagar\r\n");
 		btnPagar.setFont(new Font("Dialog", Font.PLAIN, 19));
 		btnPagar.setBackground(Color.GREEN);
 		btnCesta.setEnabled(false);
-		panel.add(btnPagar);
+		panelCentroSur.add(btnPagar);
 		
 		
 		/*EVENTOS*/

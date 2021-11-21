@@ -24,6 +24,12 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -53,8 +59,10 @@ public class VentanaRegistroo extends JFrame {
 	private JButton btnVolver,btnAvatar,btnComp;
 	private JFileChooser fc;
 	private File ficheroSeleccionado;
+	private JLabel lblAvatarSeleccionado;
 	
 
+	private static Logger log = Logger.getLogger("LogUserRegistered"); 
 	
 
 	/**
@@ -190,9 +198,10 @@ public class VentanaRegistroo extends JFrame {
 		panelEste.setPreferredSize(new Dimension(100,100));
 		panelEste.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		JLabel lblAvatarSeleccionado = new JLabel("");
+		lblAvatarSeleccionado = new JLabel("");
 		panelEste.add(lblAvatarSeleccionado);
 		
+		System.out.println(ficheroSeleccionado);
 	
 		setVisible(true);
 		
@@ -241,6 +250,22 @@ public class VentanaRegistroo extends JFrame {
 						Connection con2 = BD.initBD("baseDeDatos");
 						BD.intertarUsuarioBBDD(con2,u);
 						BD.closeBD(con2);
+						
+						try {
+							Handler handler = new FileHandler("LogUserRegistered");
+							handler.setFormatter(new SimpleFormatter());
+							log.addHandler(handler);
+							log.log(Level.INFO, "Se ha añadido un usuario");
+							
+						} catch (SecurityException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						} catch (IOException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
+
+						
 						JOptionPane.showMessageDialog(null, "Usuario registrado correctamente", "REGISTRO CORRECTO", JOptionPane.INFORMATION_MESSAGE);
 						vaciarCampos();
 					}else {
@@ -272,6 +297,7 @@ public class VentanaRegistroo extends JFrame {
 	public void vaciarCampos() {
 		txtNick.setText("");
 		txtContraseya.setText("");
+		lblAvatarSeleccionado.setIcon(null);
 	}
 }
 	

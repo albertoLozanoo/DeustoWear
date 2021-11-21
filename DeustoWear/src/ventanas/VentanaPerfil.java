@@ -2,25 +2,36 @@ package ventanas;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.GridLayout;
+import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.util.regex.Pattern;
 
+import javax.swing.DefaultListModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.SwingConstants;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
+import javax.swing.plaf.DimensionUIResource;
+import javax.swing.text.html.ImageView;
 
 import clases.BD;
 import clases.Usuario;
+import clases.Venta;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JList;
 
@@ -30,7 +41,13 @@ public class VentanaPerfil extends JFrame {
 	public static Connection con;
 	public static String nombreBD = "baseDeDatos.db";
 	private JFrame ventanaActual, ventanaAnterior;
+	private JLabel lblnumPedidos;
+	private DefaultListModel<String> modeloListVentasUsuario;
+	private JList<String> listaVentasUsuario;
+	private JScrollPane scrollListaVentas;
 	
+	
+	public Usuario u;
 
 	/**
 	 * Create the frame.
@@ -38,7 +55,7 @@ public class VentanaPerfil extends JFrame {
 	 */
 	
 	public VentanaPerfil(JFrame va, Usuario u) {
-		
+		//cargarTMventasUsuarioAJlist();
 		System.out.println("Este es el logo " + u.getLogoAvatar());
 		System.out.println(u.getContraseya());
 		ventanaAnterior = va;
@@ -87,7 +104,8 @@ public class VentanaPerfil extends JFrame {
 		panelNorte.setBackground(new Color(255, 102, 51));
 		panelNorte.setLayout(new GridLayout(0, 4, 0, 0));
 		
-		JButton btnEditar = new JButton("Editar");
+		JButton btnEditar = new JButton("CAMBIAR CONTRASE\u00D1A");
+		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setFont(new Font("Lato", Font.PLAIN, 19));
 		btnEditar.setBackground(new Color(204, 102, 51));
 		panelNorte.add(btnEditar);
@@ -126,12 +144,19 @@ public class VentanaPerfil extends JFrame {
 		BD.closeBD(con);
 		
 		ImageIcon im = new ImageIcon(avatar);
-		lblAvatar.setIcon(im);
+
+		
+
+		ImageIcon imagenConDimensiones = new ImageIcon(im.getImage().getScaledInstance(300,300,ImageView.CENTER));
+		lblAvatar.setIcon(imagenConDimensiones);
+		lblAvatar.setPreferredSize(new DimensionUIResource(100, 100));
+		lblAvatar.setIcon(imagenConDimensiones);
+		
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(255, 153, 0));
 		panelCentral.add(panel);
-		panel.setLayout(new MigLayout("", "[152px,grow]", "[155.00px][grow]"));
+		panel.setLayout(new MigLayout("", "[152px,grow]", "[49.00][55.00px][grow]"));
 		
 		JLabel lblEnunciado = new JLabel("\tPedidos realizados:");
 		lblEnunciado.setHorizontalAlignment(SwingConstants.LEFT);
@@ -139,8 +164,15 @@ public class VentanaPerfil extends JFrame {
 		lblEnunciado.setFont(new Font("Lato", Font.BOLD, 24));
 		panel.add(lblEnunciado, "cell 0 0,alignx center,aligny bottom");
 		
+		lblnumPedidos = new JLabel("Num. de Pedidos : ");
+		lblnumPedidos.setForeground(Color.WHITE);
+		lblnumPedidos.setFont(new Font("Lato", Font.PLAIN, 18));
+		lblnumPedidos.setHorizontalAlignment(SwingConstants.CENTER);
+		panel.add(lblnumPedidos, "cell 0 1,alignx center,aligny center");
+		
+		
 		JList list = new JList();
-		panel.add(list, "cell 0 1,grow");
+		panel.add(list, "cell 0 2,grow");
 		
 		
 		btnEditar.addActionListener(new ActionListener() {
@@ -188,6 +220,14 @@ public class VentanaPerfil extends JFrame {
 			}
 		});
 		
+		
+	}
+	
+	private void cargarTMventasUsuarioAJlist(){
+		for(String clave : u.tmVentasUsuario.keySet() ) {
+			String venta = u.tmVentasUsuario.get(clave).toString();
+			modeloListVentasUsuario.addElement(venta);
+		}
 	}
 }
 

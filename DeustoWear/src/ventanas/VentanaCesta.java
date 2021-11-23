@@ -30,6 +30,7 @@ import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
@@ -43,7 +44,10 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
+
 import java.awt.FlowLayout;
+import javax.swing.BoxLayout;
 
 public class VentanaCesta extends JFrame {
 
@@ -53,7 +57,8 @@ public class VentanaCesta extends JFrame {
 	private JButton btnLogo,btnEliminarArticulo;
 	private JTable tablaArticulos;
 	private DefaultTableModel modeloTablaArticulos = new DefaultTableModel();
-	
+	public Usuario u;
+	private double precioTotal;
 	
 	/**
 	 * Create the frame.
@@ -202,6 +207,23 @@ public class VentanaCesta extends JFrame {
 		
 		JPanel panelCentroCentro = new JPanel();
 		panelCentro.add(panelCentroCentro, BorderLayout.CENTER);
+		panelCentroCentro.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		
+		JPanel panelCentroDerecha = new JPanel();
+		contentPane.add(panelCentroDerecha, BorderLayout.EAST);
+		panelCentroDerecha.setLayout(new MigLayout("", "[207px][1px]", "[202.00px][grow]"));
+		
+		JLabel lblPrecioTotal = new JLabel("Precio Total :");
+		lblPrecioTotal.setFont(new Font("Microsoft YaHei", Font.BOLD, 19));
+		panelCentroDerecha.add(lblPrecioTotal, "cell 0 0,alignx center,aligny bottom");
+		
+		precioTotal = u.sumaTotalAPagar();
+		
+		JLabel lblPrecioTotalInput = new JLabel(""+ precioTotal);
+		panelCentroDerecha.add(lblPrecioTotalInput, "cell 0 1,alignx center,aligny top");
+		
+		
+		
 		
 
 		
@@ -218,11 +240,15 @@ public class VentanaCesta extends JFrame {
 		
 		
 		
+		
+		
 		/*EVENTOS*/
 		btnEliminarCesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				modeloTablaArticulos.setRowCount(0);
 				u.eliminarCarrito(u.getCarrito());
+				lblPrecioTotal.setForeground(new Color(240,240,240));
+				lblPrecioTotalInput.setForeground(new Color(240,240,240));
 			}
 		});
 		
@@ -234,7 +260,17 @@ public class VentanaCesta extends JFrame {
 		
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				u.comprar();
+				JOptionPane.showMessageDialog(null, "Compra registrada con exito " + u.getNick() + "\n gracias por tu visita te dejamos con tus \n articulos favoritos","¡¡GRACIAS!!", JOptionPane.INFORMATION_MESSAGE);
+				ventanaActual.dispose();
+				new VentanaFavoritos(va, u);
 				
+				precioTotal = 0.0;
+				
+				modeloTablaArticulos.setRowCount(0);
+				u.eliminarCarrito(u.getCarrito());
+				lblPrecioTotal.setForeground(new Color(240,240,240));
+				lblPrecioTotalInput.setForeground(new Color(240,240,240));
 			}
 		});
 		
@@ -287,6 +323,8 @@ public class VentanaCesta extends JFrame {
 			}
 		});
 	}
+	
+
 	
 	
 

@@ -56,7 +56,7 @@ public class VentanaHome extends JFrame {
 		
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1046, 593);
+		setBounds(100, 100, 1446, 793);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

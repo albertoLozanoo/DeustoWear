@@ -8,7 +8,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.lang.reflect.Array;
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.TreeMap;
 
 
@@ -22,7 +24,7 @@ public class Usuario {
 	
 	
 	public static Venta ventaActual = new Venta();
-	public static TreeMap<String, Venta> tmVentasUsuario;
+	public static TreeMap<Integer, Venta> tmVentasUsuario = new TreeMap<>();
 
 
 	/**
@@ -62,7 +64,7 @@ public class Usuario {
 		this.contraseya = contraseya;
 	}
 
-	public  ArrayList<Articulo> getCarrito() {
+	public static ArrayList<Articulo> getCarrito() {
 		return carrito;
 	}
 
@@ -87,11 +89,11 @@ public class Usuario {
 		Usuario.avatar = avatar;
 	}
 
-	public  TreeMap<String, Venta> getTmVentasUsuario() {
+	public  TreeMap<Integer, Venta> getTmVentasUsuario() {
 		return tmVentasUsuario;
 	}
 
-	public  void setTmVentasUsuario(TreeMap<String, Venta> tmVentasUsuario) {
+	public  void setTmVentasUsuario(TreeMap<Integer, Venta> tmVentasUsuario) {
 		Usuario.tmVentasUsuario = tmVentasUsuario;
 	}
 	
@@ -172,6 +174,14 @@ public class Usuario {
 	}
 	
 	
+	public static double sumaTotalAPagar() {
+		double sumaTotal = 0.0;
+		for(Articulo a: getCarrito()) {
+			sumaTotal = sumaTotal + a.getPrecio();
+		}
+		return sumaTotal;
+	}
+	
 	/**
 	 * Metodo que guarda en un fichero binario los articulos favoritos del usaurio
 	 */
@@ -225,6 +235,15 @@ public class Usuario {
 					}
 			}
 		}
+	}
+	
+	public static void comprar() {
+		Double precioTotal = Usuario.sumaTotalAPagar();
+		
+		ventaActual = new Venta(ventaActual.getToken(),Usuario.getCarrito(),Usuario.getCarrito().size(),System.currentTimeMillis());
+		Usuario.tmVentasUsuario.put(ventaActual.getToken(), ventaActual);
+		System.out.println(ventaActual);
+		System.out.println("Venta Registrada con Exito " + Usuario.getNick());
 	}
 
 	

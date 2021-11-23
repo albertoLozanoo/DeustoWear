@@ -224,7 +224,7 @@ public class VentanaPerfil extends JFrame {
 	}
 	
 	private void cargarTMventasUsuarioAJlist(){
-		for(String clave : u.tmVentasUsuario.keySet() ) {
+		for(int clave : u.tmVentasUsuario.keySet() ) {
 			String venta = u.tmVentasUsuario.get(clave).toString();
 			modeloListVentasUsuario.addElement(venta);
 		}

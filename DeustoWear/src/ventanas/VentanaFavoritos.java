@@ -158,6 +158,7 @@ public class VentanaFavoritos extends JFrame {
 					modeloArticulosFavoritos.removeElementAt(pos);
 					listaArticulosFavoritos.setModel(modeloArticulosFavoritos);
 					JOptionPane.showMessageDialog(null, "Artículo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
+					panelCentral.updateUI();
 				}
 			}
 		

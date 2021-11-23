@@ -231,7 +231,7 @@ public class VentanaRegistroo extends JFrame {
 				lblAvatarSeleccionado.setPreferredSize(new DimensionUIResource(100, 100));
 			}
 		});
-		
+	
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String ERnick = "[A-Za-z]{1,15}";
@@ -241,7 +241,7 @@ public class VentanaRegistroo extends JFrame {
 				System.out.println(avatar);
 				boolean correctoNick = Pattern.matches(ERnick, nick);
 				
-				if((correctoNick) && (!nick.equals("admin")) && (!nick.equals("") && !contraseya.equals(""))) {
+				if((correctoNick) && (!nick.equals("admin")) && (!nick.equals("") && !contraseya.equals("") )) {
 					Connection con = BD.initBD("baseDeDatos");
 					int valor = BD.estaRegistrado(con, nick);
 					if(valor == 0) {

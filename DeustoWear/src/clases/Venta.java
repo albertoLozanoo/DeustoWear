@@ -7,33 +7,39 @@ import java.util.Date;
 
 public class Venta {
 	
-	private String token;
+	private int token;
 	private ArrayList<Articulo> arrayArticulos;
 	private int numArticulos;
 	private double precioTotal;
-	private Connection con;
+
 	private Date fechaVenta;
 	public static SimpleDateFormat sdf = new SimpleDateFormat("EE, d MM yyyy HH:mm:ss");
 	
-	public Venta() {
-		
-	}
-
-	public Venta(String token, ArrayList<Articulo> arrayArticulos, int numArticulos,int precioTotal, Connection con, Date fechaVenta) {
+	
+	public Venta(int token, ArrayList<Articulo> arrayArticulos, int numArticulos,int precioTotal, Date fechaVenta) {
 		super();
 		this.token = token;
 		this.arrayArticulos = arrayArticulos;
 		this.numArticulos = numArticulos;
-		this.con = con;
 		this.fechaVenta = fechaVenta;
 		this.precioTotal = precioTotal;
 	}
 
-	public String getToken() {
+	public Venta(int i, ArrayList<Articulo> arrayList, int j, long l) {
+		// TODO Auto-generated constructor stub
+	}
+	
+
+	public Venta() {
+		// TODO Auto-generated constructor stub
+	}
+
+
+	public int getToken() {
 		return token;
 	}
 
-	public void setToken(String token) {
+	public void setToken(int token) {
 		this.token = token;
 	}
 
@@ -62,13 +68,7 @@ public class Venta {
 		this.numArticulos = numArticulos;
 	}
 
-	public Connection getCon() {
-		return con;
-	}
-
-	public void setCon(Connection con) {
-		this.con = con;
-	}
+	
 
 	public Date getFechaVenta() {
 		return fechaVenta;
@@ -87,7 +87,7 @@ public class Venta {
 	}
 
 	public boolean equals(Venta v) {
-		if(v.getToken().contentEquals(token)) {
+		if(v.getToken() == token) {
 			return true;
 		}else {
 			return false;
@@ -95,13 +95,14 @@ public class Venta {
 	}
 
 	public int compareTo(Venta v) {
-		return v.token.compareTo(this.token);
+		return v.token - (this.token);
 	}
 	
 	@Override
 	public String toString() {
-		return "Venta [token=" + token + ", "+ "arrayArticulos=" + arrayArticulos + ", numArticulos="+ numArticulos + ", con=" + con + ", fechaVenta=" + fechaVenta + "]";
+		return "Venta [token=" + token + ", "+ "arrayArticulos=" + arrayArticulos + ", numArticulos="+ numArticulos + ", fechaVenta=" + fechaVenta + "]";
 	}
+	
 	
 	
 	

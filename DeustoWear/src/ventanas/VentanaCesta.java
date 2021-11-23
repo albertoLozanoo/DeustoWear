@@ -9,11 +9,15 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
 import javax.swing.plaf.DimensionUIResource;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.text.html.ImageView;
 
 import clases.Articulo;
 import clases.Usuario;
+import enumeration.Colores;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
@@ -29,6 +33,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 
 import java.awt.EventQueue;
 
@@ -43,8 +50,9 @@ public class VentanaCesta extends JFrame {
 	private JPanel contentPane;
 	private JComboBox<String> comboTalla, comboPrenda;
 	private JFrame ventanaActual,ventanaAnterior;
-	private JButton btnLogo;
-	
+	private JButton btnLogo,btnEliminarArticulo;
+	private JTable tablaArticulos;
+	private DefaultTableModel modeloTablaArticulos = new DefaultTableModel();
 	
 	
 	/**
@@ -163,18 +171,28 @@ public class VentanaCesta extends JFrame {
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new BorderLayout(0, 0));
 		
-		JList listCesta = new JList();
-		panelCentro.add(listCesta, BorderLayout.CENTER);
-		
 		JPanel panelCentroSur = new JPanel();
 		panelCentro.add(panelCentroSur, BorderLayout.SOUTH);
 		panelCentroSur.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
+		JButton btnEliminarCesta = new JButton("Eliminar cesta\r\n");
+		btnEliminarCesta.setBackground(new Color(0, 0, 0));
+		btnEliminarCesta.setFont(new Font("Dialog", Font.PLAIN, 19));
+		btnEliminarCesta.setForeground(Color.WHITE);
+		panelCentroSur.add(btnEliminarCesta);
+		
+		btnEliminarArticulo = new JButton("Eliminar Articulo\r\n");
+		btnEliminarArticulo.setBackground(new Color(200, 0, 30));
+		btnEliminarArticulo.setFont(new Font("Dialog", Font.PLAIN, 19));
+		btnEliminarArticulo.setForeground(Color.WHITE);
+		panelCentroSur.add(btnEliminarArticulo);
+		
 		JButton btnSeguirComprando = new JButton("Seguir comprando\r\n");
-		btnSeguirComprando.setBackground(new Color(255, 140, 0));
+		btnSeguirComprando.setBackground(new Color(10, 100, 255));
 		btnSeguirComprando.setFont(new Font("Dialog", Font.PLAIN, 19));
-		btnSeguirComprando.setForeground(Color.BLACK);
+		btnSeguirComprando.setForeground(Color.WHITE);
 		panelCentroSur.add(btnSeguirComprando);
+		
 		
 		JButton btnPagar = new JButton("Pagar\r\n");
 		btnPagar.setFont(new Font("Dialog", Font.PLAIN, 19));
@@ -182,8 +200,38 @@ public class VentanaCesta extends JFrame {
 		btnCesta.setEnabled(false);
 		panelCentroSur.add(btnPagar);
 		
+		JPanel panelCentroCentro = new JPanel();
+		panelCentro.add(panelCentroCentro, BorderLayout.CENTER);
+		
+
+		
+		String [] header = {"TAG","TALLA", "PRECIO","COLOR", "SEXO"};
+		modeloTablaArticulos.setColumnIdentifiers(header);
+		for(Articulo a : u.getCarrito()) {
+			String dataRow[] = {a.getName(),a.getTalla(),String.valueOf(a.getPrecio()),a.getColor(),a.getSexo()};
+			modeloTablaArticulos.addRow(dataRow);	
+		}
+		
+		tablaArticulos = new JTable(modeloTablaArticulos);
+		JScrollPane scroll =new JScrollPane(tablaArticulos);
+		panelCentroCentro.add(tablaArticulos);
+		
+		
 		
 		/*EVENTOS*/
+		btnEliminarCesta.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				modeloTablaArticulos.setRowCount(0);
+				u.eliminarCarrito(u.getCarrito());
+			}
+		});
+		
+		btnEliminarArticulo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				
+			}
+		});
+		
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				

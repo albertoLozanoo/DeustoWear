@@ -57,7 +57,7 @@ public class panelArticuloHome extends JPanel {
 		lblNombreLoop.setBackground(new Color(255, 255, 255));
 		panelSur.add(lblNombreLoop, "cell 0 0,aligny center");
 		
-		JButton btnFavoritos = new JButton("Corazon");
+		JButton btnFavoritos = new JButton("+Favoritos");
 		btnFavoritos.setBackground(new Color(204, 51, 0));
 		btnFavoritos.setForeground(new Color(255, 255, 255));
 		btnFavoritos.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
@@ -70,7 +70,7 @@ public class panelArticuloHome extends JPanel {
 		
 		JButton btnComprar = new JButton("Comprar");
 		btnComprar.setFont(new Font("Trebuchet MS", Font.PLAIN, 15));
-		btnComprar.setForeground(new Color(255, 255, 255));
+		btnComprar.setForeground(new Color(51, 51, 153));
 		btnComprar.setBackground(new Color(153, 255, 0));
 		panelSur.add(btnComprar, "cell 1 1");
 		

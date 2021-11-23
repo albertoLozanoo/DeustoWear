@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
@@ -164,9 +165,12 @@ public class Usuario {
 	 */
 	public  void eliminarFavorito(int id) {
 		Articulo f = favoritos.remove(id);
-		guardarFavoritosEnFichero();
-									  
 	}
+	
+	public void eliminarCarrito(ArrayList<Articulo> carrito) {
+		carrito.clear();
+	}
+	
 	
 	/**
 	 * Metodo que guarda en un fichero binario los articulos favoritos del usaurio

@@ -169,8 +169,10 @@ public class VentanaHome extends JFrame {
 		panelCentro.setBackground(new Color(255, 153, 51));
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 3, 0, 0));
-		
+	
 		this.cargarPaneles();
+		
+		
 		
 		btnPerfil.addActionListener(new ActionListener() {
 			

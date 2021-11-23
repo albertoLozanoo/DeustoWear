@@ -16,6 +16,7 @@ public class Venta {
 	public static SimpleDateFormat sdf = new SimpleDateFormat("EE, d MM yyyy HH:mm:ss");
 	
 	public Venta() {
+		
 	}
 
 	public Venta(String token, ArrayList<Articulo> arrayArticulos, int numArticulos,int precioTotal, Connection con, Date fechaVenta) {

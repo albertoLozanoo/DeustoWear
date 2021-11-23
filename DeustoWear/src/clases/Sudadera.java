@@ -6,7 +6,7 @@ import enumeration.Sexo;
 import enumeration.Talla;
 
 public class Sudadera extends Articulo {
-	boolean capucha;
+	String capucha;
 	
 	/**
 	 * Constructor por defecto de la clase Sudadera
@@ -26,7 +26,7 @@ public class Sudadera extends Articulo {
 	 * @param capucha Con capucha / Sin capucha
 	 * @param imagen URL img de la sudadera
 	 */
-	public Sudadera(int id,String name, String talla,double precio, String color, String sexo,String imagen,boolean capucha) {
+	public Sudadera(int id,String name, String talla,double precio, String color, String sexo,String imagen,String capucha) {
 		super(id, name,talla, precio, color,sexo,imagen);
 		this.capucha = capucha;
 	}
@@ -39,11 +39,11 @@ public class Sudadera extends Articulo {
 		this.talla = talla;
 	}
 
-	public boolean isCapucha() {
+	public String getCapucha() {
 		return capucha;
 	}
 
-	public void setCapucha(boolean capucha) {
+	public void setCapucha(String capucha) {
 		this.capucha = capucha;
 	}
 	

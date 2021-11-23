@@ -101,6 +101,17 @@ public class VentanaAdmin extends JFrame {
 		btnElimiarArticulo.setFont(new Font("Lato", Font.BOLD, 15));
 		panelDCHsur.add(btnElimiarArticulo);
 		
+		JPanel panelDerechaCentroLista = new JPanel();
+		panelCNTeliminarArticulo.add(panelDerechaCentroLista, BorderLayout.CENTER);
+		panelDerechaCentroLista.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panelTituloListaArticulos = new JPanel();
+		panelDerechaCentroLista.add(panelTituloListaArticulos, BorderLayout.NORTH);
+		
+		JLabel lblListaArticulos = new JLabel("Lista de articulos");
+		lblListaArticulos.setFont(new Font("Lato", Font.BOLD, 23));
+		panelTituloListaArticulos.add(lblListaArticulos);
+		
 		JPanel panelSur = new JPanel();
 		panelSur.setBackground(new Color(0, 153, 204));
 		contentPane.add(panelSur, BorderLayout.SOUTH);

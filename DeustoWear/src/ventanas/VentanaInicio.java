@@ -36,6 +36,8 @@ import com.jgoodies.forms.layout.RowSpec;
 import clases.Articulo;
 import clases.BD;
 import clases.Camiseta;
+import clases.Pantalon;
+import clases.Sudadera;
 import clases.Usuario;
 import enumeration.Sexo;
 import enumeration.Talla;
@@ -96,9 +98,16 @@ public class VentanaInicio extends JFrame {
 	}
 
 	public VentanaInicio() {
+
+		/*Articulo a1 = new Camiseta(111,"camiseta","S",10,"Negro","Hombre","imagenes/camisetas/camiseta1.png");
+		Articulo a2 = new Pantalon(123, "pantalon", "M", 25, "Azul","Mujer","imagenes/pantalones/pantalon1.png","Corto");
+		Articulo a3 = new Sudadera(332,"sudadera","XXL",30,"Rojo","Hombre","imagenes/sudaderas/sudadera1.png","Con Capucha");*/
 		setVisible(true);
 		con = BD.initBD("baseDeDatos.db");
 		BD.crearTablas(con);
+		/*BD.insertarCamisetaBBDD(con, a1);
+		BD.insertarPantalonBBDD(con, a2);
+		BD.insertarSudaderaBBDD(con, a3);*/
 		BD.closeBD(con);
 		ventanaActual = this;
 		tmUsuarios = new TreeMap<>();

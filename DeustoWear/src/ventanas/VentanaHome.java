@@ -53,7 +53,7 @@ public class VentanaHome extends JFrame {
 		
 		ventanaAnterior = va;
 		ventanaActual = this;
-		this.cargarPaneles();
+		
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1046, 593);
@@ -170,6 +170,7 @@ public class VentanaHome extends JFrame {
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 3, 0, 0));
 		
+		this.cargarPaneles();
 		
 		btnPerfil.addActionListener(new ActionListener() {
 			
@@ -224,11 +225,12 @@ public class VentanaHome extends JFrame {
 	}
 	
 	public void cargarPaneles() {
-		Connection con = BD.initBD("baseDeDato.db");
-		TreeMap<String , Articulo> tm = BD.obtenerMapaArticulos(con);
+		Connection con = BD.initBD("baseDeDatos.db");
+		TreeMap<Integer , Articulo> tm = BD.cargarMapaArticulosDeInfoBBDD(con);
 		for(Articulo a: tm.values()) {
 			panelArticuloHome pi = new panelArticuloHome(a);
 			panelCentro.add(pi);
+			panelCentro.updateUI();
 		}
 		BD.closeBD(con);
 	}

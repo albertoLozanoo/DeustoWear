@@ -7,7 +7,7 @@ import enumeration.Talla;
 import enumeration.TipoPantalon;
 
 public class Pantalon extends Articulo{
-	TipoPantalon tipoPantalon;
+	String tipoPantalon;
 	
 	/**
 	 * Constructor por defecto de la clase Pantalon
@@ -29,17 +29,17 @@ public class Pantalon extends Articulo{
 	 */
 	
 
-	public Pantalon(int id, String name,String talla, double precio, String color,String sexo,String imagen,TipoPantalon tipoPantalon) {
+	public Pantalon(int id, String name,String talla, double precio, String color,String sexo,String imagen,String tipoPantalon) {
 		super(id,name,talla,precio,color,sexo,imagen);
 
 		this.tipoPantalon = tipoPantalon;
 	}
 
-	public TipoPantalon getTipoPantalon() {
+	public String getTipoPantalon() {
 		return tipoPantalon;
 	}
 
-	public void setTipoPantalon(TipoPantalon tipoPantalon) {
+	public void setTipoPantalon(String tipoPantalon) {
 		this.tipoPantalon = tipoPantalon;
 	}
 

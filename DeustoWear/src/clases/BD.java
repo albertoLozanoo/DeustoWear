@@ -11,6 +11,7 @@ import java.util.TreeMap;
 import enumeration.Colores;
 import enumeration.Sexo;
 import enumeration.Talla;
+import enumeration.TipoPantalon;
 
 
 public class BD {
@@ -56,7 +57,7 @@ public class BD {
 	 * @param con Conexion
 	 */
 	public static void crearTablas(Connection con) {
-		String sent1 = "CREATE TABLE IF NOT EXISTS Articulos(ID Integer,Name String, Talla String,Precio Double,Color String, Sexo String, Imagen String)";
+		String sent1 = "CREATE TABLE IF NOT EXISTS Articulos(ID Integer,Name String, Talla String,Precio Double,Color String, Sexo String, Imagen String, TipoPantalon String, Capucha String, TipoArticulo String)";
 		String sent2 = "CREATE TABLE IF NOT EXISTS Usuarios(Nick String, Contraseña String, Avatar String)";
 		
 		Statement st = null;
@@ -294,8 +295,8 @@ public class BD {
 	 * @param con Conexion
 	 * @param a Articulo ha introducir en la BBDD
 	 */
-	public static void intertarCamisetaBBDD(Connection con,Articulo a) {
-		String sent = "INSERT INTO Articulos VALUES("+a.getID()+",'"+a.getName()+"','"+a.getTalla()+"',"+a.getPrecio()+",'"+a.getColor()+"','"+a.getSexo()+"','"+a.getImagen()+"')";
+	public static void insertarCamisetaBBDD(Connection con,Articulo a) {
+		String sent = "INSERT INTO Articulos VALUES("+a.getID()+",'"+a.getName()+"','"+a.getTalla()+"',"+a.getPrecio()+",'"+a.getColor()+"','"+a.getSexo()+"','"+a.getImagen()+"','null','null','c')";
 		Statement st = null;
 		
 		try {
@@ -320,6 +321,65 @@ public class BD {
 			}
 		}
 		
+	}
+	
+	public static void insertarPantalonBBDD(Connection con,Articulo a) {
+		if (a instanceof Pantalon) { 
+			String sent = "INSERT INTO Articulos VALUES("+a.getID()+",'"+a.getName()+"','"+a.getTalla()+"',"+a.getPrecio()+",'"+a.getColor()+"','"+a.getSexo()+"','"+a.getImagen()+"','"+((Pantalon) a).getTipoPantalon()+"','null','p')";                             
+			Statement st = null;
+		
+			try {
+				st = con.createStatement();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				st.executeUpdate(sent);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				if(st!=null) {
+					try {
+						st.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		
+		}
+	}
+	
+	public static void insertarSudaderaBBDD(Connection con,Articulo a) {
+		if(a instanceof Sudadera) {
+			String sent = "INSERT INTO Articulos VALUES("+a.getID()+",'"+a.getName()+"','"+a.getTalla()+"',"+a.getPrecio()+",'"+a.getColor()+"','"+a.getSexo()+"','"+a.getImagen()+"','null','"+ ((Sudadera)a).getCapucha()+"','s')";
+			Statement st = null;
+			
+			try {
+				st = con.createStatement();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			try {
+				st.executeUpdate(sent);
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} finally {
+				if(st!=null) {
+					try {
+						st.close();
+					} catch (SQLException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		}	
 	}
 	
 	/**
@@ -375,7 +435,7 @@ public class BD {
 	 * @param con Conexión con la BBDD
 	 * @return TreeMap<String,Usuario> tmUsuario
 	 */
-	public static TreeMap<String, Usuario> obtenerMapaUsuarios(Connection con){
+	public static TreeMap<String, Usuario> cargarMapaUsuariosDeInfoBBDD(Connection con){
 		TreeMap<String, Usuario> tmUsuario = new TreeMap<>();
 		
 		String sentSQL = "SELECT * FROM Usuarios";
@@ -404,58 +464,39 @@ public class BD {
 	 * @param con Conexión con la BBDD
 	 * @return TreeMap<String,Articulo>
 	 */
-	public static TreeMap<String, Articulo> obtenerMapaArticulos(Connection con){
-		TreeMap<String, Articulo> tmArticulo = new TreeMap<>();
+	public static TreeMap<Integer, Articulo> cargarMapaArticulosDeInfoBBDD(Connection con){
+		TreeMap<Integer, Articulo> tmArticulo = new TreeMap<>();
 		
 		String sentSQL = "SELECT * FROM Articulos";
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sentSQL);
 			while(rs.next()) { //Mientras no hayamos llegado al final del conjunto de resultados
-				if (rs instanceof Camiseta) {
-					String ID = rs.getString("ID");
+					
+					int ID = rs.getInt("ID");
 					String name = rs.getString("Name");
 					String talla = rs.getString("Talla");
 					int precio = rs.getInt("Precio");
 					String color = rs.getString("Color");
 					String sexo = rs.getString("Sexo");
 					String imagen = rs.getString("Imagen");
-				
-					//Camiseta c = new Camiseta(ID,name,talla,precio,color,sexo,imagen);
-					//tmArticulo.put(ID, c);		
-				}
-				
-				if(rs instanceof Pantalon) {
-					String ID = rs.getString("ID");
-					String name = rs.getString("Name");
-					String talla = rs.getString("Talla");
-					int precio = rs.getInt("Precio");
-					String color = rs.getString("Color");
-					String sexo = rs.getString("Sexo");
-					String imagen = rs.getString("Imagen");
+					String tipo = rs.getString("TipoArticulo");
 					String tipoPantalon = rs.getString("TipoPantalon");
-				
-					//Pantalon p = new Pantalon(ID,name,talla,precio,color,sexo,imagen,tipoPantalon);
-					//tmArticulo.put(ID, p);		
-				}
-				
-				if(rs instanceof Sudadera) {
-					String ID = rs.getString("ID");
-					String name = rs.getString("Name");
-					String talla = rs.getString("Talla");
-					int precio = rs.getInt("Precio");
-					String color = rs.getString("Color");
-					String sexo = rs.getString("Sexo");
-					String imagen = rs.getString("Imagen");
 					String capucha = rs.getString("Capucha");
-				
-					//Sudadera s = new Sudadera(ID,name,talla,precio,color,sexo,imagen,capucha);
-					//tmArticulo.put(ID, s);	
+					Articulo a = null;
+					if(tipo.equals("c")) 
+						a = new Camiseta(ID, name,talla,precio,color,sexo,imagen);
+					else if(tipo.equals("p"))
+						a = new Pantalon(ID,name,talla,precio,color,sexo,imagen,tipoPantalon);	
+					else if(tipo.equals("s")) {
+						a = new Sudadera(ID,name,talla,precio,color,sexo,imagen,capucha);
+					}
+					tmArticulo.put(ID, a);
+					System.out.println("Articulo "+ name + "anyadido \n");
 				}
-			
-			}
 			rs.close();
 			stmt.close();
+			System.out.println("Articulos cargados con exito.... \n");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

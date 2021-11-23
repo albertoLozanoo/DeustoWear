@@ -10,15 +10,17 @@ import java.io.ObjectOutputStream;
 import java.util.ArrayList;
 import java.util.TreeMap;
 
+
+
 public class Usuario {
 	private static String nick;
 	private static String contraseya;
-	public static ArrayList<Articulo> carrito;
-	public static ArrayList<Articulo> favoritos;
+	public static ArrayList<Articulo> carrito = new ArrayList<>();
+	public static ArrayList<Articulo> favoritos = new ArrayList<>();
 	public static String avatar;
 	
 	
-	public static Venta ventaActual;
+	public static Venta ventaActual = new Venta();
 	public static TreeMap<String, Venta> tmVentasUsuario;
 
 
@@ -43,7 +45,7 @@ public class Usuario {
 		this.contraseya = contrseya;
 		this.avatar = avatar;
 	}
-	public static String getNick() {
+	public static  String getNick() {
 		return nick;
 	}
 
@@ -51,7 +53,7 @@ public class Usuario {
 		this.nick = nick;
 	}
 
-	public static String getContraseya() {
+	public  String getContraseya() {
 		return contraseya;
 	}
 
@@ -59,45 +61,45 @@ public class Usuario {
 		this.contraseya = contraseya;
 	}
 
-	public static ArrayList<Articulo> getCarrito() {
+	public  ArrayList<Articulo> getCarrito() {
 		return carrito;
 	}
 
-	public static void setCarrito(ArrayList<Articulo> carrito) {
+	public  void setCarrito(ArrayList<Articulo> carrito) {
 		Usuario.carrito = carrito;
 	}
 	
 
-	public static String getLogoAvatar() {
+	public  String getLogoAvatar() {
 		return avatar;
 	}
 
-	public static void setLogoAvatar(String logoAvatar) {
+	public  void setLogoAvatar(String logoAvatar) {
 		Usuario.avatar = logoAvatar;
 	}
 	
-	public static String getAvatar() {
+	public  String getAvatar() {
 		return avatar;
 	}
 
-	public static void setAvatar(String avatar) {
+	public  void setAvatar(String avatar) {
 		Usuario.avatar = avatar;
 	}
 
-	public static TreeMap<String, Venta> getTmVentasUsuario() {
+	public  TreeMap<String, Venta> getTmVentasUsuario() {
 		return tmVentasUsuario;
 	}
 
-	public static void setTmVentasUsuario(TreeMap<String, Venta> tmVentasUsuario) {
+	public  void setTmVentasUsuario(TreeMap<String, Venta> tmVentasUsuario) {
 		Usuario.tmVentasUsuario = tmVentasUsuario;
 	}
 	
 	
-	public static Venta getVentaActual() {
+	public  Venta getVentaActual() {
 		return ventaActual;
 	}
 
-	public static void setVentaActual(Venta ventaActual) {
+	public  void setVentaActual(Venta ventaActual) {
 		Usuario.ventaActual = ventaActual;
 	}
 
@@ -113,11 +115,11 @@ public class Usuario {
 		return u.nick.compareTo(this.nick);
 	}
 	
-	public static ArrayList<Articulo> getFavoritos() {
+	public static  ArrayList<Articulo> getFavoritos() {
 		return favoritos;
 	}
 
-	public static void setFavoritos(ArrayList<Articulo> favoritos) {
+	public  void setFavoritos(ArrayList<Articulo> favoritos) {
 		Usuario.favoritos = favoritos;
 	}
 
@@ -134,24 +136,25 @@ public class Usuario {
 	 * Metodo que devuelve el numero de articulos favortios que tiene el usuario
 	 * @return
 	 */
-	public static int getNumFavoritos() {
+	public  int getNumFavoritos() {
 		return favoritos.size();
 	}
 	
 	/**
 	 * Metodo que añade un articulo a favoritos
-	 * @param f Articulo a añadir 
+	 * @param a Articulo a añadir 
 	 * @return devuelve true si lo puede añaadir, false en caso contrario
 	 */
-	public static boolean addFavorito(Articulo f) {
-		boolean repetido;
-		
-		repetido = favoritos.contains(f.getID());
-		if(repetido==false) {
-			favoritos.add(f);
-			guardarFavoritosEnFichero();
+	public static void addFavorito(Articulo a) {
+		if( a !=null && !favoritos.contains(a)) {
+			favoritos.add(a);
 		}
-		return repetido;
+	}
+	
+	public static void addCarrito(Articulo a) {
+		if( a !=null) {
+			carrito.add(a);
+		}
 	}
 
 	
@@ -159,7 +162,7 @@ public class Usuario {
 	 * Metodo que elimina un aritculo del array de favoritos del usuario
 	 * @param id del articulo a eliminar
 	 */
-	public static void eliminarFavorito(int id) {
+	public  void eliminarFavorito(int id) {
 		Articulo f = favoritos.remove(id);
 		guardarFavoritosEnFichero();
 									  

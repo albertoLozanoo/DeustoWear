@@ -252,7 +252,7 @@ public class VentanaRegistroo extends JFrame {
 						BD.closeBD(con2);
 						
 						try {
-							Handler handler = new FileHandler("LogUserRegistered");
+							Handler handler = new FileHandler("loggers/LogUserRegistered");
 							handler.setFormatter(new SimpleFormatter());
 							log.addHandler(handler);
 							log.log(Level.INFO, "Se ha añadido un usuario");

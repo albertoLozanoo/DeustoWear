@@ -39,6 +39,7 @@ public class Pantalon extends Articulo{
 		return tipoPantalon;
 	}
 
+	
 	public void setTipoPantalon(String tipoPantalon) {
 		this.tipoPantalon = tipoPantalon;
 	}

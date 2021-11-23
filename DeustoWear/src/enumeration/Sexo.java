@@ -6,3 +6,4 @@ package enumeration;
  *
  */
 public enum Sexo {HOMBRE, MUJER}
+

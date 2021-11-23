@@ -438,7 +438,7 @@ public class BD {
 	public static TreeMap<String, Usuario> cargarMapaUsuariosDeInfoBBDD(Connection con){
 		TreeMap<String, Usuario> tmUsuario = new TreeMap<>();
 		
-		String sentSQL = "SELECT * FROM Usuarios";
+		String sentSQL = "SELECT Nick,Contraseña FROM Usuarios";
 		try {
 			Statement stmt = con.createStatement();
 			ResultSet rs = stmt.executeQuery(sentSQL);

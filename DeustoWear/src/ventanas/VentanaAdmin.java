@@ -8,14 +8,18 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import clases.Articulo;
 import clases.Usuario;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
+import javax.swing.JList;
+
 import java.awt.Font;
 import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
@@ -25,6 +29,10 @@ public class VentanaAdmin extends JFrame {
 	private JPanel contentPane;
 	public Connection con;
 	public JFrame ventanaAnterior,ventanaActual;
+	private JList<Articulo> listaArticulos;
+	private DefaultListModel<Articulo> modeloListaArticulos;
+	
+	
 	/**
 	 * Create the frame.
 	 */
@@ -121,6 +129,14 @@ public class VentanaAdmin extends JFrame {
 		btnInicio.setBackground(new Color(255, 153, 0));
 		panelSur.add(btnInicio);
 		
+		modeloListaArticulos = new DefaultListModel<>();
+		listaArticulos = new JList<>(modeloListaArticulos);
+		
+		/*for(Integer clave : VentanaInicio.tmArticulos.keySet()) {
+			for(Articulo valor : VentanaInicio.tmArticulos.get()) {
+				modeloListaArticulos.addElement(valor);
+			}
+		}*/
 		
 		/**EVENTOS*/
 		btnInicio.addActionListener(new ActionListener() {

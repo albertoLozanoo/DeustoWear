@@ -21,9 +21,14 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
+import java.lang.System.Logger;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.SimpleFormatter;
 
 import javax.swing.JTextPane;
 import java.awt.Font;
@@ -50,6 +55,12 @@ import javax.swing.GroupLayout;
 import javax.swing.ImageIcon;
 import javax.swing.GroupLayout.Alignment;
 
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+
+import java.util.logging.SimpleFormatter;
+
 public class VentanaInicio extends JFrame {
 
 	private JPanel contentPane,panelCentro,panelNorte,panelSur;
@@ -57,6 +68,7 @@ public class VentanaInicio extends JFrame {
 	private JButton btnIniciarSesion,btnRegistrarse;
 	private JFrame ventanaActual;
 	public static Connection con;
+	
 	
 	public static TreeMap<String, Usuario> tmUsuarios;
 	public static TreeMap<Integer,Articulo> tmArticulos;
@@ -80,6 +92,7 @@ public class VentanaInicio extends JFrame {
 	private JPanel panelCentroInsideIzquierda;
 	private JButton btnLogo;
 	
+	//private static Logger log; 
 
 	/**
 	 * Launch the application.
@@ -98,17 +111,19 @@ public class VentanaInicio extends JFrame {
 	}
 
 	public VentanaInicio() {
-
+		
 		/*Articulo a1 = new Camiseta(111,"camiseta","S",10,"Negro","Hombre","imagenes/camisetas/camiseta1.png");
 		Articulo a2 = new Pantalon(123, "pantalon", "M", 25, "Azul","Mujer","imagenes/pantalones/pantalon1.png","Corto");
 		Articulo a3 = new Sudadera(332,"sudadera","XXL",30,"Rojo","Hombre","imagenes/sudaderas/sudadera1.png","Con Capucha");*/
 		setVisible(true);
 		con = BD.initBD("baseDeDatos.db");
 		BD.crearTablas(con);
+		BD.cargarMapaUsuariosDeInfoBBDD(con);
 		/*BD.insertarCamisetaBBDD(con, a1);
 		BD.insertarPantalonBBDD(con, a2);
 		BD.insertarSudaderaBBDD(con, a3);*/
 		BD.closeBD(con);
+		
 		ventanaActual = this;
 		tmUsuarios = new TreeMap<>();
 		tmArticulos = new TreeMap<>();
@@ -189,7 +204,7 @@ public class VentanaInicio extends JFrame {
 		panelCentroInside.add(txtNick, "cell 0 5,alignx center,aligny center");
 		txtNick.setColumns(25);
 		
-		lblContraseya = new JLabel("Contrase\u00F1a :");
+		lblContraseya = new JLabel("Contraseya :");
 		lblContraseya.setBackground(new Color(240, 240, 240));
 		lblContraseya.setForeground(new Color(0, 0, 153));
 		lblContraseya.setFont(new Font("Lato", Font.BOLD, 31));
@@ -253,6 +268,10 @@ public class VentanaInicio extends JFrame {
 		lblRegistrarEsGratis.setFont(new Font("Lato", Font.BOLD | Font.ITALIC, 15));
 		panelNorte.add(lblRegistrarEsGratis, "cell 0 2,aligny top");
 		
+		txtNick.setForeground(new Color(255,255,255));
+		txtContraseya.setForeground(new Color(255,255,255));
+		
+		
 		/*EVENTOS*/
 		
 		/**
@@ -294,9 +313,14 @@ public class VentanaInicio extends JFrame {
 						if((resul == 2) && (!nick.equals("admin") && !c.equals("admin"))){
 							JOptionPane.showMessageDialog(null, "Cargando WearHome, bienvenid@ "+ nick,"WELCOME", JOptionPane.INFORMATION_MESSAGE);
 							Usuario u = new Usuario(nick,c);
+							u.cargarFavoritosDelFichero();
 							new VentanaHome(ventanaActual, u);
 							ventanaActual.dispose();
 						}else if(nick.equals("admin") && c.equals("admin")){
+							/*Handler handler = new FileHandler("loggers/LogUserLoggin");
+							handler.setFormatter(new SimpleFormatter());
+							log.addHandler(handler);
+							log.log(Level.INFO, "Se ha loggeado el usuario" + nick + "\nHora: " + System.currentTimeMillis());*/
 							JOptionPane.showMessageDialog(null, "Cargando WearHome VISUAL admin web","WELCOME", JOptionPane.INFORMATION_MESSAGE);
 							Usuario admin = new Usuario("admin","admin");
 							new VentanaAdmin(ventanaActual, admin);

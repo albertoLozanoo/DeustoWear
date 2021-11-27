@@ -42,12 +42,9 @@ public class VentanaPerfil extends JFrame {
 	public static String nombreBD = "baseDeDatos.db";
 	private JFrame ventanaActual, ventanaAnterior;
 	private JLabel lblnumPedidos;
-	private DefaultListModel<String> modeloListVentasUsuario;
-	private JList<String> listaVentasUsuario;
+	private DefaultListModel<Venta> modeloListVentasUsuario;
+	private JList<Venta> listaVentasUsuario;
 	private JScrollPane scrollListaVentas;
-	
-	
-	public Usuario u;
 
 	/**
 	 * Create the frame.
@@ -55,6 +52,7 @@ public class VentanaPerfil extends JFrame {
 	 */
 	
 	public VentanaPerfil(JFrame va, Usuario u) {
+		
 		//cargarTMventasUsuarioAJlist();
 		System.out.println("Este es el logo " + u.getLogoAvatar());
 		System.out.println(u.getContraseya());
@@ -170,11 +168,19 @@ public class VentanaPerfil extends JFrame {
 		lblnumPedidos.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblnumPedidos, "cell 0 1,alignx center,aligny center");
 		
+		modeloListVentasUsuario = new DefaultListModel<>();
+		listaVentasUsuario = new JList<Venta>(modeloListVentasUsuario);
+		scrollListaVentas = new JScrollPane(listaVentasUsuario);
+		panel.add(listaVentasUsuario, "cell 0 2");
 		
-		JList list = new JList();
-		panel.add(list, "cell 0 2,grow");
+		for(int clave : u.getHmVentasUsuario().keySet()) {
+			Venta valor = u.getHmVentasUsuario().get(clave);
+			modeloListVentasUsuario.addElement(valor);
+			
+		}
 		
 		
+		/*EVENTOS*/
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String contra = JOptionPane.showInputDialog("Introduzca la nueva contraseña:");
@@ -220,15 +226,8 @@ public class VentanaPerfil extends JFrame {
 			}
 		});
 		
-		
 	}
 	
-	private void cargarTMventasUsuarioAJlist(){
-		for(int clave : u.tmVentasUsuario.keySet() ) {
-			String venta = u.tmVentasUsuario.get(clave).toString();
-			modeloListVentasUsuario.addElement(venta);
-		}
-	}
 }
 
 

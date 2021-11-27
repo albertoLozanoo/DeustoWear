@@ -17,6 +17,7 @@ import javax.swing.text.html.ImageView;
 
 import clases.Articulo;
 import clases.Usuario;
+import clases.Venta;
 import enumeration.Colores;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.JTextField;
@@ -31,6 +32,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Random;
 
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
@@ -261,9 +263,22 @@ public class VentanaCesta extends JFrame {
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				u.comprar();
+				
+				/*for(Articulo a : u.getCarrito()) {
+					precioTotal = precioTotal + a.getPrecio();
+				}
+				int token = (int)(Math.random()*100);
+				Venta v = new Venta(token,u.getCarrito(),u.getCarrito().size(),(int)precioTotal , System.currentTimeMillis());
+				
+				for(int clave: u.getTmVentasUsuario().keySet()) {
+					if(!u.getTmVentasUsuario().containsKey(clave)) {
+						u.getTmVentasUsuario().put(clave, v);
+						u.numVentas = u.numVentas + 1;
+						System.out.println(u.numVentas + ": ventas realizadas " + u.getNick());
+					}
+				}*/
+				
 				JOptionPane.showMessageDialog(null, "Compra registrada con exito " + u.getNick() + "\n gracias por tu visita te dejamos con tus \n articulos favoritos","¡¡GRACIAS!!", JOptionPane.INFORMATION_MESSAGE);
-				ventanaActual.dispose();
-				new VentanaFavoritos(va, u);
 				
 				precioTotal = 0.0;
 				
@@ -271,6 +286,9 @@ public class VentanaCesta extends JFrame {
 				u.eliminarCarrito(u.getCarrito());
 				lblPrecioTotal.setForeground(new Color(240,240,240));
 				lblPrecioTotalInput.setForeground(new Color(240,240,240));
+				
+				ventanaActual.dispose();
+				new VentanaFavoritos(va, u);
 			}
 		});
 		

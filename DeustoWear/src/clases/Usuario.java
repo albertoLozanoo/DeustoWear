@@ -11,6 +11,7 @@ import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 
@@ -21,10 +22,10 @@ public class Usuario {
 	public static ArrayList<Articulo> carrito = new ArrayList<>();
 	public static ArrayList<Articulo> favoritos = new ArrayList<>();
 	public static String avatar;
-	
+	public static int numVentas;
 	
 	public static Venta ventaActual = new Venta();
-	public static TreeMap<Integer, Venta> tmVentasUsuario = new TreeMap<>();
+	public static HashMap<Integer, Venta> hmVentasUsuario = new HashMap<>();
 
 
 	/**
@@ -89,12 +90,12 @@ public class Usuario {
 		Usuario.avatar = avatar;
 	}
 
-	public  TreeMap<Integer, Venta> getTmVentasUsuario() {
-		return tmVentasUsuario;
+	public  HashMap<Integer, Venta> getHmVentasUsuario() {
+		return hmVentasUsuario;
 	}
 
-	public  void setTmVentasUsuario(TreeMap<Integer, Venta> tmVentasUsuario) {
-		Usuario.tmVentasUsuario = tmVentasUsuario;
+	public  void setHmVentasUsuario(HashMap<Integer, Venta> tmVentasUsuario) {
+		Usuario.hmVentasUsuario = hmVentasUsuario;
 	}
 	
 	
@@ -237,18 +238,33 @@ public class Usuario {
 		}
 	}
 	
-	public static void comprar() {
+	/*public static void comprar() {
 		Double precioTotal = Usuario.sumaTotalAPagar();
 		
 		ventaActual = new Venta(ventaActual.getToken(),Usuario.getCarrito(),Usuario.getCarrito().size(),System.currentTimeMillis());
 		Usuario.tmVentasUsuario.put(ventaActual.getToken(), ventaActual);
 		System.out.println(ventaActual);
 		System.out.println("Venta Registrada con Exito " + Usuario.getNick());
-	}
+	}*/
 
+	public static void comprar() {
+		double precioTotal = 0;
+		for(Articulo a : carrito) {
+			precioTotal = precioTotal + a.getPrecio();
+		}
+		int token = (int)(Math.random()*100);
+		Venta v = new Venta(token,carrito,carrito.size(),(int)precioTotal , System.currentTimeMillis());
+		
+		hmVentasUsuario.put(token, v);
+		numVentas = numVentas + 1;
+		System.out.println(v);
+		System.out.println(numVentas + ": ventas realizadas " + getNick());
+	}
 	
-	
-	
-	
-	
+	public static void recorrerHashVentas() {
+		for(int clave : hmVentasUsuario.keySet()) {
+			Venta valor = hmVentasUsuario.get(clave);
+		}
+	}
 }
+	

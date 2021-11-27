@@ -11,12 +11,11 @@ public class Venta {
 	private ArrayList<Articulo> arrayArticulos;
 	private int numArticulos;
 	private double precioTotal;
-
-	private Date fechaVenta;
-	public static SimpleDateFormat sdf = new SimpleDateFormat("EE, d MM yyyy HH:mm:ss");
+	private long fechaVenta;
 	
 	
-	public Venta(int token, ArrayList<Articulo> arrayArticulos, int numArticulos,int precioTotal, Date fechaVenta) {
+	
+	public Venta(int token, ArrayList<Articulo> arrayArticulos, int numArticulos,int precioTotal, long fechaVenta) {
 		super();
 		this.token = token;
 		this.arrayArticulos = arrayArticulos;
@@ -70,11 +69,11 @@ public class Venta {
 
 	
 
-	public Date getFechaVenta() {
+	public long getFechaVenta() {
 		return fechaVenta;
 	}
 
-	public void setFechaVenta(Date fechaVenta) {
+	public void setFechaVenta(long fechaVenta) {
 		this.fechaVenta = fechaVenta;
 	}
 	
@@ -100,7 +99,7 @@ public class Venta {
 	
 	@Override
 	public String toString() {
-		return "Venta [token=" + token + ", "+ "arrayArticulos=" + arrayArticulos + ", numArticulos="+ numArticulos + ", fechaVenta=" + fechaVenta + "]";
+		return "Venta [token=" + token + ", numArticulos="+ numArticulos + ", fechaVenta=" + fechaVenta + "]";
 	}
 	
 	

@@ -13,6 +13,12 @@ public class Venta {
 	private double precioTotal;
 	private long fechaVenta;
 	
+	//FORMATO DE FECHAS!!!!!!!!!!!!!!!!!!!!!!!!!
+	/*private static SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yy HH:mm:ss" );
+	@Override
+	public String toString() {
+		return id + "\t" + producto.getId() + "\t" + sdf.format( new Date( fecha ) ) + "\t" + cantidad + " unidades";
+	}*/
 	
 	
 	public Venta(int token, ArrayList<Articulo> arrayArticulos, int numArticulos,int precioTotal, long fechaVenta) {

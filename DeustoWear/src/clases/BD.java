@@ -7,6 +7,11 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.TreeMap;
+import java.util.logging.FileHandler;
+import java.util.logging.Handler;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import java.util.logging.SimpleFormatter;
 
 import enumeration.Colores;
 import enumeration.Sexo;
@@ -16,23 +21,27 @@ import enumeration.TipoPantalon;
 
 public class BD {
 	
+	private static Logger logger = Logger.getLogger( "BaseDatos" );
+	
 	/**
 	 * Crea la conexion con la BBDD
 	 * @param baseDeDatos
 	 * @return deuvelve la cionexion si ha sido exitosa la comunicacion
+	 * @throws DeustoException 
 	 */
-	public static Connection initBD(String baseDeDatos) {
+	public static Connection initBD(String nomBD) throws DeustoException {
 		Connection con = null;
 		
 		try {
+			logger.log( Level.INFO, "Carga de libreria org.sqlite.JDBC" );
 			Class.forName("org.sqlite.JDBC");
+			logger.log( Level.INFO, "Abriendo conexion con " + nomBD );
 			con = DriverManager.getConnection("jdbc:sqlite:baseDeDatos");
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! LOADING DRIVER");
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
 		}
 		return con;
 	}
@@ -40,14 +49,16 @@ public class BD {
 	/**
 	 * Cierra la BBDD
 	 * @param con Conexion
+	 * @throws DeustoException 
 	 */
-	public static void closeBD(Connection con) {
+	public static void closeBD(Connection con) throws DeustoException {
 		if(con!=null) {
 			try {
 				con.close();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log( Level.INFO, "Cerrando conexion" );
+			} catch (Exception e) {
+				logger.log( Level.SEVERE, "Excepcion", e );
+				throw new DeustoException("ERROR! CONNECTION BBDD FAILED");
 			}
 		}
 	}
@@ -55,8 +66,9 @@ public class BD {
 	/**
 	 * Metodo que crea las tablas necesarias en la BBDD
 	 * @param con Conexion
+	 * @throws DeustoException 
 	 */
-	public static void crearTablas(Connection con) {
+	public static void crearTablas(Connection con) throws DeustoException {
 		String sent1 = "CREATE TABLE IF NOT EXISTS Articulos(ID Integer,Name String, Talla String,Precio Double,Color String, Sexo String, Imagen String, TipoPantalon String, Capucha String, TipoArticulo String)";
 		String sent2 = "CREATE TABLE IF NOT EXISTS Usuarios(Nick String, Contraseña String, Avatar String)";
 		
@@ -64,18 +76,20 @@ public class BD {
 		
 		try {
 			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + sent1 );
 			st.executeUpdate(sent1);
+			logger.log( Level.INFO, "Statement: " + sent2 );
 			st.executeUpdate(sent2);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! CREATION TABLES FAILED");
 		} finally {
 			if(st!=null) {
 				try {
 					st.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
 				}
 			}
 		}
@@ -89,14 +103,16 @@ public class BD {
 	 * 		
 	 * 		1. Si el nick ya esta regitrado y se debra escoger otro nick
 	 * 		0. Si el nick no esta en la BBDD
+	 * @throws DeustoException 
 	 */
-	public static int estaRegistrado(Connection con, String nick) {
+	public static int estaRegistrado(Connection con, String nick) throws DeustoException {
 		String sentencia = "SELECT Nick FROM Usuarios WHERE Nick ='" + nick + "'";
 		Statement st = null;
 		int resul = 0;
 		
 		try {
 			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
 			ResultSet rs = st.executeQuery(sentencia);
 			if(rs.next()) {
 				if(rs.getString("Nick").equals(nick));
@@ -105,23 +121,20 @@ public class BD {
 				resul = 0;
 			}
 			rs.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
 		} finally {
 			if(st!=null) {
 				try {
 					st.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
 				}
 			}
 		}
-		
-		
 		return resul;
-		
 	}
 	/**
 	 * Método que recibe los datos de un Usuario y comprueba que está registrado en la BBDD
@@ -130,13 +143,15 @@ public class BD {
 	 * @return 0 si el usuario no está registrado
 	 * 		   1 si el usuario está registrado pero la contraseña no es correcta
 	 * 		   2 si el usuario está registrado y la contraseña es correcta
+	 * @throws DeustoException 
 	 */
-	public static int obtenerUsuario(Connection con, String nick, String c) {
+	public static int obtenerUsuario(Connection con, String nick, String c) throws DeustoException {
 		String sentencia = "SELECT Contraseña FROM Usuarios WHERE 	Nick ='"+nick+"'";
 		Statement st = null;
 		int resul=0;
 		try {
 			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
 			ResultSet rs = st.executeQuery(sentencia);
 			if(rs.next()) { //Hemos encontrado una tupla que cumple la condición
 				if(rs.getString("Contraseña").equals(c)) {
@@ -148,16 +163,16 @@ public class BD {
 				resul = 0;
 			}
 			rs.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
 		} finally {
 			if(st!=null) {
 				try {
 					st.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
 				}
 			}
 		}
@@ -171,13 +186,15 @@ public class BD {
 	 * @return 0 si el Articulo no está registrado
 	 * 		   1 si el Articulo está registrado pero la contraseña no es correcta
 	 * 		   2 si el usuario está registrado y la contraseña es correcta
+	 * @throws DeustoException 
 	 */
-	public static int obtenerArticulo(Connection con, int ID, String name) {
+	public static int obtenerArticulo(Connection con, int ID, String name) throws DeustoException {
 		String sentencia = "SELECT ID FROM Articulos WHERE 	Name ='"+name+"'";
 		Statement st = null;
 		int resul=0;
 		try {
 			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
 			ResultSet rs = st.executeQuery(sentencia);
 			if(rs.next()) { //Hemos encontrado una tupla que cumple la condición
 				if(rs.getString("ID").equals(ID)) {
@@ -189,16 +206,16 @@ public class BD {
 				resul = 0;
 			}
 			rs.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
 		} finally {
 			if(st!=null) {
 				try {
 					st.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
 				}
 			}
 		}
@@ -209,51 +226,54 @@ public class BD {
 	 * Metodo que introduce un Usuario pasado por parametro en la tabla de Usuarios de la BBDD
 	 * @param con Conexion
 	 * @param u Usuario ha introducir
+	 * @throws DeustoException 
 	 */
 	
-	public static void intertarUsuarioBBDD(Connection con,Usuario u) {
+	public static void intertarUsuarioBBDD(Connection con,Usuario u) throws DeustoException {
 		String sent = "INSERT INTO Usuarios VALUES('"+u.getNick()+"','"+u.getContraseya()+"','"+u.getLogoAvatar()+"')";
 		Statement st = null;
 		
 		try {
 			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
 			st.executeUpdate(sent);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
 		} finally {
 			if(st!=null) {
 				try {
 					st.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
 				}
 			}
 		}
 	}
 	
-	public static String conseguirAvatar(Connection con,String nick) {
+	public static String conseguirAvatar(Connection con,String nick) throws DeustoException {
 		String sent = "SELECT Avatar FROM Usuarios WHERE Nick ='"+nick+"'";
 		Statement st = null;
 		try {
 			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
 			ResultSet rs = st.executeQuery(sent);
 			if(rs.next()) { //Hemos encontrado una tupla que cumple la condición
 				String avatar = rs.getString("Avatar");
 				rs.close();
 				return avatar;
 			}
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
 		} finally {
 			if(st!=null) {
 				try {
 					st.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
 				}
 			}
 		}
@@ -264,26 +284,28 @@ public class BD {
 	 * @param con Conexion
 	 * @param nick El nick del usuario al que le vamos a cambiar la contraseña
 	 * @param c La nueva contraseña
+	 * @throws DeustoException 
 	 */
 	
-	public static void cambiarContrasenya(Connection con, String nick, String c) {
+	public static void cambiarContrasenya(Connection con, String nick, String c) throws DeustoException {
 		
 		String sent = "UPDATE Usuarios SET Contraseña = '"+c+"' WHERE Nick = '"+nick+"'";
 		Statement st = null;
 		
 		try {
 			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
 			st.executeUpdate(sent);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
 		} finally {
 			if(st!=null) {
 				try {
 					st.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
 				}
 			}
 		}
@@ -294,58 +316,59 @@ public class BD {
 	 * Metodo que inserta un articulo pasado por parametro en la tabla de Articulos de la BBDD
 	 * @param con Conexion
 	 * @param a Articulo ha introducir en la BBDD
+	 * @throws DeustoException 
 	 */
-	public static void insertarCamisetaBBDD(Connection con,Articulo a) {
+	public static void insertarCamisetaBBDD(Connection con,Articulo a) throws DeustoException {
 		String sent = "INSERT INTO Articulos VALUES("+a.getID()+",'"+a.getName()+"','"+a.getTalla()+"',"+a.getPrecio()+",'"+a.getColor()+"','"+a.getSexo()+"','"+a.getImagen()+"','null','null','c')";
 		Statement st = null;
 		
 		try {
 			st = con.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log( Level.INFO, "Statement: " + st );
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
 		}
 		try {
 			st.executeUpdate(sent);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
 		} finally {
 			if(st!=null) {
 				try {
 					st.close();
-				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
 				}
 			}
 		}
 		
 	}
 	
-	public static void insertarPantalonBBDD(Connection con,Articulo a) {
+	public static void insertarPantalonBBDD(Connection con,Articulo a) throws DeustoException {
 		if (a instanceof Pantalon) { 
 			String sent = "INSERT INTO Articulos VALUES("+a.getID()+",'"+a.getName()+"','"+a.getTalla()+"',"+a.getPrecio()+",'"+a.getColor()+"','"+a.getSexo()+"','"+a.getImagen()+"','"+((Pantalon) a).getTipoPantalon()+"','null','p')";                             
 			Statement st = null;
 		
 			try {
 				st = con.createStatement();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log( Level.INFO, "Statement: " + st );
+			} catch (Exception e) {
+				logger.log( Level.SEVERE, "Excepcion", e );
 			}
 			try {
 				st.executeUpdate(sent);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				logger.log( Level.SEVERE, "Excepcion", e );
+				throw new DeustoException("ERROR! STATEMENT FAILED");
 			} finally {
 				if(st!=null) {
 					try {
 						st.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					} catch (Exception e) {
+						logger.log( Level.SEVERE, "Excepcion", e );
+						throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
 					}
 				}
 			}
@@ -353,29 +376,29 @@ public class BD {
 		}
 	}
 	
-	public static void insertarSudaderaBBDD(Connection con,Articulo a) {
+	public static void insertarSudaderaBBDD(Connection con,Articulo a) throws DeustoException {
 		if(a instanceof Sudadera) {
 			String sent = "INSERT INTO Articulos VALUES("+a.getID()+",'"+a.getName()+"','"+a.getTalla()+"',"+a.getPrecio()+",'"+a.getColor()+"','"+a.getSexo()+"','"+a.getImagen()+"','null','"+ ((Sudadera)a).getCapucha()+"','s')";
 			Statement st = null;
 			
 			try {
 				st = con.createStatement();
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				logger.log( Level.INFO, "Statement: " + st );
+			} catch (Exception e) {
+				logger.log( Level.SEVERE, "Excepcion", e );
 			}
 			try {
 				st.executeUpdate(sent);
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				logger.log( Level.SEVERE, "Excepcion", e );
+				throw new DeustoException("ERROR! STATEMENT FAILED");
 			} finally {
 				if(st!=null) {
 					try {
 						st.close();
-					} catch (SQLException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					} catch (Exception e) {
+						logger.log( Level.SEVERE, "Excepcion", e );
+						throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
 					}
 				}
 			}
@@ -386,63 +409,89 @@ public class BD {
 	 * Metodo que elimina a un usurio pasado por parametro de la tabla de Usuarios de la BBDD 
 	 * @param con Conexion
 	 * @param nick Nombre del usuario a eliminar 
+	 * @throws DeustoException 
 	 */
 	
-	public static void eliminarUsuarioBBDD(Connection con,String nick){
+	public static void eliminarUsuarioBBDD(Connection con,String nick) throws DeustoException{
 		String sent ="DELETE FROM Usuarios WHERE nick='"+nick+"'";
 		Statement st = null;
 		
 		try {
 			st = con.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log( Level.INFO, "Statement: " + st );
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
 		}
 		try {
 			st.executeUpdate(sent);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
 		}
-	}
+	}	
+	
 	
 	/**
 	 * Metodo que elimina un Articulo pasado por paremtro de la tabla de Articulos de la BBDD
 	 * @param con Conexion
 	 * @param ID ID del articulo a eliminar 
+	 * @throws DeustoException 
 	 */
 	
-	public static void eliminarArticuloBBDD(Connection con,int ID){
+	public static void eliminarArticuloBBDD(Connection con,int ID) throws DeustoException{
 		String sent ="DELETE FROM Articulos WHERE ID='"+ID+"'";
 		Statement st = null;
 		
 		try {
 			st = con.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			logger.log( Level.INFO, "Statement: " + st );
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! CREATION STATEMENT FAILED");
 		}
 		try {
 			st.executeUpdate(sent);
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
 		}
-	}
+	}	
+	
 	
 	/**
 	 * Método que obtiene un mapa con los Usuarios de la BBDD
 	 * @param con Conexión con la BBDD
 	 * @return TreeMap<String,Usuario> tmUsuario
+	 * @throws DeustoException 
 	 */
-	public static TreeMap<String, Usuario> cargarMapaUsuariosDeInfoBBDD(Connection con){
+	public static TreeMap<String, Usuario> cargarMapaUsuariosDeInfoBBDD(Connection con) throws DeustoException{
 		TreeMap<String, Usuario> tmUsuario = new TreeMap<>();
+		Statement stmt = null;
 		
 		String sentSQL = "SELECT Nick,Contraseña FROM Usuarios";
 		try {
-			Statement stmt = con.createStatement();
+			stmt = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + stmt );
 			ResultSet rs = stmt.executeQuery(sentSQL);
-			while(rs.next()) { //Mientras no hayamos llegado al final del conjunto de resultados
+			while(rs.next()) { 
 				String nick = rs.getString("Nick");
 				String contraseya = rs.getString("Contraseña");
 				Usuario u = new Usuario(nick,contraseya);
@@ -450,11 +499,19 @@ public class BD {
 			}
 			rs.close();
 			stmt.close();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		} finally {
+			if(stmt!=null) {
+				try {
+					stmt.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
 		}
-		
 		return tmUsuario;
 	}
 	
@@ -463,15 +520,18 @@ public class BD {
 	 * Método que obtiene un mapa con los Articulos de la BBDD
 	 * @param con Conexión con la BBDD
 	 * @return TreeMap<String,Articulo>
+	 * @throws DeustoException 
 	 */
-	public static TreeMap<Integer, Articulo> cargarMapaArticulosDeInfoBBDD(Connection con){
+	public static TreeMap<Integer, Articulo> cargarMapaArticulosDeInfoBBDD(Connection con) throws DeustoException{
 		TreeMap<Integer, Articulo> tmArticulo = new TreeMap<>();
+		Statement stmt = null;
 		
 		String sentSQL = "SELECT * FROM Articulos";
 		try {
-			Statement stmt = con.createStatement();
+			stmt = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + stmt );
 			ResultSet rs = stmt.executeQuery(sentSQL);
-			while(rs.next()) { //Mientras no hayamos llegado al final del conjunto de resultados
+			while(rs.next()) { 
 					
 					int ID = rs.getInt("ID");
 					String name = rs.getString("Name");
@@ -484,33 +544,43 @@ public class BD {
 					String tipoPantalon = rs.getString("TipoPantalon");
 					String capucha = rs.getString("Capucha");
 					Articulo a = null;
-					if(tipo.equals("c")) 
+					if(tipo.equals("c")) {
 						a = new Camiseta(ID, name,talla,precio,color,sexo,imagen);
-					else if(tipo.equals("p"))
+					}else if(tipo.equals("p")) {
 						a = new Pantalon(ID,name,talla,precio,color,sexo,imagen,tipoPantalon);	
-					else if(tipo.equals("s")) {
+					}else if(tipo.equals("s")) {
 						a = new Sudadera(ID,name,talla,precio,color,sexo,imagen,capucha);
 					}
 					tmArticulo.put(ID, a);
-					System.out.println("Articulo "+ name + "anyadido \n");
+					
 				}
 			rs.close();
 			stmt.close();
-			System.out.println("Articulos cargados con exito.... \n");
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		} finally {
+			if(stmt!=null) {
+				try {
+					stmt.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
 		}
-		
 		return tmArticulo;
 	}
 	
-	public static TreeMap<Integer,Articulo> cargarCamisetasDeInfoDeBBDD(Connection con){
+	public static TreeMap<Integer,Articulo> cargarCamisetasDeInfoDeBBDD(Connection con) throws DeustoException{
 		TreeMap<Integer, Articulo> tmCamisetas = new TreeMap<>();
+		Statement stmt = null;
 		
 		String sentSQL = "SELECT * FROM Articulos WHERE TipoArticulo = 'c'";
 		try {
-			Statement stmt = con.createStatement();
+			stmt = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + stmt );
 			ResultSet rs = stmt.executeQuery(sentSQL);
 			while(rs.next()) {
 				int ID = rs.getInt("ID");
@@ -530,20 +600,31 @@ public class BD {
 				rs.close();
 				stmt.close();
 				System.out.println("Camisetas cargadas con exito.... \n");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				logger.log( Level.SEVERE, "Excepcion", e );
+				throw new DeustoException("ERROR! STATEMENT FAILED");
+			} finally {
+				if(stmt!=null) {
+					try {
+						stmt.close();
+					} catch (Exception e) {
+						logger.log( Level.SEVERE, "Excepcion", e );
+						throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+					}
+				}
 			}
 			
 			return tmCamisetas;
 		}
 	
-	public static TreeMap<Integer,Articulo> cargarPantalonesDeInfoDeBBDD(Connection con){
+	public static TreeMap<Integer,Articulo> cargarPantalonesDeInfoDeBBDD(Connection con) throws DeustoException{
 		TreeMap<Integer, Articulo> tmPantalones = new TreeMap<>();
+		Statement stmt = null;
 		
 		String sentSQL = "SELECT * FROM Articulos WHERE TipoArticulo = 'p'";
 		try {
-			Statement stmt = con.createStatement();
+			stmt = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + stmt );
 			ResultSet rs = stmt.executeQuery(sentSQL);
 			while(rs.next()) {
 				int ID = rs.getInt("ID");
@@ -563,20 +644,31 @@ public class BD {
 				rs.close();
 				stmt.close();
 				System.out.println("Pantalones cargados con exito.... \n");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				logger.log( Level.SEVERE, "Excepcion", e );
+				throw new DeustoException("ERROR! STATEMENT FAILED");
+			} finally {
+				if(stmt!=null) {
+					try {
+						stmt.close();
+					} catch (Exception e) {
+						logger.log( Level.SEVERE, "Excepcion", e );
+						throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+					}
+				}
 			}
 			
 			return tmPantalones;
 		}
 	
-	public static TreeMap<Integer,Articulo> cargarSudaderasDeInfoDeBBDD(Connection con){
+	public static TreeMap<Integer,Articulo> cargarSudaderasDeInfoDeBBDD(Connection con) throws DeustoException{
 		TreeMap<Integer, Articulo> tmSudaderas = new TreeMap<>();
+		Statement stmt=null;
 		
 		String sentSQL = "SELECT * FROM Articulos WHERE TipoArticulo = 's'";
 		try {
-			Statement stmt = con.createStatement();
+			stmt = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + stmt );
 			ResultSet rs = stmt.executeQuery(sentSQL);
 			while(rs.next()) {
 				int ID = rs.getInt("ID");
@@ -596,9 +688,18 @@ public class BD {
 				rs.close();
 				stmt.close();
 				System.out.println("Sudadera cargados con exito.... \n");
-			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+			} catch (Exception e) {
+				logger.log( Level.SEVERE, "Excepcion", e );
+				throw new DeustoException("ERROR! STATEMENT FAILED");
+			} finally {
+				if(stmt!=null) {
+					try {
+						stmt.close();
+					} catch (Exception e) {
+						logger.log( Level.SEVERE, "Excepcion", e );
+						throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+					}
+				}
 			}
 			
 			return tmSudaderas;

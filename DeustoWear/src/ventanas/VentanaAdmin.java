@@ -3,12 +3,14 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Connection;
+import java.util.TreeMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import clases.Articulo;
+import clases.DeustoException;
 import clases.Usuario;
 
 import javax.swing.DefaultListModel;
@@ -138,29 +140,30 @@ public class VentanaAdmin extends JFrame {
 		
 		
 		anyadirArticulosALista();
-		
+		setVisible(true);
 		/**EVENTOS*/
 		btnInicio.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaInicio();
+				try {
+					new VentanaInicio();
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
 	}
 	
 	private void anyadirArticulosALista() {
-		System.out.println("Antes de entrar");
-		modeloListaArticulos.removeAllElements();
-		for(int clave : VentanaInicio.tmArticulos.keySet()) {
-			System.out.println(("Entra a recorrer"));
-			Articulo valor = VentanaInicio.tmArticulos.get(clave);
-				modeloListaArticulos.addElement(valor);
+		for(int clave : VentanaInicio.getTmArticulos().keySet()) {
+			Articulo valor = VentanaInicio.getTmArticulos().get(clave);
+			modeloListaArticulos.addElement(valor);
 		}
 		listaArticulos.setModel(modeloListaArticulos);
-		System.out.println("Sale de recorrer");
 	}
 	
 }

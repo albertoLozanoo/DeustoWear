@@ -11,9 +11,9 @@ import javax.swing.plaf.DimensionUIResource;
 import javax.swing.text.html.ImageView;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import java.awt.FlowLayout;
-
 import javax.swing.Action;
 import javax.swing.BoxLayout;
 import javax.swing.JTextField;
@@ -22,13 +22,13 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
-import java.lang.System.Logger;
+import java.io.IOException;
 import java.sql.Connection;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
-import java.util.logging.Level;
+
 import java.util.logging.SimpleFormatter;
 
 import javax.swing.JTextPane;
@@ -42,6 +42,7 @@ import com.jgoodies.forms.layout.RowSpec;
 import clases.Articulo;
 import clases.BD;
 import clases.Camiseta;
+import clases.DeustoException;
 import clases.Pantalon;
 import clases.Sudadera;
 import clases.Usuario;
@@ -69,10 +70,11 @@ public class VentanaInicio extends JFrame {
 	private JButton btnIniciarSesion,btnRegistrarse;
 	private JFrame ventanaActual;
 	public static Connection con;
+	private static Logger logger = Logger.getLogger("LogUserLogged"); 
 	
 	
-	public static TreeMap<String, Usuario> tmUsuarios;
-	public static TreeMap<Integer,Articulo> tmArticulos;
+	public static TreeMap<String, Usuario> tmUsuarios = new TreeMap<>();
+	public static TreeMap<Integer,Articulo> tmArticulos = new TreeMap<>();
 	private JPanel panelCentroIzquierda;
 	private JPanel panelCentroDerecha;
 	private JPanel panelCentroDerechaArriba;
@@ -82,6 +84,8 @@ public class VentanaInicio extends JFrame {
 	private JLabel lblIzquierdaFrase2;
 	private JLabel lblIzquierdaFrase3;
 	private JLabel lblDerechos;
+	
+
 	private JPanel panelCentroInside;
 	private JPanel panelNorteInside;
 	private JLabel lblIniciarSesionNorte;
@@ -110,14 +114,29 @@ public class VentanaInicio extends JFrame {
 			}
 		});
 	}
+	
+	public static TreeMap<String, Usuario> getTmUsuarios() {
+		return tmUsuarios;
+	}
 
-	public VentanaInicio() {
+	public static void setTmUsuarios(TreeMap<String, Usuario> tmUsuarios) {
+		VentanaInicio.tmUsuarios = tmUsuarios;
+	}
+
+	public static TreeMap<Integer, Articulo> getTmArticulos() {
+		return tmArticulos;
+	}
+
+	public static void setTmArticulos(TreeMap<Integer, Articulo> tmArticulos) {
+		VentanaInicio.tmArticulos = tmArticulos;
+	}
+
+	public VentanaInicio() throws DeustoException {
 		/*Articulo a1 = new Camiseta(111,"camiseta","S",10,"Negro","Hombre","imagenes/camisetas/camiseta1.png");
 		Articulo a2 = new Pantalon(123, "pantalon", "M", 25, "Azul","Mujer","imagenes/pantalones/pantalon1.png","Corto");
 		Articulo a3 = new Sudadera(332,"sudadera","XXL",30,"Rojo","Hombre","imagenes/sudaderas/sudadera1.png","Con Capucha");*/
 		setVisible(true);
-		tmUsuarios = new TreeMap<>();
-		tmArticulos = new TreeMap<>();
+		
 		con = BD.initBD("baseDeDatos.db");
 		BD.crearTablas(con);
 		BD.cargarMapaUsuariosDeInfoBBDD(con);
@@ -127,8 +146,6 @@ public class VentanaInicio extends JFrame {
 		BD.insertarSudaderaBBDD(con, a3);*/
 		BD.closeBD(con);
 		ventanaActual = this;
-		tmUsuarios = new TreeMap<>();
-		tmArticulos = new TreeMap<>();
 		setTitle("Bienvenido a DeustoWear");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1176, 639);
@@ -305,8 +322,20 @@ public class VentanaInicio extends JFrame {
 				String c = txtContraseya.getText();
 				
 				if((!nick.equals("") && !c.equals("")) || (!nick.equals("admin") && !c.equals("admin"))) {
-					Connection con = BD.initBD("baseDeDatos.db");
-					int resul = BD.obtenerUsuario(con, nick, c);
+					Connection con = null;
+					try {
+						con = BD.initBD("baseDeDatos.db");
+					} catch (DeustoException e3) {
+						// TODO Auto-generated catch block
+						e3.printStackTrace();
+					}
+					int resul = 0;
+					try {
+						resul = BD.obtenerUsuario(con, nick, c);
+					} catch (DeustoException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
 					if((resul == 0) && !nick.equals("admin") && !c.equals("admin")){
 						JOptionPane.showMessageDialog(null, "Todavia no te has registrado","¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 						txtNick.setText("");
@@ -317,10 +346,29 @@ public class VentanaInicio extends JFrame {
 						txtContraseya.setText("");
 					}else {
 						if((resul == 2) && (!nick.equals("admin") && !c.equals("admin"))){
+							
 							JOptionPane.showMessageDialog(null, "Cargando WearHome, bienvenid@ "+ nick,"WELCOME", JOptionPane.INFORMATION_MESSAGE);
 							Usuario u = new Usuario(nick,c);
 							u.cargarFavoritosDelFichero();
-							new VentanaHome(ventanaActual, u);
+							Handler handler = null;
+							try {
+								handler = new FileHandler("loggers/LogUserLogged");
+							} catch (SecurityException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							} catch (IOException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
+							handler.setFormatter(new SimpleFormatter());
+							logger.addHandler(handler);
+							logger.log(Level.INFO, "Se ha loggoeado");
+							try {
+								new VentanaHome(ventanaActual, u);
+							} catch (DeustoException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 							ventanaActual.dispose();
 						}else if(nick.equals("admin") && c.equals("admin")){
 							/*Handler handler = new FileHandler("loggers/LogUserLoggin");

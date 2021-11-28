@@ -23,6 +23,7 @@ import javax.swing.border.EmptyBorder;
 
 import clases.Articulo;
 import clases.BD;
+import clases.DeustoException;
 import clases.Usuario;;
 
 public class VentanaFavoritos extends JFrame {
@@ -129,7 +130,12 @@ public class VentanaFavoritos extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaHome(ventanaActual,u);
+				try {
+					new VentanaHome(ventanaActual,u);
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 		});
 		
@@ -139,7 +145,12 @@ public class VentanaFavoritos extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaPerfil(ventanaActual,u);
+				try {
+					new VentanaPerfil(ventanaActual,u);
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
@@ -170,7 +181,12 @@ public class VentanaFavoritos extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaHome(ventanaActual,u);
+				try {
+					new VentanaHome(ventanaActual,u);
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
@@ -179,7 +195,12 @@ public class VentanaFavoritos extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaPerfil(ventanaActual,u);
+				try {
+					new VentanaPerfil(ventanaActual,u);
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				//new VentanaPerfil(ventanaActual);
 			}
 		});

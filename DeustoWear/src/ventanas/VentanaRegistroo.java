@@ -12,6 +12,7 @@ import javax.swing.plaf.DimensionUIResource;
 import javax.swing.text.html.ImageView;
 
 import clases.BD;
+import clases.DeustoException;
 import clases.Usuario;
 
 import java.awt.Color;
@@ -242,14 +243,42 @@ public class VentanaRegistroo extends JFrame {
 				boolean correctoNick = Pattern.matches(ERnick, nick);
 				
 				if((correctoNick) && (!nick.equals("admin")) && (!nick.equals("") && !contraseya.equals("") )) {
-					Connection con = BD.initBD("baseDeDatos");
-					int valor = BD.estaRegistrado(con, nick);
+					Connection con = null;
+					Connection con2 = null;
+					try {
+						con = BD.initBD("baseDeDatos");
+					} catch (DeustoException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+					int valor = 0;
+					try {
+						valor = BD.estaRegistrado(con, nick);
+					} catch (DeustoException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
 					if(valor == 0) {
 						Usuario u = new Usuario(nick, contraseya,avatar);
 						VentanaInicio.tmUsuarios.put(u.getNick(), u);
-						Connection con2 = BD.initBD("baseDeDatos");
-						BD.intertarUsuarioBBDD(con2,u);
-						BD.closeBD(con2);
+						try {
+							con2 = BD.initBD("baseDeDatos");
+						} catch (DeustoException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						try {
+							BD.intertarUsuarioBBDD(con2,u);
+						} catch (DeustoException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
+						try {
+							BD.closeBD(con2);
+						} catch (DeustoException e2) {
+							// TODO Auto-generated catch block
+							e2.printStackTrace();
+						}
 						
 						try {
 							Handler handler = new FileHandler("loggers/LogUserRegistered");

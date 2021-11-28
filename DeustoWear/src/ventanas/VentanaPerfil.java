@@ -30,6 +30,7 @@ import javax.swing.plaf.DimensionUIResource;
 import javax.swing.text.html.ImageView;
 
 import clases.BD;
+import clases.DeustoException;
 import clases.Usuario;
 import clases.Venta;
 import net.miginfocom.swing.MigLayout;
@@ -49,9 +50,10 @@ public class VentanaPerfil extends JFrame {
 	/**
 	 * Create the frame.
 	 * @param ventanaActual2 
+	 * @throws DeustoException 
 	 */
 	
-	public VentanaPerfil(JFrame va, Usuario u) {
+	public VentanaPerfil(JFrame va, Usuario u) throws DeustoException {
 		
 		//cargarTMventasUsuarioAJlist();
 		System.out.println("Este es el logo " + u.getLogoAvatar());
@@ -188,9 +190,24 @@ public class VentanaPerfil extends JFrame {
 				String ERcontraseya = "[0-9]{1,15}";
 				boolean correctoContra = Pattern.matches(ERcontraseya, contra);
 				if(correctoContra && !contra.equals(u.getContraseya())) {
-					con = BD.initBD(nombreBD);
-					BD.cambiarContrasenya(con, u.getNick(), contra);
-					BD.closeBD(con);
+					try {
+						con = BD.initBD(nombreBD);
+					} catch (DeustoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						BD.cambiarContrasenya(con, u.getNick(), contra);
+					} catch (DeustoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						BD.closeBD(con);
+					} catch (DeustoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					JOptionPane.showMessageDialog(null, "Contraseña cambiada correctamente", "CAMBIO REALIZADO", JOptionPane.INFORMATION_MESSAGE);
 				}else {
 					JOptionPane.showMessageDialog(null, "Loading...Error", "!!ERROR!!", JOptionPane.ERROR_MESSAGE);
@@ -204,7 +221,12 @@ public class VentanaPerfil extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaHome(ventanaActual,u);
+				try {
+					new VentanaHome(ventanaActual,u);
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				//new VentanaPerfil(ventanaActual);
 			}
 		});

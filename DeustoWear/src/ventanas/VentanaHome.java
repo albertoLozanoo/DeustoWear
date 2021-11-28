@@ -14,6 +14,7 @@ import javax.swing.text.html.ImageView;
 
 import clases.Articulo;
 import clases.BD;
+import clases.DeustoException;
 import clases.Usuario;
 import net.miginfocom.swing.MigLayout;
 import panel.panelArticuloHome;
@@ -49,8 +50,9 @@ public class VentanaHome extends JFrame {
 	
 	/**
 	 * Create the frame.
+	 * @throws DeustoException 
 	 */
-	public VentanaHome(JFrame va,Usuario u) {
+	public VentanaHome(JFrame va,Usuario u) throws DeustoException {
 		
 		ventanaAnterior = va;
 		ventanaActual = this;
@@ -194,7 +196,12 @@ public class VentanaHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaInicio();
+				try {
+					new VentanaInicio();
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
@@ -204,7 +211,12 @@ public class VentanaHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaPerfil(ventanaActual,u);
+				try {
+					new VentanaPerfil(ventanaActual,u);
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
@@ -234,16 +246,36 @@ public class VentanaHome extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (comboPrenda.getSelectedIndex() ==0){
 					panelCentro.removeAll();
-					cargarPaneles();
+					try {
+						cargarPaneles();
+					} catch (DeustoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}else if(comboPrenda.getSelectedIndex()==1) {
 					panelCentro.removeAll();
-					cargarPanelesConCamisetas();
+					try {
+						cargarPanelesConCamisetas();
+					} catch (DeustoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}else if(comboPrenda.getSelectedIndex()==2){
 					panelCentro.removeAll();
-					cargarPanelesConPantalones();		
+					try {
+						cargarPanelesConPantalones();
+					} catch (DeustoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}		
 				}else if(comboPrenda.getSelectedIndex()==3) {
 					panelCentro.removeAll();
-					cargarPanelesConSudaderas();
+					try {
+						cargarPanelesConSudaderas();
+					} catch (DeustoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 				}
 			}
 		});
@@ -252,7 +284,7 @@ public class VentanaHome extends JFrame {
 	}
 	
 	
-	public void cargarPaneles() {
+	public void cargarPaneles() throws DeustoException {
 		Connection con = BD.initBD("baseDeDatos.db");
 		TreeMap<Integer , Articulo> tm = BD.cargarMapaArticulosDeInfoBBDD(con);
 		for(Articulo a: tm.values()) {
@@ -266,7 +298,7 @@ public class VentanaHome extends JFrame {
 	/*
 	 * Metodos para el sistema de busqueda de articulos
 	 */
-	public void cargarPanelesConCamisetas() {
+	public void cargarPanelesConCamisetas() throws DeustoException {
 		Connection con = BD.initBD("baseDeDatos.db");
 		TreeMap<Integer , Articulo> tm = BD.cargarCamisetasDeInfoDeBBDD(con);
 		for(Articulo a: tm.values()) {
@@ -277,7 +309,7 @@ public class VentanaHome extends JFrame {
 		BD.closeBD(con);
 	}
 	
-	public void cargarPanelesConPantalones() {
+	public void cargarPanelesConPantalones() throws DeustoException {
 		Connection con = BD.initBD("baseDeDatos.db");
 		TreeMap<Integer , Articulo> tm = BD.cargarPantalonesDeInfoDeBBDD(con);
 		for(Articulo a: tm.values()) {
@@ -288,7 +320,7 @@ public class VentanaHome extends JFrame {
 		BD.closeBD(con);
 	}
 	
-	public void cargarPanelesConSudaderas() {
+	public void cargarPanelesConSudaderas() throws DeustoException {
 		Connection con = BD.initBD("baseDeDatos.db");
 		TreeMap<Integer , Articulo> tm = BD.cargarSudaderasDeInfoDeBBDD(con);
 		for(Articulo a: tm.values()) {

@@ -25,6 +25,7 @@ import javax.swing.JLabel;
 import java.awt.Font;
 
 import javax.swing.DefaultListModel;
+import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -225,10 +226,19 @@ public class VentanaCesta extends JFrame {
 		panelCentroDerecha.add(lblPrecioTotalInput, "cell 0 1,alignx center,aligny top");
 		
 		
+		/**
+		 * Comprobacion del estado de la compra
+		 * 	Si el carrito del usuario esta vacio el boton pagar estara desactivado
+		 */
+		if(u.getCarrito().size() <1) {
+			btnPagar.setEnabled(false);
+		}
 		
 		
-
 		
+		/**
+		 * Tabla de los articulos del carrito del usuario
+		 */
 		String [] header = {"TAG","TALLA", "PRECIO","COLOR", "SEXO"};
 		modeloTablaArticulos.setColumnIdentifiers(header);
 		for(Articulo a : u.getCarrito()) {
@@ -239,9 +249,6 @@ public class VentanaCesta extends JFrame {
 		tablaArticulos = new JTable(modeloTablaArticulos);
 		JScrollPane scroll =new JScrollPane(tablaArticulos);
 		panelCentroCentro.add(tablaArticulos);
-		
-		
-		
 		
 		
 		/*EVENTOS*/

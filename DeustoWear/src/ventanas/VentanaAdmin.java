@@ -120,6 +120,9 @@ public class VentanaAdmin extends JFrame {
 		lblListaArticulos.setFont(new Font("Lato", Font.BOLD, 23));
 		panelTituloListaArticulos.add(lblListaArticulos);
 		
+		JPanel panelCentroDerechaLista = new JPanel();
+		panelDerechaCentroLista.add(panelCentroDerechaLista, BorderLayout.CENTER);
+		
 		JPanel panelSur = new JPanel();
 		panelSur.setBackground(new Color(0, 153, 204));
 		contentPane.add(panelSur, BorderLayout.SOUTH);
@@ -129,14 +132,12 @@ public class VentanaAdmin extends JFrame {
 		btnInicio.setBackground(new Color(255, 153, 0));
 		panelSur.add(btnInicio);
 		
-		modeloListaArticulos = new DefaultListModel<>();
-		listaArticulos = new JList<>(modeloListaArticulos);
+		modeloListaArticulos = new DefaultListModel<Articulo>();
+		listaArticulos = new JList<Articulo>(modeloListaArticulos);
+		panelCentroDerechaLista.add(listaArticulos);
 		
-		/*for(Integer clave : VentanaInicio.tmArticulos.keySet()) {
-			for(Articulo valor : VentanaInicio.tmArticulos.get()) {
-				modeloListaArticulos.addElement(valor);
-			}
-		}*/
+		
+		anyadirArticulosALista();
 		
 		/**EVENTOS*/
 		btnInicio.addActionListener(new ActionListener() {
@@ -148,6 +149,18 @@ public class VentanaAdmin extends JFrame {
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
+	}
+	
+	private void anyadirArticulosALista() {
+		System.out.println("Antes de entrar");
+		modeloListaArticulos.removeAllElements();
+		for(int clave : VentanaInicio.tmArticulos.keySet()) {
+			System.out.println(("Entra a recorrer"));
+			Articulo valor = VentanaInicio.tmArticulos.get(clave);
+				modeloListaArticulos.addElement(valor);
+		}
+		listaArticulos.setModel(modeloListaArticulos);
+		System.out.println("Sale de recorrer");
 	}
 	
 }

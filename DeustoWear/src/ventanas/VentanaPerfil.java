@@ -141,10 +141,8 @@ public class VentanaPerfil extends JFrame {
 		String avatar = BD.conseguirAvatar(con, u.getNick());
 		BD.closeBD(con);
 		
-		ImageIcon im = new ImageIcon(avatar);
-
 		
-
+		ImageIcon im = new ImageIcon(avatar);		
 		ImageIcon imagenConDimensiones = new ImageIcon(im.getImage().getScaledInstance(300,300,ImageView.CENTER));
 		lblAvatar.setIcon(imagenConDimensiones);
 		lblAvatar.setPreferredSize(new DimensionUIResource(100, 100));
@@ -168,6 +166,9 @@ public class VentanaPerfil extends JFrame {
 		lblnumPedidos.setHorizontalAlignment(SwingConstants.CENTER);
 		panel.add(lblnumPedidos, "cell 0 1,alignx center,aligny center");
 		
+		/**
+		 * Lista de ventas hechas por cliente
+		 */
 		modeloListVentasUsuario = new DefaultListModel<>();
 		listaVentasUsuario = new JList<Venta>(modeloListVentasUsuario);
 		scrollListaVentas = new JScrollPane(listaVentasUsuario);

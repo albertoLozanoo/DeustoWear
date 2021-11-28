@@ -8,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.DimensionUIResource;
+import javax.swing.text.html.ImageView;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
@@ -111,19 +112,20 @@ public class VentanaInicio extends JFrame {
 	}
 
 	public VentanaInicio() {
-		
 		/*Articulo a1 = new Camiseta(111,"camiseta","S",10,"Negro","Hombre","imagenes/camisetas/camiseta1.png");
 		Articulo a2 = new Pantalon(123, "pantalon", "M", 25, "Azul","Mujer","imagenes/pantalones/pantalon1.png","Corto");
 		Articulo a3 = new Sudadera(332,"sudadera","XXL",30,"Rojo","Hombre","imagenes/sudaderas/sudadera1.png","Con Capucha");*/
 		setVisible(true);
+		tmUsuarios = new TreeMap<>();
+		tmArticulos = new TreeMap<>();
 		con = BD.initBD("baseDeDatos.db");
 		BD.crearTablas(con);
 		BD.cargarMapaUsuariosDeInfoBBDD(con);
+		BD.cargarMapaArticulosDeInfoBBDD(con);
 		/*BD.insertarCamisetaBBDD(con, a1);
 		BD.insertarPantalonBBDD(con, a2);
 		BD.insertarSudaderaBBDD(con, a3);*/
 		BD.closeBD(con);
-		
 		ventanaActual = this;
 		tmUsuarios = new TreeMap<>();
 		tmArticulos = new TreeMap<>();
@@ -168,13 +170,17 @@ public class VentanaInicio extends JFrame {
 		panelNorteInsideIzquierda.add(lblIzquierdaFrase3);
 		
 		panelCentroInsideIzquierda = new JPanel();
-		panelCentroInsideIzquierda.setBackground(new Color(255, 255, 255));
+		panelCentroInsideIzquierda.setBackground(new Color(255, 102, 0));
 		panelCentroIzquierda.add(panelCentroInsideIzquierda, BorderLayout.CENTER);
-		panelCentroInsideIzquierda.setLayout(new GridLayout(0, 1, 0, 0));
 		
-		btnLogo = new JButton(new ImageIcon("imagenes/logo.jpg"));
-		btnLogo.setBackground(new Color(255, 102, 51));
-		btnLogo.setPreferredSize(new DimensionUIResource(400, 450));
+		btnLogo = new JButton("");
+		btnLogo.setBackground(new Color(255, 102, 0));
+		ImageIcon im = new ImageIcon("imagenes/logo.jpg");
+		ImageIcon imagenConDimensiones = new ImageIcon(im.getImage().getScaledInstance(300,300,ImageView.CENTER));
+		panelCentroInsideIzquierda.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
+		btnLogo.setIcon(imagenConDimensiones);
+		btnLogo.setPreferredSize(new DimensionUIResource(350, 300));
+		btnLogo.setIcon(imagenConDimensiones);
 		panelCentroInsideIzquierda.add(btnLogo);
 		
 		

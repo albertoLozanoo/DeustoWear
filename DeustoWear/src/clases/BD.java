@@ -504,4 +504,104 @@ public class BD {
 		
 		return tmArticulo;
 	}
+	
+	public static TreeMap<Integer,Articulo> cargarCamisetasDeInfoDeBBDD(Connection con){
+		TreeMap<Integer, Articulo> tmCamisetas = new TreeMap<>();
+		
+		String sentSQL = "SELECT * FROM Articulos WHERE TipoArticulo = 'c'";
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sentSQL);
+			while(rs.next()) {
+				int ID = rs.getInt("ID");
+				String name = rs.getString("Name");
+				String talla = rs.getString("Talla");
+				int precio = rs.getInt("Precio");
+				String color = rs.getString("Color");
+				String sexo = rs.getString("Sexo");
+				String imagen = rs.getString("Imagen");
+				String tipo = rs.getString("TipoArticulo");
+				String tipoPantalon = rs.getString("TipoPantalon");
+				String capucha = rs.getString("Capucha");
+				
+				Articulo a = new Camiseta(ID,name,talla,precio,color,sexo,imagen);
+				tmCamisetas.put(ID, a);
+			}
+				rs.close();
+				stmt.close();
+				System.out.println("Camisetas cargadas con exito.... \n");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return tmCamisetas;
+		}
+	
+	public static TreeMap<Integer,Articulo> cargarPantalonesDeInfoDeBBDD(Connection con){
+		TreeMap<Integer, Articulo> tmPantalones = new TreeMap<>();
+		
+		String sentSQL = "SELECT * FROM Articulos WHERE TipoArticulo = 'p'";
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sentSQL);
+			while(rs.next()) {
+				int ID = rs.getInt("ID");
+				String name = rs.getString("Name");
+				String talla = rs.getString("Talla");
+				int precio = rs.getInt("Precio");
+				String color = rs.getString("Color");
+				String sexo = rs.getString("Sexo");
+				String imagen = rs.getString("Imagen");
+				String tipo = rs.getString("TipoArticulo");
+				String tipoPantalon = rs.getString("TipoPantalon");
+				String capucha = rs.getString("Capucha");
+				
+				Articulo a = new Pantalon(ID,name,talla,precio,color,sexo,imagen,tipoPantalon);
+				tmPantalones.put(ID, a);
+			}
+				rs.close();
+				stmt.close();
+				System.out.println("Pantalones cargados con exito.... \n");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return tmPantalones;
+		}
+	
+	public static TreeMap<Integer,Articulo> cargarSudaderasDeInfoDeBBDD(Connection con){
+		TreeMap<Integer, Articulo> tmSudaderas = new TreeMap<>();
+		
+		String sentSQL = "SELECT * FROM Articulos WHERE TipoArticulo = 's'";
+		try {
+			Statement stmt = con.createStatement();
+			ResultSet rs = stmt.executeQuery(sentSQL);
+			while(rs.next()) {
+				int ID = rs.getInt("ID");
+				String name = rs.getString("Name");
+				String talla = rs.getString("Talla");
+				int precio = rs.getInt("Precio");
+				String color = rs.getString("Color");
+				String sexo = rs.getString("Sexo");
+				String imagen = rs.getString("Imagen");
+				String tipo = rs.getString("TipoArticulo");
+				String tipoPantalon = rs.getString("TipoPantalon");
+				String capucha = rs.getString("Capucha");
+				
+				Articulo a = new Sudadera(ID,name,talla,precio,color,sexo,imagen,capucha);
+				tmSudaderas.put(ID, a);
+			}
+				rs.close();
+				stmt.close();
+				System.out.println("Sudadera cargados con exito.... \n");
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			return tmSudaderas;
+		}
+		
 }

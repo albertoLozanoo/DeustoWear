@@ -30,6 +30,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 import javax.swing.JComboBox;
@@ -100,19 +101,24 @@ public class VentanaHome extends JFrame {
 		panelWest.add(lblComboPrenda, "cell 0 5,alignx center,aligny center");
 		
 		
+		/*ComboBox Articulos*/
 		comboPrenda = new JComboBox<String>();
 		comboPrenda.setToolTipText("");
 		panelWest.add(comboPrenda, "cell 1 5,growx,aligny center");
 		
-		JLabel lblComboTalla = new JLabel("Talla");
-		lblComboTalla.setForeground(new Color(255, 255, 255));
-		lblComboTalla.setFont(new Font("Lato", Font.PLAIN, 18));
-		lblComboTalla.setHorizontalAlignment(SwingConstants.CENTER);
-		lblComboTalla.setBackground(new Color(240, 240, 240));
-		panelWest.add(lblComboTalla, "cell 0 7,alignx center,aligny center");
+		ArrayList<String> tiposArticulos = new ArrayList<>();
+		tiposArticulos.add("Articulos");
+		tiposArticulos.add("Camiseta");
+		tiposArticulos.add("Pantalon");
+		tiposArticulos.add("Sudadera");
 		
-		comboTalla = new JComboBox<String>();
-		panelWest.add(comboTalla, "cell 1 7,growx");
+		for(String articulo : tiposArticulos) {
+			comboPrenda.addItem(articulo);
+		}
+	
+	
+		
+		
 		
 		JRadioButton rdbtnHombre = new JRadioButton("Hombre");
 		rdbtnHombre.setForeground(new Color(255, 255, 255));
@@ -223,8 +229,28 @@ public class VentanaHome extends JFrame {
 			}
 		});
 		
+		btnBuscar.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (comboPrenda.getSelectedIndex() ==0){
+					panelCentro.removeAll();
+					cargarPaneles();
+				}else if(comboPrenda.getSelectedIndex()==1) {
+					panelCentro.removeAll();
+					cargarPanelesConCamisetas();
+				}else if(comboPrenda.getSelectedIndex()==2){
+					panelCentro.removeAll();
+					cargarPanelesConPantalones();		
+				}else if(comboPrenda.getSelectedIndex()==3) {
+					panelCentro.removeAll();
+					cargarPanelesConSudaderas();
+				}
+			}
+		});
+		
 		
 	}
+	
 	
 	public void cargarPaneles() {
 		Connection con = BD.initBD("baseDeDatos.db");
@@ -236,6 +262,45 @@ public class VentanaHome extends JFrame {
 		}
 		BD.closeBD(con);
 	}
+	
+	/*
+	 * Metodos para el sistema de busqueda de articulos
+	 */
+	public void cargarPanelesConCamisetas() {
+		Connection con = BD.initBD("baseDeDatos.db");
+		TreeMap<Integer , Articulo> tm = BD.cargarCamisetasDeInfoDeBBDD(con);
+		for(Articulo a: tm.values()) {
+			panelArticuloHome pi = new panelArticuloHome(a);
+			panelCentro.add(pi);
+			panelCentro.updateUI();
+		}
+		BD.closeBD(con);
+	}
+	
+	public void cargarPanelesConPantalones() {
+		Connection con = BD.initBD("baseDeDatos.db");
+		TreeMap<Integer , Articulo> tm = BD.cargarPantalonesDeInfoDeBBDD(con);
+		for(Articulo a: tm.values()) {
+			panelArticuloHome pi = new panelArticuloHome(a);
+			panelCentro.add(pi);
+			panelCentro.updateUI();
+		}
+		BD.closeBD(con);
+	}
+	
+	public void cargarPanelesConSudaderas() {
+		Connection con = BD.initBD("baseDeDatos.db");
+		TreeMap<Integer , Articulo> tm = BD.cargarSudaderasDeInfoDeBBDD(con);
+		for(Articulo a: tm.values()) {
+			panelArticuloHome pi = new panelArticuloHome(a);
+			panelCentro.add(pi);
+			panelCentro.updateUI();
+		}
+		BD.closeBD(con);
+	}
+	
+	
+	
 	
 	
 

@@ -156,7 +156,7 @@ public class Usuario {
 	}
 	
 	public static void addCarrito(Articulo a) {
-		if( a !=null) {
+		if(a !=null) {
 			carrito.add(a);
 		}
 	}

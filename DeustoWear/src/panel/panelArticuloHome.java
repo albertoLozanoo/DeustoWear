@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.regex.Pattern;
 
@@ -21,6 +22,8 @@ import clases.Articulo;
 import clases.BD;
 import clases.Usuario;
 import clases.Venta;
+import enumeration.Colores;
+import enumeration.Talla;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -34,6 +37,7 @@ public class panelArticuloHome extends JPanel {
 	 * Create the panel.corazon favorito
 	 */
 	public panelArticuloHome(Articulo a) {
+		
 		setLayout(new BorderLayout(0, 0));
 		JPanel panelCentro = new JPanel();
 		add(panelCentro, BorderLayout.CENTER);
@@ -49,7 +53,7 @@ public class panelArticuloHome extends JPanel {
 		JPanel panelSur = new JPanel();
 		panelSur.setBackground(new Color(51, 153, 255));
 		add(panelSur, BorderLayout.SOUTH);
-		panelSur.setLayout(new MigLayout("", "[196.00][grow,center]", "[55.00][48.00][45.00][47.00]"));
+		panelSur.setLayout(new MigLayout("", "[196.00,grow][grow,center]", "[55.00][48.00][45.00][][47.00][]"));
 		
 		JLabel lblNombreLoop = new JLabel(a.getName());
 		lblNombreLoop.setFont(new Font("Microsoft New Tai Lue", Font.BOLD, 26));
@@ -83,17 +87,55 @@ public class panelArticuloHome extends JPanel {
 		lblColor.setForeground(new Color(255, 255, 255));
 		lblColor.setFont(new Font("Microsoft YaHei", Font.PLAIN, 19));
 		lblColor.setHorizontalAlignment(SwingConstants.LEFT);
-		panelSur.add(lblColor, "cell 0 2,alignx left,aligny top");
+		panelSur.add(lblColor, "flowx,cell 0 2,alignx left,aligny bottom");
+		
+		
 		
 		JLabel lblTalla = new JLabel("Talla (ES: "+ a.getTalla()+ ")");
 		lblTalla.setForeground(new Color(255, 255, 255));
 		lblTalla.setFont(new Font("Microsoft YaHei UI", Font.PLAIN, 19));
-		panelSur.add(lblTalla, "cell 0 3,alignx left,aligny bottom");
+		panelSur.add(lblTalla, "cell 0 4,alignx left,aligny bottom");
 		
 		JLabel lblSexo = new JLabel(a.getSexo()+ "  ");
 		lblSexo.setFont(new Font("Microsoft YaHei", Font.ITALIC, 15));
 		lblSexo.setForeground(new Color(255, 255, 255));
-		panelSur.add(lblSexo, "cell 1 3,alignx center,aligny bottom");
+		panelSur.add(lblSexo, "cell 1 4,alignx center,aligny bottom");
+		
+		/*ComboBox Color*/
+		JComboBox cbColor = new JComboBox();
+		panelSur.add(cbColor, "cell 0 3,growx");
+		
+		ArrayList<Colores> colores = new ArrayList<>();
+		colores.add(Colores.AZUL);
+		colores.add(Colores.BLANCO);
+		colores.add(Colores.DEUSTO);
+		colores.add(Colores.NARANJA);
+		colores.add(Colores.NEGRO);
+		
+		String sel = "Seleccione un color...";
+		cbColor.addItem(sel);
+		for(Colores c: colores) {
+			cbColor.addItem(c);
+		}
+	
+		
+		/*ComboBox Talla*/
+		JComboBox cbTalla = new JComboBox();
+		panelSur.add(cbTalla, "cell 0 5,growx");
+		
+		ArrayList<Talla> tallas = new ArrayList<>();
+		tallas.add(Talla.XS);
+		tallas.add(Talla.S);
+		tallas.add(Talla.M);
+		tallas.add(Talla.L);
+		tallas.add(Talla.XL);
+		tallas.add(Talla.XXL);
+		
+		String sel2 = "Seleccione una talla...";
+		cbTalla.addItem(sel2);
+		for(Talla t:tallas) {
+			cbTalla.addItem(t);
+		}
 		
 		
 		/*EVENTOS*/

@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.text.html.ImageView;
 
 import clases.Articulo;
+import clases.BD;
 import clases.DeustoException;
 import clases.Usuario;
 import clases.Venta;
@@ -33,7 +34,12 @@ import javax.swing.SwingConstants;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Random;
 
 import javax.swing.JComboBox;
@@ -41,6 +47,7 @@ import javax.swing.JRadioButton;
 import javax.swing.JScrollBar;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextArea;
 
 import java.awt.EventQueue;
 
@@ -55,13 +62,15 @@ import javax.swing.BoxLayout;
 
 public class VentanaCesta extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel contentPane,panelCentro;
 	private JComboBox<String> comboTalla, comboPrenda;
 	private JFrame ventanaActual,ventanaAnterior;
 	private JButton btnLogo,btnEliminarArticulo;
 	private JTable tablaArticulos;
 	private DefaultTableModel modeloTablaArticulos = new DefaultTableModel();
 	public Usuario u;
+	private JTextArea ticket;
+	private JScrollPane scrollAreaResumen;
 	private double precioTotal;
 	
 	/**
@@ -79,6 +88,8 @@ public class VentanaCesta extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(10, 10));
 		contentPane.setBackground(new Color(0, 153, 255));
+		ticket = new JTextArea();
+		scrollAreaResumen = new JScrollPane(ticket);
 		
 		JPanel panelNorte = new JPanel();
 		panelNorte.setBackground(new Color(255, 153, 0));
@@ -175,7 +186,7 @@ public class VentanaCesta extends JFrame {
 		btnPerfil.setBackground(new Color(204, 102, 51));
 		panelSur.add(btnPerfil);
 		
-		JPanel panelCentro = new JPanel();
+		panelCentro = new JPanel();
 		panelCentro.setBackground(new Color(255, 153, 51));
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new BorderLayout(0, 0));
@@ -201,6 +212,7 @@ public class VentanaCesta extends JFrame {
 		btnSeguirComprando.setFont(new Font("Dialog", Font.PLAIN, 19));
 		btnSeguirComprando.setForeground(Color.WHITE);
 		panelCentroSur.add(btnSeguirComprando);
+		cargarCarritoEnTextArea();
 		
 		
 		JButton btnPagar = new JButton("Pagar\r\n");
@@ -256,7 +268,7 @@ public class VentanaCesta extends JFrame {
 		btnEliminarCesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				modeloTablaArticulos.setRowCount(0);
-				u.eliminarCarrito(u.getCarrito());
+				
 				lblPrecioTotal.setForeground(new Color(240,240,240));
 				lblPrecioTotalInput.setForeground(new Color(240,240,240));
 			}
@@ -264,21 +276,61 @@ public class VentanaCesta extends JFrame {
 		
 		btnEliminarArticulo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				modeloTablaArticulos.removeRow(tablaArticulos.getSelectedRow());
 				
+				//precioTotal = u.eliminarPrecioDeCesta(tablaArticulos.getSelectedRow());
+				JOptionPane.showMessageDialog(null, "Artículo eliminado del carrito ","DONE", JOptionPane.INFORMATION_MESSAGE);
+				panelCentro.updateUI();
 			}
 		});
 		
 		btnPagar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				Connection con = null;
+				long s;
+				try {
+					con = BD.initBD("baseDeDatos.db");
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				u.comprar();
 				JOptionPane.showMessageDialog(null, "Compra registrada con exito " + u.getNick() + "\n gracias por tu visita te dejamos con tus \n articulos favoritos","¡¡GRACIAS!!", JOptionPane.INFORMATION_MESSAGE);
-				
+				Runnable r = new Runnable() {
+					public void run() {
+						for(int i=255;i>=0;i--) {
+							ticket.setForeground(new Color(i,i,i));
+							try {
+								Thread.sleep(500);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						ticket.setText("");
+					}
+				};
+				Thread t = new Thread(r);
+				t.start();
+				generarTicket();
+				try {
+					BD.registrarVenta(con,u);
+				} catch (DeustoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				precioTotal = 0.0;
 				
 				modeloTablaArticulos.setRowCount(0);
 				u.eliminarCarrito(u.getCarrito());
 				lblPrecioTotal.setForeground(new Color(240,240,240));
 				lblPrecioTotalInput.setForeground(new Color(240,240,240));
+				try {
+					BD.closeBD(con);
+				} catch (DeustoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 				
 				ventanaActual.dispose();
 				new VentanaFavoritos(va, u);
@@ -350,9 +402,41 @@ public class VentanaCesta extends JFrame {
 					// TODO Auto-generated catch block
 					e1.printStackTrace();
 				}
+				System.out.println(precioTotal);
 				
 			}
 		});
+	}
+	private void cargarCarritoEnTextArea() {
+		String texto = "";
+		double total = 0;
+		for(Articulo a : u.carrito) {
+			texto = texto + a + "\n";
+			total = total + a.getPrecio();
+		}
+		texto = texto + "TOTAL: "+total+" â‚¬";
+		ticket.setText(texto);
+	}
+	
+	private void generarTicket() {
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy" + " ("+ System.currentTimeMillis()+")");
+		
+		Date d = new Date(System.currentTimeMillis());
+		String nomfich = u.getNick()+" "+sdf.format(d) +".txt";
+		PrintWriter pw = null;
+		
+		try {
+			pw = new PrintWriter(nomfich);
+			pw.println(ticket.getText());
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			if(pw!=null) {
+				pw.flush();
+				pw.close();
+			}
+		}
 	}
 	
 

@@ -71,6 +71,7 @@ public class BD {
 	public static void crearTablas(Connection con) throws DeustoException {
 		String sent1 = "CREATE TABLE IF NOT EXISTS Articulos(ID Integer,Name String, Talla String,Precio Double,Color String, Sexo String, Imagen String, TipoPantalon String, Capucha String, TipoArticulo String)";
 		String sent2 = "CREATE TABLE IF NOT EXISTS Usuarios(Nick String, Contraseña String, Avatar String)";
+		String sent3 = "CREATE TABLE IF NOT EXISTS Ventas(Nick String, Token lon)";
 		
 		Statement st = null;
 		
@@ -80,6 +81,8 @@ public class BD {
 			st.executeUpdate(sent1);
 			logger.log( Level.INFO, "Statement: " + sent2 );
 			st.executeUpdate(sent2);
+			logger.log( Level.INFO, "Statement: " + sent2 );
+			st.executeUpdate(sent3);
 		} catch (Exception e) {
 			logger.log( Level.SEVERE, "Excepcion", e );
 			throw new DeustoException("ERROR! CREATION TABLES FAILED");
@@ -704,5 +707,51 @@ public class BD {
 			
 			return tmSudaderas;
 		}
+	
+	public static void registrarVenta(Connection con,Usuario u) throws DeustoException {
+		String sent = "INSERT INTO Ventas VALUES('"+u.getNick()+"','"+System.currentTimeMillis()+"')";
+		Statement st = null;
+		
+		try {
+			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
+			st.executeUpdate(sent);
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
+		}
+	}
+	
+	public static void eliminarVentas(Connection con,Usuario u) throws DeustoException {
+		String sent = "DELETE * FROM Ventas WHERE nick='"+u.getNick();
+		Statement st = null;
+		
+		try {
+			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
+			st.executeUpdate(sent);
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
+		}
+	}
 		
 }

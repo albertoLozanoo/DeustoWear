@@ -6,6 +6,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.text.html.ImageView;
@@ -92,7 +93,7 @@ public class VentanaInicio extends JFrame {
 	private JLabel lblNick;
 	private JTextField txtNick;
 	private JLabel lblContraseya;
-	private JTextField txtContraseya;
+	private JPasswordField txtContraseya;
 	private JPanel panelNorteInsideIzquierda;
 	private JPanel panelCentroInsideIzquierda;
 	private JButton btnLogo;
@@ -233,7 +234,7 @@ public class VentanaInicio extends JFrame {
 		lblContraseya.setFont(new Font("Lato", Font.BOLD, 31));
 		panelCentroInside.add(lblContraseya, "cell 0 8,alignx center,aligny center");
 		
-		txtContraseya = new JTextField();
+		txtContraseya = new JPasswordField();
 		txtContraseya.setBackground(new Color(255, 153, 0));
 		txtContraseya.setHorizontalAlignment(SwingConstants.CENTER);
 		panelCentroInside.add(txtContraseya, "cell 0 11,alignx center,aligny center");
@@ -304,6 +305,8 @@ public class VentanaInicio extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				txtNick.setText("");
+				txtContraseya.setText("");
 				ventanaActual.dispose();
 				new VentanaRegistroo(ventanaActual);
 				//new VentantaRegistro(ventanaActual);

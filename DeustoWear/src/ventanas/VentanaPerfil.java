@@ -110,6 +110,11 @@ public class VentanaPerfil extends JFrame {
 		btnEditar.setBackground(new Color(204, 102, 51));
 		panelNorte.add(btnEditar);
 		
+		JButton btnEliminarVentas = new JButton("ELIMINARVENTAS");
+		btnEliminarVentas.setForeground(Color.WHITE);
+		btnEliminarVentas.setFont(new Font("Lato", Font.PLAIN, 19));
+		btnEliminarVentas.setBackground(new Color(204, 102, 51));
+		panelNorte.add(btnEliminarVentas);
 		
 		
 		JPanel panelCentral = new JPanel();
@@ -213,6 +218,33 @@ public class VentanaPerfil extends JFrame {
 					JOptionPane.showMessageDialog(null, "Loading...Error", "!!ERROR!!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
+
+		});
+		
+		btnEliminarVentas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+					try {
+						con = BD.initBD(nombreBD);
+					} catch (DeustoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						BD.eliminarVentas(con, u);
+					} catch (DeustoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					try {
+						BD.closeBD(con);
+					} catch (DeustoException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+					JOptionPane.showMessageDialog(null, "VENTAS ELIMINADAS", "CAMBIO REALIZADO", JOptionPane.INFORMATION_MESSAGE);
+				}
+			
+
 
 		});
 		

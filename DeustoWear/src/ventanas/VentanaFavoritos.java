@@ -160,7 +160,10 @@ public class VentanaFavoritos extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				int pos = listaArticulosFavoritos.getSelectedIndex();
+				modeloArticulosFavoritos.remove(listaArticulosFavoritos.getSelectedIndex());
+				JOptionPane.showMessageDialog(null, "Artículo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
+				panelCentral.updateUI();
+				/*int pos = listaArticulosFavoritos.getSelectedIndex();
 				if(pos!=-1)
 				{
 					modeloArticulosFavoritos.addElement(listaArticulosFavoritos.getSelectedValue());
@@ -170,7 +173,7 @@ public class VentanaFavoritos extends JFrame {
 					listaArticulosFavoritos.setModel(modeloArticulosFavoritos);
 					JOptionPane.showMessageDialog(null, "Artículo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
 					panelCentral.updateUI();
-				}
+				}*/
 			}
 		
 		

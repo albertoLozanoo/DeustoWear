@@ -160,6 +160,10 @@ public class Usuario {
 			carrito.add(a);
 		}
 	}
+	
+	public  void eliminarArticulo(int id) {
+		Articulo f = carrito.remove(id);
+	}
 
 	
 	/**
@@ -181,6 +185,14 @@ public class Usuario {
 			sumaTotal = sumaTotal + a.getPrecio();
 		}
 		return sumaTotal;
+	}
+	
+	public static double eliminarPrecioDeCesta(Articulo a) {
+		double precioTotal = 0.0;
+		for(Articulo art: carrito) {
+			precioTotal = precioTotal - a.getPrecio();
+		}
+		return precioTotal;
 	}
 	
 	/**

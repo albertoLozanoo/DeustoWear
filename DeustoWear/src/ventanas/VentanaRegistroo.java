@@ -5,6 +5,7 @@ import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.border.Border;
 import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.ColorUIResource;
@@ -54,13 +55,13 @@ public class VentanaRegistroo extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField txtNick;
-	private JTextField txtContraseya;
+	private static JTextField txtNick;
+	private static JPasswordField txtContraseya;
 	public JFrame ventanaActual,ventanaAnterior;
 	private JButton btnVolver,btnAvatar,btnComp;
 	private JFileChooser fc;
 	private File ficheroSeleccionado;
-	private JLabel lblAvatarSeleccionado;
+	private static JLabel lblAvatarSeleccionado;
 	
 
 	private static Logger log = Logger.getLogger("LogUserRegistered"); 
@@ -150,7 +151,7 @@ public class VentanaRegistroo extends JFrame {
 		lblContraseya.setFont(new Font("Lato", Font.BOLD, 21));
 		panelCentroDerechaInput.add(lblContraseya, "cell 0 5,alignx center,aligny center");
 		
-		txtContraseya = new JTextField();
+		txtContraseya = new JPasswordField();
 		txtContraseya.setForeground(new Color(255, 255, 255));
 		txtContraseya.setBackground(new Color(204, 102, 51));
 		txtContraseya.setColumns(10);
@@ -305,6 +306,8 @@ public class VentanaRegistroo extends JFrame {
 					JOptionPane.showMessageDialog(null, "El nombre no es correcto, recuerda que tu nick: \n\t 1. No puede contener numeros, solo letras \n\t 2. No puedes crear cuenta con nick 'admin' \n\t 3. El campo contraseña no puede estar vacio", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 					txtNick.setText("");
 				}
+				txtNick.setText("");
+				txtContraseya.setText("");
 			}
 		});	
 		/**
@@ -323,7 +326,7 @@ public class VentanaRegistroo extends JFrame {
 	/**
 	 * Metodo que limpia el contenido en los textFields
 	 */
-	public void vaciarCampos() {
+	public static void vaciarCampos() {
 		txtNick.setText("");
 		txtContraseya.setText("");
 		lblAvatarSeleccionado.setIcon(null);

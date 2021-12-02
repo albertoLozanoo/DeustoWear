@@ -25,6 +25,7 @@ import java.awt.event.ActionListener;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.logging.FileHandler;
@@ -47,6 +48,7 @@ import clases.DeustoException;
 import clases.Pantalon;
 import clases.Sudadera;
 import clases.Usuario;
+import clases.Venta;
 import enumeration.Sexo;
 import enumeration.Talla;
 import enumeration.Colores;
@@ -76,6 +78,8 @@ public class VentanaInicio extends JFrame {
 	
 	public static TreeMap<String, Usuario> tmUsuarios = new TreeMap<>();
 	public static TreeMap<Integer,Articulo> tmArticulos = new TreeMap<>();
+	public static HashMap<Usuario,ArrayList<Venta>> hmVentasTotales = new HashMap<>();
+	
 	private JPanel panelCentroIzquierda;
 	private JPanel panelCentroDerecha;
 	private JPanel panelCentroDerechaArriba;
@@ -130,6 +134,14 @@ public class VentanaInicio extends JFrame {
 
 	public static void setTmArticulos(TreeMap<Integer, Articulo> tmArticulos) {
 		VentanaInicio.tmArticulos = tmArticulos;
+	}
+	
+	public static HashMap<Usuario, ArrayList<Venta>> getHMVentasTotales() {
+		return hmVentasTotales;
+	}
+
+	public static void setHMVentasTotales(HashMap<Usuario,  ArrayList<Venta>> hmVentasTotales) {
+		VentanaInicio.hmVentasTotales = hmVentasTotales;
 	}
 
 	public VentanaInicio() throws DeustoException {

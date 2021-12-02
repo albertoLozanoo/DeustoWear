@@ -134,6 +134,9 @@ public class VentanaAdmin extends JFrame {
 		btnInicio.setBackground(new Color(255, 153, 0));
 		panelSur.add(btnInicio);
 		
+		JButton btnVentas = new JButton("VER Ventas Usuarios");
+		panelSur.add(btnVentas);
+		
 		modeloListaArticulos = new DefaultListModel<Articulo>();
 		listaArticulos = new JList<Articulo>(modeloListaArticulos);
 		panelCentroDerechaLista.add(listaArticulos);

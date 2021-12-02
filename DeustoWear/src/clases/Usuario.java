@@ -14,6 +14,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.TreeMap;
 
+import ventanas.VentanaInicio;
+
 
 
 public class Usuario {
@@ -26,6 +28,7 @@ public class Usuario {
 	
 	public static Venta ventaActual = new Venta();
 	public static HashMap<Integer, Venta> hmVentasUsuario = new HashMap<>();
+	
 
 
 	/**
@@ -265,11 +268,11 @@ public class Usuario {
 			precioTotal = precioTotal + a.getPrecio();
 		}
 		int token = (int)(Math.random()*100);
-		Venta v = new Venta(token,carrito,carrito.size(),(int)precioTotal , System.currentTimeMillis());
+		ventaActual = new Venta(token,carrito,carrito.size(),(int)precioTotal , System.currentTimeMillis());
 		
-		hmVentasUsuario.put(token, v);
+		hmVentasUsuario.put(token, ventaActual);
 		numVentas = numVentas + 1;
-		System.out.println(v);
+		System.out.println(ventaActual);
 		System.out.println(numVentas + ": ventas realizadas " + getNick());
 	}
 	

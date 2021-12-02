@@ -285,7 +285,15 @@ public class VentanaCesta extends JFrame {
 		});
 		
 		btnPagar.addActionListener(new ActionListener() {
+			
 			public void actionPerformed(ActionEvent arg0) {
+				
+				/*for(Usuario u: VentanaInicio.getHMVentasTotales().keySet()) {
+					for(Venta v : VentanaInicio.getHMVentasTotales().get(u)) {
+						
+					}
+					VentanaInicio.getHMVentasTotales().put(u,u.getVentaActual());
+				}*/
 				Connection con = null;
 				long s;
 				try {

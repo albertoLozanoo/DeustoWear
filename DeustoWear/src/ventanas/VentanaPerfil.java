@@ -110,7 +110,7 @@ public class VentanaPerfil extends JFrame {
 		btnEditar.setBackground(new Color(204, 102, 51));
 		panelNorte.add(btnEditar);
 		
-		JButton btnEliminarVentas = new JButton("ELIMINARVENTAS");
+		JButton btnEliminarVentas = new JButton("ELIMINAR VENTAS");
 		btnEliminarVentas.setForeground(Color.WHITE);
 		btnEliminarVentas.setFont(new Font("Lato", Font.PLAIN, 19));
 		btnEliminarVentas.setBackground(new Color(204, 102, 51));
@@ -144,7 +144,7 @@ public class VentanaPerfil extends JFrame {
 		JLabel lblAvatar = new JLabel();
 		panelCentroIzquierda.add(lblAvatar, "cell 0 2,alignx center,aligny center");
 		
-		con = BD.initBD(nombreBD);
+		con = BD.initBD("baseDeDatos.db");
 		String avatar = BD.conseguirAvatar(con, u.getNick());
 		BD.closeBD(con);
 		
@@ -196,7 +196,7 @@ public class VentanaPerfil extends JFrame {
 				boolean correctoContra = Pattern.matches(ERcontraseya, contra);
 				if(correctoContra && !contra.equals(u.getContraseya())) {
 					try {
-						con = BD.initBD(nombreBD);
+						con = BD.initBD("baseDeDatos.db");
 					} catch (DeustoException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();
@@ -224,19 +224,10 @@ public class VentanaPerfil extends JFrame {
 		btnEliminarVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					try {
-						con = BD.initBD(nombreBD);
-					} catch (DeustoException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					try {
+						con = BD.initBD("baseDeDatos.db");
 						BD.eliminarVentas(con, u);
-					} catch (DeustoException e1) {
-						// TODO Auto-generated catch block
-						e1.printStackTrace();
-					}
-					try {
 						BD.closeBD(con);
+						u.eliminarVentasDeHashMap();
 					} catch (DeustoException e1) {
 						// TODO Auto-generated catch block
 						e1.printStackTrace();

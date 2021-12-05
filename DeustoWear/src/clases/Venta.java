@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class Venta {
 	
+	public String nick;
 	private int token;
 	private ArrayList<Articulo> arrayArticulos;
 	private int numArticulos;
@@ -37,6 +38,11 @@ public class Venta {
 
 	public Venta() {
 		// TODO Auto-generated constructor stub
+	}
+	
+	public Venta(String nick, int token) {
+		this.nick = nick;
+		this.token = token;
 	}
 
 

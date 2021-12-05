@@ -10,6 +10,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import clases.Articulo;
+import clases.BD;
 import clases.DeustoException;
 import clases.Usuario;
 
@@ -33,12 +34,20 @@ public class VentanaAdmin extends JFrame {
 	public JFrame ventanaAnterior,ventanaActual;
 	private JList<Articulo> listaArticulos;
 	private DefaultListModel<Articulo> modeloListaArticulos;
-	
+	private TreeMap<Integer, Articulo> tmArticulosAdmin = new TreeMap<>();
 	
 	/**
 	 * Create the frame.
+	 * @throws DeustoException 
 	 */
-	public VentanaAdmin(JFrame va,Usuario u) {
+	public VentanaAdmin(JFrame va,Usuario u) throws DeustoException {
+		con = BD.initBD("baseDeDatos.db");
+		BD.cargarMapaUsuariosDeInfoBBDD(con);
+		tmArticulosAdmin = BD.cargarMapaArticulosDeInfoBBDD(con);
+		/*BD.insertarCamisetaBBDD(con, a1);
+		BD.insertarPantalonBBDD(con, a2);
+		BD.insertarSudaderaBBDD(con, a3);*/
+		BD.closeBD(con);
 		ventanaAnterior = va;
 		ventanaActual = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -143,7 +152,6 @@ public class VentanaAdmin extends JFrame {
 		
 		
 		anyadirArticulosALista();
-		setVisible(true);
 		/**EVENTOS*/
 		btnInicio.addActionListener(new ActionListener() {
 			
@@ -162,8 +170,8 @@ public class VentanaAdmin extends JFrame {
 	}
 	
 	private void anyadirArticulosALista() {
-		for(int clave : VentanaInicio.getTmArticulos().keySet()) {
-			Articulo valor = VentanaInicio.getTmArticulos().get(clave);
+		for(int clave : tmArticulosAdmin.keySet()) {
+			Articulo valor = tmArticulosAdmin.get(clave);
 			modeloListaArticulos.addElement(valor);
 		}
 		listaArticulos.setModel(modeloListaArticulos);

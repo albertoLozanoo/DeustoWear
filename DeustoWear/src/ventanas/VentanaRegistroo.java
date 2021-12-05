@@ -247,7 +247,7 @@ public class VentanaRegistroo extends JFrame {
 					Connection con = null;
 					Connection con2 = null;
 					try {
-						con = BD.initBD("baseDeDatos");
+						con = BD.initBD("baseDeDatos.db");
 					} catch (DeustoException e2) {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
@@ -263,7 +263,7 @@ public class VentanaRegistroo extends JFrame {
 						Usuario u = new Usuario(nick, contraseya,avatar);
 						VentanaInicio.tmUsuarios.put(u.getNick(), u);
 						try {
-							con2 = BD.initBD("baseDeDatos");
+							con2 = BD.initBD("baseDeDatos.db");
 						} catch (DeustoException e2) {
 							// TODO Auto-generated catch block
 							e2.printStackTrace();

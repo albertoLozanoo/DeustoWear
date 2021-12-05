@@ -152,8 +152,8 @@ public class VentanaInicio extends JFrame {
 		
 		con = BD.initBD("baseDeDatos.db");
 		BD.crearTablas(con);
-		BD.cargarMapaUsuariosDeInfoBBDD(con);
-		BD.cargarMapaArticulosDeInfoBBDD(con);
+		tmUsuarios = BD.cargarMapaUsuariosDeInfoBBDD(con);
+		tmArticulos = BD.cargarMapaArticulosDeInfoBBDD(con);
 		/*BD.insertarCamisetaBBDD(con, a1);
 		BD.insertarPantalonBBDD(con, a2);
 		BD.insertarSudaderaBBDD(con, a3);*/
@@ -392,7 +392,12 @@ public class VentanaInicio extends JFrame {
 							log.log(Level.INFO, "Se ha loggeado el usuario" + nick + "\nHora: " + System.currentTimeMillis());*/
 							JOptionPane.showMessageDialog(null, "Cargando WearHome VISUAL admin web","WELCOME", JOptionPane.INFORMATION_MESSAGE);
 							Usuario admin = new Usuario("admin","admin");
-							new VentanaAdmin(ventanaActual, admin);
+							try {
+								new VentanaAdmin(ventanaActual, admin);
+							} catch (DeustoException e1) {
+								// TODO Auto-generated catch block
+								e1.printStackTrace();
+							}
 							ventanaActual.dispose();
 						}
 					}

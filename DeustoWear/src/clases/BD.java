@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -576,6 +577,12 @@ public class BD {
 		return tmArticulo;
 	}
 	
+	/**
+	 * Metodo que permite cargar un treeMap con todas las camisetas de la BBDD
+	 * @param con
+	 * @return TreeMap con todas las camiestas regitradas
+	 * @throws DeustoException
+	 */
 	public static TreeMap<Integer,Articulo> cargarCamisetasDeInfoDeBBDD(Connection con) throws DeustoException{
 		TreeMap<Integer, Articulo> tmCamisetas = new TreeMap<>();
 		Statement stmt = null;
@@ -619,7 +626,12 @@ public class BD {
 			
 			return tmCamisetas;
 		}
-	
+	/**
+	 * Metodo que permite cargar un treeMap con todas los pantalones de la BBDD
+	 * @param con
+	 * @return TreeMap con todas las pantalones regitradas
+	 * @throws DeustoException
+	 */
 	public static TreeMap<Integer,Articulo> cargarPantalonesDeInfoDeBBDD(Connection con) throws DeustoException{
 		TreeMap<Integer, Articulo> tmPantalones = new TreeMap<>();
 		Statement stmt = null;
@@ -664,6 +676,12 @@ public class BD {
 			return tmPantalones;
 		}
 	
+	/**
+	 * Metodo que permite cargar un treeMap con todas las sudaderas de la BBDD
+	 * @param con
+	 * @return TreeMap con todas las sudaderas regitradas
+	 * @throws DeustoException
+	 */
 	public static TreeMap<Integer,Articulo> cargarSudaderasDeInfoDeBBDD(Connection con) throws DeustoException{
 		TreeMap<Integer, Articulo> tmSudaderas = new TreeMap<>();
 		Statement stmt=null;
@@ -708,6 +726,12 @@ public class BD {
 			return tmSudaderas;
 		}
 	
+	/**
+	 * Metodo que permite registrar una nueva venta en la tabla Ventas de la BBDD
+	 * @param con
+	 * @param u Usuario al que registrar una nueva ventas
+	 * @throws DeustoException
+	 */
 	public static void registrarVenta(Connection con,Usuario u) throws DeustoException {
 		String sent = "INSERT INTO Ventas VALUES('"+u.getNick()+"','"+System.currentTimeMillis()+"')";
 		Statement st = null;
@@ -730,7 +754,53 @@ public class BD {
 			}
 		}
 	}
+	/**
+	 * Metodo que permite conseguir todas las ventas de todos los usuarios registrados
+	 * @param con
+	 * @return Devuelve un HashMap con toda la informacion de las ventas
+	 * @throws DeustoException
+	 */
+	public static HashMap<String,ArrayList<Venta>> conseguirVentasTotales(Connection con) throws DeustoException {
+		HashMap<String, ArrayList<Venta>> hmVentasTotales = new HashMap<>();
+		String sent = "SELECT * FROM Ventas";
+		Statement st = null;
+		try {
+			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
+			ResultSet rs = st.executeQuery(sent);
+			while(rs.next()) {
+				String nick = rs.getString("Nick");
+				int token = rs.getInt("Token");
+				
+				Venta v = new Venta(nick, token);
+				if(hmVentasTotales.containsKey(nick)) {
+					hmVentasTotales.put(nick, new ArrayList());
+				}
+				hmVentasTotales.get(nick).add(v);
+			}
+			rs.close();
+			return hmVentasTotales;
+		} catch (SQLException e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
+		}
+	}
 	
+	/**
+	 * Metodo que permite eliminar las ventas de un usuario
+	 * @param con
+	 * @param u Usuario al que eliminaremos las ventas
+	 * @throws DeustoException
+	 */
 	public static void eliminarVentas(Connection con,Usuario u) throws DeustoException {
 		String sent = "DELETE * FROM Ventas WHERE nick='"+u.getNick();
 		Statement st = null;
@@ -753,5 +823,37 @@ public class BD {
 			}
 		}
 	}
+	
+	/**
+	 * Metodo que permite contar el numero de Articulos en la BBDD
+	 * @param con
+	 * @return deuvelve el numero de articulos registrados
+	 * @throws DeustoException
+	 */
+	public static int contarArticulos(Connection con) throws DeustoException {
+		String sent = "select count(*) from Articulos";
+		Statement st = null;
+		int resul = 0;
 		
+		try {
+			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
+			ResultSet rs = st.executeQuery(sent);
+			resul = rs.getInt(1);
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
+		}
+		return resul;
+	}
+	
 }

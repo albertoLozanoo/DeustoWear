@@ -268,7 +268,7 @@ public class VentanaCesta extends JFrame {
 		btnEliminarCesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				modeloTablaArticulos.setRowCount(0);
-				
+				u.limpiarCarrito();
 				lblPrecioTotal.setForeground(new Color(240,240,240));
 				lblPrecioTotalInput.setForeground(new Color(240,240,240));
 			}
@@ -276,10 +276,13 @@ public class VentanaCesta extends JFrame {
 		
 		btnEliminarArticulo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
+				int index = tablaArticulos.getSelectedRow();
 				modeloTablaArticulos.removeRow(tablaArticulos.getSelectedRow());
-				
+				double precioAreducir = (double) modeloTablaArticulos.getValueAt(index, 3);
+				//int precioAreducir = (int) tablaArticulos.getValueAt(index, 3);
 				//precioTotal = u.eliminarPrecioDeCesta(tablaArticulos.getSelectedRow());
 				JOptionPane.showMessageDialog(null, "Artículo eliminado del carrito ","DONE", JOptionPane.INFORMATION_MESSAGE);
+				precioTotal = precioTotal - precioAreducir;
 				panelCentro.updateUI();
 			}
 		});
@@ -288,12 +291,7 @@ public class VentanaCesta extends JFrame {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				
-				/*for(Usuario u: VentanaInicio.getHMVentasTotales().keySet()) {
-					for(Venta v : VentanaInicio.getHMVentasTotales().get(u)) {
-						
-					}
-					VentanaInicio.getHMVentasTotales().put(u,u.getVentaActual());
-				}*/
+				new VentanaEsperaTransaccion(va, u);
 				Connection con = null;
 				long s;
 				try {
@@ -303,7 +301,7 @@ public class VentanaCesta extends JFrame {
 					e1.printStackTrace();
 				}
 				u.comprar();
-				JOptionPane.showMessageDialog(null, "Compra registrada con exito " + u.getNick() + "\n gracias por tu visita te dejamos con tus \n articulos favoritos","¡¡GRACIAS!!", JOptionPane.INFORMATION_MESSAGE);
+				//JOptionPane.showMessageDialog(null, "Compra registrada con exito " + u.getNick() + "\n gracias por tu visita te dejamos con tus \n articulos favoritos","¡¡GRACIAS!!", JOptionPane.INFORMATION_MESSAGE);
 				Runnable r = new Runnable() {
 					public void run() {
 						for(int i=255;i>=0;i--) {
@@ -341,7 +339,7 @@ public class VentanaCesta extends JFrame {
 				}
 				
 				ventanaActual.dispose();
-				new VentanaFavoritos(va, u);
+				//new VentanaFavoritos(va, u);
 			}
 		});
 		
@@ -446,6 +444,8 @@ public class VentanaCesta extends JFrame {
 			}
 		}
 	}
+	
+	
 	
 
 	

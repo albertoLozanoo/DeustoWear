@@ -158,17 +158,24 @@ public class Usuario {
 		}
 	}
 	
+
 	public static void addCarrito(Articulo a) {
 		if(a !=null) {
 			carrito.add(a);
 		}
 	}
 	
+	public static void limpiarCarrito() {
+		carrito.clear();
+	}
+	
 	public  void eliminarArticulo(int id) {
 		Articulo f = carrito.remove(id);
 	}
 
-	
+	public void eliminarVentasDeHashMap() {
+		hmVentasUsuario.clear();
+	}
 	/**
 	 * Metodo que elimina un aritculo del array de favoritos del usuario
 	 * @param id del articulo a eliminar
@@ -181,6 +188,10 @@ public class Usuario {
 		carrito.clear();
 	}
 	
+	public void eliminarFavorito (Articulo a) {
+		favoritos.remove(a);
+	}
+	
 	
 	public static double sumaTotalAPagar() {
 		double sumaTotal = 0.0;
@@ -190,14 +201,22 @@ public class Usuario {
 		return sumaTotal;
 	}
 	
-	public static double eliminarPrecioDeCesta(Articulo a) {
+	/*public static double restarPrecioTotal(Double precio) {
+		double precioTotal = sumaTotalAPagar();
+		
+		precioTotal = precioTotal-precio;
+		
+		return precioTotal;
+	}*/
+	
+	/*public static double eliminarPrecioDeCesta(Articulo a) {
 		double precioTotal = 0.0;
 		for(Articulo art: carrito) {
 			precioTotal = precioTotal - a.getPrecio();
 		}
 		return precioTotal;
 	}
-	
+	*/
 	/**
 	 * Metodo que guarda en un fichero binario los articulos favoritos del usaurio
 	 */

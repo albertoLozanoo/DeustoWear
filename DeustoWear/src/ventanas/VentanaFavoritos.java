@@ -162,6 +162,9 @@ public class VentanaFavoritos extends JFrame {
 				// TODO Auto-generated method stub
 				modeloArticulosFavoritos.remove(listaArticulosFavoritos.getSelectedIndex());
 				JOptionPane.showMessageDialog(null, "Artículo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
+				Articulo a = listaArticulosFavoritos.getSelectedValue();
+				
+				//u.eliminarFavorito(a);
 				panelCentral.updateUI();
 				/*int pos = listaArticulosFavoritos.getSelectedIndex();
 				if(pos!=-1)

@@ -428,7 +428,7 @@ public class VentanaCesta extends JFrame {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy" + " ("+ System.currentTimeMillis()+")");
 		
 		Date d = new Date(System.currentTimeMillis());
-		String nomfich = u.getNick()+" "+sdf.format(d) +".txt";
+		String nomfich ="tickets/"+ u.getNick()+" "+sdf.format(d) +".txt";
 		PrintWriter pw = null;
 		
 		try {

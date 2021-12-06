@@ -1,2 +1,0 @@
-Camiseta [ID=111, name=camiseta, talla=S, precio=10.0, color=Negro, sexo=Hombre, imagen=imagenes/camisetas/camiseta1.png]
-TOTAL: 10.0 €

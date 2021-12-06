@@ -24,7 +24,7 @@ public class Camiseta extends Articulo{
 	 * @param sexo
 	 * @param imagen
 	 */
-	public Camiseta(int id, String name,String talla, int precio, String color,String sexo, String imagen) {
+	public Camiseta(int id, String name,String talla, double precio, String color,String sexo, String imagen) {
 		super(id,name,talla,precio,color,sexo,imagen);
 		
 	}

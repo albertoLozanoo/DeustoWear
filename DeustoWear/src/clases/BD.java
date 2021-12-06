@@ -71,7 +71,7 @@ public class BD {
 	 */
 	public static void crearTablas(Connection con) throws DeustoException {
 		String sent1 = "CREATE TABLE IF NOT EXISTS Articulos(ID Integer,Name String, Talla String,Precio Double,Color String, Sexo String, Imagen String, TipoPantalon String, Capucha String, TipoArticulo String)";
-		String sent2 = "CREATE TABLE IF NOT EXISTS Usuarios(Nick String, Contraseña String, Avatar String)";
+		String sent2 = "CREATE TABLE IF NOT EXISTS Usuarios(Nick String, Contraseya String, Avatar String)";
 		String sent3 = "CREATE TABLE IF NOT EXISTS Ventas(Nick String, Token long)";
 		
 		Statement st = null;
@@ -150,7 +150,7 @@ public class BD {
 	 * @throws DeustoException 
 	 */
 	public static int obtenerUsuario(Connection con, String nick, String c) throws DeustoException {
-		String sentencia = "SELECT Contraseña FROM Usuarios WHERE 	Nick ='"+nick+"'";
+		String sentencia = "SELECT Contraseya FROM Usuarios WHERE 	Nick ='"+nick+"'";
 		Statement st = null;
 		int resul=0;
 		try {
@@ -158,7 +158,7 @@ public class BD {
 			logger.log( Level.INFO, "Statement: " + st );
 			ResultSet rs = st.executeQuery(sentencia);
 			if(rs.next()) { //Hemos encontrado una tupla que cumple la condición
-				if(rs.getString("Contraseña").equals(c)) {
+				if(rs.getString("Contraseya").equals(c)) {
 					resul = 2;
 				}else {
 					resul = 1;
@@ -300,7 +300,7 @@ public class BD {
 	 */
 	public static void cambiarContrasenya(Connection con, String nick, String c) throws DeustoException {
 		
-		String sent = "UPDATE Usuarios SET Contraseña = '"+c+"' WHERE Nick = '"+nick+"'";
+		String sent = "UPDATE Usuarios SET Contraseya = '"+c+"' WHERE Nick = '"+nick+"'";
 		Statement st = null;
 		
 		try {
@@ -507,14 +507,14 @@ public class BD {
 		TreeMap<String, Usuario> tmUsuario = new TreeMap<>();
 		Statement stmt = null;
 		
-		String sentSQL = "SELECT Nick,Contraseña FROM Usuarios";
+		String sentSQL = "SELECT Nick,Contraseya FROM Usuarios";
 		try {
 			stmt = con.createStatement();
 			logger.log( Level.INFO, "Statement: " + stmt );
 			ResultSet rs = stmt.executeQuery(sentSQL);
 			while(rs.next()) { 
 				String nick = rs.getString("Nick");
-				String contraseya = rs.getString("Contraseña");
+				String contraseya = rs.getString("Contraseya");
 				Usuario u = new Usuario(nick,contraseya);
 				tmUsuario.put(nick, u);
 			}

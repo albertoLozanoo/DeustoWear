@@ -234,6 +234,9 @@ public class VentanaRegistroo extends JFrame {
 			}
 		});
 	
+		/**
+		 * Boton que valida si es posible registrar al usuario con los datos introducidos
+		 */
 		btnRegistrarse.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String ERnick = "[A-Za-z]{1,15}";

@@ -413,7 +413,7 @@ public class VentanaInicio extends JFrame {
 	 * Metodo recursivo que recorre el HashMap de ventas y suma el precio total de todas las ventas
 	 * @param hmVentasTotales
 	 * @param it
-	 * @return
+	 * @return la suma de las ventasTotales
 	 */
 	public static int sumaHMVentasTotales(HashMap<String,ArrayList<Venta>> hmVentasTotales,Iterator<String> it) {
 		if(it.hasNext()) {

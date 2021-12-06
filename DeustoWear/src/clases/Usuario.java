@@ -232,22 +232,6 @@ public class Usuario {
 		return sumaTotal;
 	}
 	
-	/*public static double restarPrecioTotal(Double precio) {
-		double precioTotal = sumaTotalAPagar();
-		
-		precioTotal = precioTotal-precio;
-		
-		return precioTotal;
-	}*/
-	
-	/*public static double eliminarPrecioDeCesta(Articulo a) {
-		double precioTotal = 0.0;
-		for(Articulo art: carrito) {
-			precioTotal = precioTotal - a.getPrecio();
-		}
-		return precioTotal;
-	}
-	*/
 	/**
 	 * Metodo que guarda en un fichero binario los articulos favoritos del usaurio
 	 */
@@ -303,14 +287,6 @@ public class Usuario {
 		}
 	}
 	
-	/*public static void comprar() {
-		Double precioTotal = Usuario.sumaTotalAPagar();
-		
-		ventaActual = new Venta(ventaActual.getToken(),Usuario.getCarrito(),Usuario.getCarrito().size(),System.currentTimeMillis());
-		Usuario.tmVentasUsuario.put(ventaActual.getToken(), ventaActual);
-		System.out.println(ventaActual);
-		System.out.println("Venta Registrada con Exito " + Usuario.getNick());
-	}*/
 
 	public static void comprar() {
 		double precioTotal = 0;
@@ -326,11 +302,6 @@ public class Usuario {
 		System.out.println(numVentas + ": ventas realizadas " + getNick());
 	}
 	
-	public static void recorrerHashVentas() {
-		for(int clave : hmVentasUsuario.keySet()) {
-			Venta valor = hmVentasUsuario.get(clave);
-		}
-	}
 	
 	/**
 	 * Metodo recursivo que obtiene la suma de los elementos de un array de Integer

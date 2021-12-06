@@ -189,6 +189,9 @@ public class VentanaPerfil extends JFrame {
 		
 		
 		/*EVENTOS*/
+		/**
+		 * Boton que permite editar la contraseya del usaurio
+		 */
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String contra = JOptionPane.showInputDialog("Introduzca la nueva contraseña:");
@@ -221,6 +224,9 @@ public class VentanaPerfil extends JFrame {
 
 		});
 		
+		/**
+		 * Boton que permite eliminar las ventas de un usuario
+		 */
 		btnEliminarVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 					try {
@@ -239,6 +245,9 @@ public class VentanaPerfil extends JFrame {
 
 		});
 		
+		/**
+		 * Boton que lleva a la ventana Home
+		 */
 		btnWearHome.addActionListener(new ActionListener() {
 			
 			@Override
@@ -253,6 +262,10 @@ public class VentanaPerfil extends JFrame {
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
+		
+		/**
+		 * Boton que lleva a la ventana Favoritos
+		 */
 		btnFavoritos.addActionListener(new ActionListener() {
 			
 			@Override
@@ -262,6 +275,10 @@ public class VentanaPerfil extends JFrame {
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
+		
+		/**
+		 * Boton que lleva a la ventana Cesta
+		 */
 		btnCesta.addActionListener( new ActionListener() {
 			
 			@Override

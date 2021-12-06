@@ -157,6 +157,9 @@ public class VentanaAdmin extends JFrame {
 		
 		anyadirArticulosALista();
 		/**EVENTOS*/
+		/**
+		 * Boton que vuelve a la ventana Inicio
+		 */
 		btnInicio.addActionListener(new ActionListener() {
 			
 			@Override
@@ -172,6 +175,9 @@ public class VentanaAdmin extends JFrame {
 			}
 		});
 		
+		/**
+		 * Boton que abre el panel para ver las ventas
+		 */
 		btnVentas.addActionListener(new ActionListener() {
 			
 			@Override
@@ -181,6 +187,9 @@ public class VentanaAdmin extends JFrame {
 		});
 	}
 	
+	/**
+	 * Metodo que permite añadir los aritculos a la lista
+	 */
 	private void anyadirArticulosALista() {
 		for(int clave : tmArticulosAdmin.keySet()) {
 			Articulo valor = tmArticulosAdmin.get(clave);

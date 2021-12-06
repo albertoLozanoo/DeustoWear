@@ -265,6 +265,9 @@ public class VentanaCesta extends JFrame {
 		
 		
 		/*EVENTOS*/
+		/**
+		 * Boton que permite eliminar todos los articulos de la cesta
+		 */
 		btnEliminarCesta.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				modeloTablaArticulos.setRowCount(0);
@@ -273,20 +276,24 @@ public class VentanaCesta extends JFrame {
 				lblPrecioTotalInput.setForeground(new Color(240,240,240));
 			}
 		});
-		
+		/**
+		 * Boton que permite eliminar un articulo en contreto de la lista
+		 */
 		btnEliminarArticulo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = tablaArticulos.getSelectedRow();
+				double precioAreducir = Double.parseDouble((String)modeloTablaArticulos.getValueAt(index, 2));
 				modeloTablaArticulos.removeRow(tablaArticulos.getSelectedRow());
-				double precioAreducir = (double) modeloTablaArticulos.getValueAt(index, 3);
-				//int precioAreducir = (int) tablaArticulos.getValueAt(index, 3);
-				//precioTotal = u.eliminarPrecioDeCesta(tablaArticulos.getSelectedRow());
 				JOptionPane.showMessageDialog(null, "Artículo eliminado del carrito ","DONE", JOptionPane.INFORMATION_MESSAGE);
 				precioTotal = precioTotal - precioAreducir;
+				lblPrecioTotalInput.setText(""+ precioTotal);
 				panelCentro.updateUI();
 			}
 		});
 		
+		/**
+		 * Boton que permite acceder al pago siempre y cuando haya agregado algun aritculo a su carrito
+		 */
 		btnPagar.addActionListener(new ActionListener() {
 			
 			public void actionPerformed(ActionEvent arg0) {
@@ -343,6 +350,9 @@ public class VentanaCesta extends JFrame {
 			}
 		});
 		
+		/**
+		 * Boton que lleva a la ventana Inicio
+		 */
 		btnLogo.addActionListener(new ActionListener() {
 			
 			@Override
@@ -357,7 +367,9 @@ public class VentanaCesta extends JFrame {
 			}
 		});
 		
-		
+		/**
+		 * Boton que lleva a la ventana Perfil
+		 */
 		btnPerfil.addActionListener(new ActionListener() {
 			
 			@Override
@@ -373,6 +385,9 @@ public class VentanaCesta extends JFrame {
 			}
 		});
 		
+		/**
+		 * Boton que lleva a la ventana Home
+		 */
 		btnWearHome.addActionListener(new ActionListener() {
 			
 			@Override
@@ -387,6 +402,10 @@ public class VentanaCesta extends JFrame {
 				
 			}
 		});
+		
+		/**
+		 * Boton que lleva a la ventna Favoritos
+		 */
 		btnFavoritos.addActionListener(new ActionListener() {
 			
 			@Override
@@ -397,6 +416,9 @@ public class VentanaCesta extends JFrame {
 			}
 		});
 		
+		/**
+		 * Boton que lleva de nuevo a la ventana Home para seguir comprando 
+		 */
 		btnSeguirComprando.addActionListener(new ActionListener() {
 			
 			@Override
@@ -413,6 +435,10 @@ public class VentanaCesta extends JFrame {
 			}
 		});
 	}
+	
+	/**
+	 *Metodo que permite cargar los articulos del carrito del usuario en TextArea 
+	 */
 	private void cargarCarritoEnTextArea() {
 		String texto = "";
 		double total = 0;
@@ -424,6 +450,9 @@ public class VentanaCesta extends JFrame {
 		ticket.setText(texto);
 	}
 	
+	/**
+	 * Metodo que genera un ticket para el usuario reghistradno la hora de la compra 
+	 */
 	private void generarTicket() {
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy" + " ("+ System.currentTimeMillis()+")");
 		

@@ -124,7 +124,9 @@ public class VentanaFavoritos extends JFrame {
 		cargarFavoritosDelFichero();
 		setVisible(true);
 		
-		
+		/**
+		 * Boton que lleva a la ventana Home
+		 */
 		btnWearHome.addActionListener(new ActionListener() {
 			
 			@Override
@@ -139,7 +141,9 @@ public class VentanaFavoritos extends JFrame {
 			}
 		});
 		
-		
+		/**
+		 * Boton que lleva a la ventana Perfil
+		 */
 		btnPerfil.addActionListener(new ActionListener() {
 			
 			@Override
@@ -155,6 +159,9 @@ public class VentanaFavoritos extends JFrame {
 			}
 		});
 		
+		/**
+		 * Boton que permite eliminar un fvorito de su Array
+		 */
 		btnEliminar.addActionListener(new ActionListener() {
 			
 			@Override
@@ -163,25 +170,14 @@ public class VentanaFavoritos extends JFrame {
 				modeloArticulosFavoritos.remove(listaArticulosFavoritos.getSelectedIndex());
 				JOptionPane.showMessageDialog(null, "Artículo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
 				Articulo a = listaArticulosFavoritos.getSelectedValue();
-				
-				//u.eliminarFavorito(a);
-				panelCentral.updateUI();
-				/*int pos = listaArticulosFavoritos.getSelectedIndex();
-				if(pos!=-1)
-				{
-					modeloArticulosFavoritos.addElement(listaArticulosFavoritos.getSelectedValue());
-					listaArticulosFavoritos.setModel(modeloArticulosFavoritos);
-					
-					modeloArticulosFavoritos.removeElementAt(pos);
-					listaArticulosFavoritos.setModel(modeloArticulosFavoritos);
-					JOptionPane.showMessageDialog(null, "Artículo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
-					panelCentral.updateUI();
-				}*/
+	
+				panelCentral.updateUI();	
 			}
-		
-		
 		});
 		
+		/**
+		 * Boton que lleva a la ventana Home
+		 */
 		btnWearHome.addActionListener(new ActionListener() {
 			
 			@Override
@@ -196,6 +192,10 @@ public class VentanaFavoritos extends JFrame {
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
+		
+		/**
+		 * Boton que lleva a la ventana Perfil
+		 */
 		btnPerfil.addActionListener(new ActionListener() {
 			
 			@Override
@@ -210,6 +210,10 @@ public class VentanaFavoritos extends JFrame {
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
+		
+		/**
+		 * Boton que lleva a la ventana Cesta
+		 */
 		btnCesta.addActionListener(new ActionListener() {
 			
 			@Override
@@ -219,11 +223,11 @@ public class VentanaFavoritos extends JFrame {
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
-	
-		
 	}
 
-
+	/**
+	 * Metodo que permite cargar los favoritos del usuario en una lista
+	 */
 	private void cargarFavoritosDelFichero() {
 		// TODO Auto-generated method stub
 		modeloArticulosFavoritos.removeAllElements();

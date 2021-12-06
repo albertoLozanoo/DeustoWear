@@ -181,7 +181,9 @@ public class VentanaHome extends JFrame {
 		this.cargarPaneles();
 		
 		
-		
+		/**
+		 * Boton que lleva a la ventana Perfil
+		 */
 		btnPerfil.addActionListener(new ActionListener() {
 			
 			@Override
@@ -191,6 +193,9 @@ public class VentanaHome extends JFrame {
 			}
 		});
 		
+		/**
+		 * Boton que lleva a la ventana Inicio
+		 */
 		btnLogo.addActionListener(new ActionListener() {
 			
 			@Override
@@ -206,6 +211,9 @@ public class VentanaHome extends JFrame {
 			}
 		});
 		
+		/**
+		 * Boton que lleva a la ventana Perfil
+		 */
 		btnPerfil.addActionListener(new ActionListener() {
 			
 			@Override
@@ -221,6 +229,9 @@ public class VentanaHome extends JFrame {
 			}
 		});
 		
+		/**
+		 * Boton que lleva a la ventana Favoritos
+		 */
 		btnFavoritos.addActionListener(new ActionListener() {
 			
 			@Override
@@ -231,6 +242,9 @@ public class VentanaHome extends JFrame {
 			}
 		});
 		
+		/**
+		 * Boton que lleva a la ventana Cesta
+		 */
 		btnCesta.addActionListener(new ActionListener() {
 			
 			@Override
@@ -241,6 +255,9 @@ public class VentanaHome extends JFrame {
 			}
 		});
 		
+		/**
+		 * Boton que permite la busqueda de articulos en concreto refrescando el panelCentro
+		 */
 		btnBuscar.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -279,11 +296,12 @@ public class VentanaHome extends JFrame {
 				}
 			}
 		});
-		
-		
 	}
 	
-	
+	/**
+	 * Metodo que permite cargar los paneles de los distinos articulos en el panelCentro
+	 * @throws DeustoException
+	 */
 	public void cargarPaneles() throws DeustoException {
 		Connection con = BD.initBD("baseDeDatos.db");
 		TreeMap<Integer , Articulo> tm = BD.cargarMapaArticulosDeInfoBBDD(con);
@@ -308,7 +326,9 @@ public class VentanaHome extends JFrame {
 		}
 		BD.closeBD(con);
 	}
-	
+	/*
+	 * Metodos para el sistema de busqueda de articulos
+	 */
 	public void cargarPanelesConPantalones() throws DeustoException {
 		Connection con = BD.initBD("baseDeDatos.db");
 		TreeMap<Integer , Articulo> tm = BD.cargarPantalonesDeInfoDeBBDD(con);
@@ -319,7 +339,9 @@ public class VentanaHome extends JFrame {
 		}
 		BD.closeBD(con);
 	}
-	
+	/*
+	 * Metodos para el sistema de busqueda de articulos
+	 */
 	public void cargarPanelesConSudaderas() throws DeustoException {
 		Connection con = BD.initBD("baseDeDatos.db");
 		TreeMap<Integer , Articulo> tm = BD.cargarSudaderasDeInfoDeBBDD(con);

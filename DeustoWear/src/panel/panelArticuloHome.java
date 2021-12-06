@@ -20,6 +20,9 @@ import javax.swing.text.html.ImageView;
 
 import clases.Articulo;
 import clases.BD;
+import clases.Camiseta;
+import clases.Pantalon;
+import clases.Sudadera;
 import clases.Usuario;
 import clases.Venta;
 import enumeration.Colores;
@@ -101,7 +104,8 @@ public class panelArticuloHome extends JPanel {
 		lblSexo.setForeground(new Color(255, 255, 255));
 		panelSur.add(lblSexo, "cell 1 4,alignx center,aligny bottom");
 		
-		/*ComboBox Color*/
+		
+		
 		JComboBox cbColor = new JComboBox();
 		panelSur.add(cbColor, "cell 0 3,growx");
 		
@@ -119,7 +123,7 @@ public class panelArticuloHome extends JPanel {
 		}
 	
 		
-		/*ComboBox Talla*/
+		
 		JComboBox cbTalla = new JComboBox();
 		panelSur.add(cbTalla, "cell 0 5,growx");
 		
@@ -138,11 +142,20 @@ public class panelArticuloHome extends JPanel {
 		}
 		
 		
-		/*EVENTOS*/
 		
+		/*EVENTOS*/
 		btnComprar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				u.addCarrito(a);
+				if(a instanceof Camiseta){
+					Camiseta c = new Camiseta(a.getID(),a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(),((Colores)cbColor.getSelectedItem()).toString(), a.getSexo(), a.getImagen());
+					u.addCarrito(c);
+				}else if(a instanceof Pantalon) {
+					Pantalon p = new Pantalon(a.getID(), a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(),((Colores)cbColor.getSelectedItem()).toString(),a.getSexo(), a.getImagen(),((Pantalon) a).getTipoPantalon());
+					u.addCarrito(p);
+				}else if(a instanceof Sudadera) {
+					Sudadera s = new Sudadera(a.getID(), a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(), ((Colores)cbColor.getSelectedItem()).toString(), a.getSexo(), a.getImagen(),((Sudadera) a).getCapucha());
+					u.addCarrito(s);
+				}
 				System.out.println("Articulo anyadido a carrito");
 				for(Articulo a : u.carrito) {
 					System.out.println(a);
@@ -151,14 +164,20 @@ public class panelArticuloHome extends JPanel {
 		});
 		btnFavoritos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				u.addFavorito(a);
-				System.out.println("Articulo anyadido a favoritos");
-				for(Articulo a : u.favoritos) {
+				if(a instanceof Camiseta){
+					Camiseta c = new Camiseta(a.getID(),a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(),((Colores)cbColor.getSelectedItem()).toString(), a.getSexo(), a.getImagen());
+					u.addFavorito(c);
+				}else if(a instanceof Pantalon) {
+					Pantalon p = new Pantalon(a.getID(), a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(),((Colores)cbColor.getSelectedItem()).toString(),a.getSexo(), a.getImagen(),((Pantalon) a).getTipoPantalon());
+					u.addFavorito(p);
+				}else if(a instanceof Sudadera) {
+					Sudadera s = new Sudadera(a.getID(), a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(), ((Colores)cbColor.getSelectedItem()).toString(), a.getSexo(), a.getImagen(),((Sudadera) a).getCapucha());
+					u.addFavorito(s);
+				}
+				System.out.println("Articulo anyadido a carrito");
+				for(Articulo a : u.carrito) {
 					System.out.println(a);
 				}
-				/*JOptionPane.showMessageDialog(null, "Articulo anyadido a favoritos","Favorito", JOptionPane.INFORMATION_MESSAGE);
-				u.guardarFavoritosEnFichero();
-				System.out.println("Guardando los favoritos en fichero...");*/
 			}
 		});
 	}

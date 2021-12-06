@@ -27,19 +27,24 @@ public class Pantalon extends Articulo{
 	 * @param tipoPantalon  Largo / Corto
 	 * @param imagen URL img del pantalon
 	 */
-	
-
 	public Pantalon(int id, String name,String talla, double precio, String color,String sexo,String imagen,String tipoPantalon) {
 		super(id,name,talla,precio,color,sexo,imagen);
 
 		this.tipoPantalon = tipoPantalon;
 	}
 
+	/**
+	 * Metodo que devuelve el tipo de pantalono (corto/largo)
+	 * @return tipoPantalon
+	 */
 	public String getTipoPantalon() {
 		return tipoPantalon;
 	}
 
-	
+	/**
+	 * Metodo que modifica el tipo de pantalon de un pantalon
+	 * @param tipoPantalon 
+	 */
 	public void setTipoPantalon(String tipoPantalon) {
 		this.tipoPantalon = tipoPantalon;
 	}

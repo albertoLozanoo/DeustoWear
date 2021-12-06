@@ -256,6 +256,13 @@ public class BD {
 		}
 	}
 	
+	/**
+	 * Metodo que devuelve el path del avatar de un usuario
+	 * @param con Conexion con la BBDD
+	 * @param nick del usuario
+	 * @return String con el path de la imagen
+	 * @throws DeustoException
+	 */
 	public static String conseguirAvatar(Connection con,String nick) throws DeustoException {
 		String sent = "SELECT Avatar FROM Usuarios WHERE Nick ='"+nick+"'";
 		Statement st = null;
@@ -283,6 +290,7 @@ public class BD {
 		}
 		return null;
 	}
+	
 	/**
 	 * Método que permite al usuario cambiar su contraseña y se actualiza su info en la BD
 	 * @param con Conexion
@@ -290,7 +298,6 @@ public class BD {
 	 * @param c La nueva contraseña
 	 * @throws DeustoException 
 	 */
-	
 	public static void cambiarContrasenya(Connection con, String nick, String c) throws DeustoException {
 		
 		String sent = "UPDATE Usuarios SET Contraseña = '"+c+"' WHERE Nick = '"+nick+"'";
@@ -317,9 +324,9 @@ public class BD {
 	}
 	
 	/**
-	 * Metodo que inserta un articulo pasado por parametro en la tabla de Articulos de la BBDD
+	 * Metodo que inserta una camiseta pasada por parametro en la tabla de Articulos de la BBDD
 	 * @param con Conexion
-	 * @param a Articulo ha introducir en la BBDD
+	 * @param a Camiseta ha introducir en la BBDD
 	 * @throws DeustoException 
 	 */
 	public static void insertarCamisetaBBDD(Connection con,Articulo a) throws DeustoException {
@@ -350,6 +357,12 @@ public class BD {
 		
 	}
 	
+	/**
+	 * Metodo que inserta un pantalon pasado por parametro en la tabla de Articulos de la BBDD
+	 * @param con Conexion
+	 * @param a Pantalon ha introducir en la BBDD
+	 * @throws DeustoException 
+	 */
 	public static void insertarPantalonBBDD(Connection con,Articulo a) throws DeustoException {
 		if (a instanceof Pantalon) { 
 			String sent = "INSERT INTO Articulos VALUES("+a.getID()+",'"+a.getName()+"','"+a.getTalla()+"',"+a.getPrecio()+",'"+a.getColor()+"','"+a.getSexo()+"','"+a.getImagen()+"','"+((Pantalon) a).getTipoPantalon()+"','null','p')";                             
@@ -380,6 +393,12 @@ public class BD {
 		}
 	}
 	
+	/**
+	 * Metodo que inserta una sudadera pasado por parametro en la tabla de Articulos de la BBDD
+	 * @param con Conexion
+	 * @param a Sudadera ha introducir en la BBDD
+	 * @throws DeustoException 
+	 */
 	public static void insertarSudaderaBBDD(Connection con,Articulo a) throws DeustoException {
 		if(a instanceof Sudadera) {
 			String sent = "INSERT INTO Articulos VALUES("+a.getID()+",'"+a.getName()+"','"+a.getTalla()+"',"+a.getPrecio()+",'"+a.getColor()+"','"+a.getSexo()+"','"+a.getImagen()+"','null','"+ ((Sudadera)a).getCapucha()+"','s')";
@@ -415,7 +434,6 @@ public class BD {
 	 * @param nick Nombre del usuario a eliminar 
 	 * @throws DeustoException 
 	 */
-	
 	public static void eliminarUsuarioBBDD(Connection con,String nick) throws DeustoException{
 		String sent ="DELETE FROM Usuarios WHERE nick='"+nick+"'";
 		Statement st = null;
@@ -450,7 +468,6 @@ public class BD {
 	 * @param ID ID del articulo a eliminar 
 	 * @throws DeustoException 
 	 */
-	
 	public static void eliminarArticuloBBDD(Connection con,int ID) throws DeustoException{
 		String sent ="DELETE FROM Articulos WHERE ID='"+ID+"'";
 		Statement st = null;
@@ -626,6 +643,7 @@ public class BD {
 			
 			return tmCamisetas;
 		}
+	
 	/**
 	 * Metodo que permite cargar un treeMap con todas los pantalones de la BBDD
 	 * @param con
@@ -754,6 +772,7 @@ public class BD {
 			}
 		}
 	}
+	
 	/**
 	 * Metodo que permite conseguir todas las ventas de todos los usuarios registrados
 	 * @param con

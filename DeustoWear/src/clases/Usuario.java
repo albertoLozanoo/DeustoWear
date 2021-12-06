@@ -116,22 +116,29 @@ public class Usuario {
 	  - Un valor negativo, si la Usuario this es menor que la Usuario u
 	  - Un valor positivo, si la Usuario this es mayor que la Usuario u
 	  - Un 0, Usuario this es igual que la Usuario u
-	 * */
-	
+	 **/
 	public int compareTo(Usuario u) {
 		return u.nick.compareTo(this.nick);
 	}
 	
+	/**
+	 * Metodo que devulve la lista de favoritos del usaurio
+	 * @return
+	 */
 	public static  ArrayList<Articulo> getFavoritos() {
 		return favoritos;
 	}
 
+	/**
+	 * Metodo que permite modificar el arrya de favoritos del usuario
+	 * @param favoritos
+	 */
 	public  void setFavoritos(ArrayList<Articulo> favoritos) {
 		Usuario.favoritos = favoritos;
 	}
 
 	/**
-	 * ToString clase Usuario
+	 * toString clase Usuario
 	 */
 	@Override
 	public String toString() {
@@ -158,21 +165,34 @@ public class Usuario {
 		}
 	}
 	
-
+	/**
+	 * Metodo que permite añadir un articulo al carrito del usuario
+	 * @param a Artiuclo a añadir en el carrito
+	 */
 	public static void addCarrito(Articulo a) {
 		if(a !=null) {
 			carrito.add(a);
 		}
 	}
 	
+	/**
+	 * Metodo que permite eliminar todos los articulos del carrito del usario
+	 */
 	public static void limpiarCarrito() {
 		carrito.clear();
 	}
 	
+	/**
+	 * Metodo que permite eliminar un articulo en concreto
+	 * @param id del artiuclo a eliminar
+	 */
 	public  void eliminarArticulo(int id) {
 		Articulo f = carrito.remove(id);
 	}
 
+	/**
+	 * Meotod que permite eliminar las ventas de un usuario 
+	 */
 	public void eliminarVentasDeHashMap() {
 		hmVentasUsuario.clear();
 	}
@@ -184,15 +204,26 @@ public class Usuario {
 		Articulo f = favoritos.remove(id);
 	}
 	
+	/**
+	 * Metodo que permite eliminar todos los articulos del carrito de usuario
+	 * @param carrito a eliminar
+	 */
 	public void eliminarCarrito(ArrayList<Articulo> carrito) {
 		carrito.clear();
 	}
 	
+	/**
+	 * Metodo que permite eliminar un articulo de la lista de favoritos del usuario
+	 * @param a artiuclo a eliminar de la lista de favortios
+	 */
 	public void eliminarFavorito (Articulo a) {
 		favoritos.remove(a);
 	}
 	
-	
+	/**
+	 * Metodo que recorre el carrito del usuario y consgie la sumaTotal del precio
+	 * @return sumaTotal, cantidad total a pagar
+	 */
 	public static double sumaTotalAPagar() {
 		double sumaTotal = 0.0;
 		for(Articulo a: getCarrito()) {

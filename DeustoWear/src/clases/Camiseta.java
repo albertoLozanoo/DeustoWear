@@ -15,7 +15,7 @@ public class Camiseta extends Articulo{
 	}
 	
 	/**
-	 * Constructor de la calse Camiseta
+	 * Constructor de la clase Camiseta
 	 * @param id
 	 * @param name
 	 * @param talla
@@ -29,10 +29,18 @@ public class Camiseta extends Articulo{
 		
 	}
 	
+	/**
+	 * Metodo que devuelve la talla de una camiseta
+	 * @return talla de la camiseta
+	 */
 	public String getTalla() {
 		return talla;
 	}
 
+	/**
+	 * Metodo que modifica la talla de una camiseta
+	 * @param talla de la camiseta
+	 */
 	public void setTalla(String talla) {
 		this.talla = talla;
 	}

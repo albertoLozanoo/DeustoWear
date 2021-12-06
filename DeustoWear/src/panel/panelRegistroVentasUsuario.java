@@ -1,7 +1,16 @@
 package panel;
 
 import javax.swing.JPanel;
+
+import clases.BD;
+import clases.DeustoException;
+import clases.Venta;
+
 import java.awt.BorderLayout;
+import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import javax.swing.JLabel;
 import javax.swing.JButton;
 

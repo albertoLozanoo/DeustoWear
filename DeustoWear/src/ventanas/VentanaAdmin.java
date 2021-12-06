@@ -3,6 +3,8 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.TreeMap;
 
 import javax.swing.JFrame;
@@ -13,6 +15,7 @@ import clases.Articulo;
 import clases.BD;
 import clases.DeustoException;
 import clases.Usuario;
+import clases.Venta;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
@@ -26,6 +29,7 @@ import javax.swing.JList;
 import java.awt.Font;
 import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
+import panel.panelArticuloHome;
 
 public class VentanaAdmin extends JFrame {
 
@@ -143,7 +147,7 @@ public class VentanaAdmin extends JFrame {
 		btnInicio.setBackground(new Color(255, 153, 0));
 		panelSur.add(btnInicio);
 		
-		JButton btnVentas = new JButton("VER Ventas Usuarios");
+		JButton btnVentas = new JButton("Ver ventas totales");
 		panelSur.add(btnVentas);
 		
 		modeloListaArticulos = new DefaultListModel<Articulo>();
@@ -167,6 +171,14 @@ public class VentanaAdmin extends JFrame {
 				//new VentanaPerfil(ventanaActual);
 			}
 		});
+		
+		btnVentas.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 	}
 	
 	private void anyadirArticulosALista() {
@@ -176,5 +188,6 @@ public class VentanaAdmin extends JFrame {
 		}
 		listaArticulos.setModel(modeloListaArticulos);
 	}
+	
 	
 }

@@ -300,5 +300,34 @@ public class Usuario {
 			Venta valor = hmVentasUsuario.get(clave);
 		}
 	}
+	
+	/**
+	 * Metodo recursivo que obtiene la suma de los elementos de un array de Integer
+	 * @param a ArrayList<Integer>
+	 * @param i variable que ira aumentando a medida que recorra el array
+	 * @return
+	 */
+	public static int obtenerSumaArrayInt(ArrayList<Integer> a,int i) {
+		if(i<a.size()) {
+			Integer valor = a.get(i);
+			return valor = valor + obtenerSumaArrayInt(a, i+1);
+		}else {
+			return 0;
+		}
+	}
+	
+	/**
+	 * Metodo que muestra el contenido por consola de un array de Integer
+	 * @param a ArrayList<Integer>
+	 * @param i variable que ira aumentando a medida que recorra el array
+	 */
+	public static void muestraArrayInt(ArrayList<Integer> a,int i) {
+		if(i<a.size()) {
+			Integer valor = a.get(i);
+			System.out.println(valor);
+			muestraArrayInt(a, i+1);
+		}
+	}
+
 }
 	

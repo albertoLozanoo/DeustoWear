@@ -27,6 +27,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.TreeMap;
 import java.util.logging.FileHandler;
 import java.util.logging.Handler;
@@ -407,6 +408,28 @@ public class VentanaInicio extends JFrame {
 			
 		});
 	}
+	
+	/**
+	 * Metodo recursivo que recorre el HashMap de ventas y suma el precio total de todas las ventas
+	 * @param hmVentasTotales
+	 * @param it
+	 * @return
+	 */
+	public static int sumaHMVentasTotales(HashMap<String,ArrayList<Venta>> hmVentasTotales,Iterator<String> it) {
+		if(it.hasNext()) {
+			String clave = it.next();
+			ArrayList<Venta> aVentas = hmVentasTotales.get(clave);
+			int suma = 0;
+			for(Venta v : aVentas) {
+				suma = (int) (v.getPrecioTotal() + suma);
+			}
+			return suma + sumaHMVentasTotales(hmVentasTotales, it);
+		}else {
+			return 0;
+		}
+	}
+	
+	
 }
 		
 		

@@ -7,7 +7,10 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.sql.Connection;
+import java.util.ArrayList;
 import java.util.regex.Pattern;
 
 import javax.swing.DefaultListModel;
@@ -168,7 +171,7 @@ public class VentanaFavoritos extends JFrame {
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
 				modeloArticulosFavoritos.remove(listaArticulosFavoritos.getSelectedIndex());
-				JOptionPane.showMessageDialog(null, "Artículo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Artï¿½culo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
 				Articulo a = listaArticulosFavoritos.getSelectedValue();
 	
 				panelCentral.updateUI();	
@@ -237,7 +240,35 @@ public class VentanaFavoritos extends JFrame {
 		listaArticulosFavoritos.setModel(modeloArticulosFavoritos);
 		
 	}
-
+	
+	/**
+	 * Metodo que lee el fichero txt del usuario y lo carga en un array 
+	 * @return Array con los articulos favoritos, pero en forma de string
+	 */
+	/*
+	private ArrayList<String> leerTxt(){
+		ArrayList<String> afavoritostxt= new ArrayList<String>();
+		
+		try {
+			BufferedReader bf = new BufferedReader(new FileReader(Usuario.getNick()));
+			ArrayList<String> afavoritosleidos= new ArrayList<>();
+			String temp ="";
+			String bfRead;
+			while((bfRead = bf.readLine()) != null) {
+				temp = bfRead;
+				afavoritosleidos.add(temp);
+			}
+			bf.close();
+		
+		afavoritostxt = afavoritosleidos;
+			
+		}catch (Exception e) {
+			System.err.println("No se encontrÃ³ el fichero");
+		}
+		
+		return afavoritostxt;
+	}
+	lo dejo comentado porque falta implementarlo*/
 
 	
 }

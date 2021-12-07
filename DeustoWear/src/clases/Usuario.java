@@ -4,15 +4,20 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.TreeMap;
+
+import javax.swing.JOptionPane;
 
 import ventanas.VentanaInicio;
 
@@ -155,9 +160,9 @@ public class Usuario {
 	}
 	
 	/**
-	 * Metodo que añade un articulo a favoritos
-	 * @param a Articulo a añadir 
-	 * @return devuelve true si lo puede añaadir, false en caso contrario
+	 * Metodo que aï¿½ade un articulo a favoritos
+	 * @param a Articulo a aï¿½adir 
+	 * @return devuelve true si lo puede aï¿½aadir, false en caso contrario
 	 */
 	public static void addFavorito(Articulo a) {
 		if( a !=null && !favoritos.contains(a)) {
@@ -166,8 +171,8 @@ public class Usuario {
 	}
 	
 	/**
-	 * Metodo que permite añadir un articulo al carrito del usuario
-	 * @param a Artiuclo a añadir en el carrito
+	 * Metodo que permite aï¿½adir un articulo al carrito del usuario
+	 * @param a Artiuclo a aï¿½adir en el carrito
 	 */
 	public static void addCarrito(Articulo a) {
 		if(a !=null) {
@@ -330,6 +335,51 @@ public class Usuario {
 			muestraArrayInt(a, i+1);
 		}
 	}
+	
+	
+	
+	/**
+	 * Metodo que usaremos para obtener la informacion del array favoritos que cargaremos al fichero de texto
+	 * @return cadena con la informacion de favoritos 
+	 */
+	/*
+	private String obtenerFavorito() {
+	
+		String texto = "";
+		for(Articulo fav: Usuario.getFavoritos()) {
+			texto += fav.toString() + "\n";
+		}
+		return texto; 
+		
+	}
+	lo dejo comentado porque falta implementarlo*/
+	
+	
+	/** 
+	 * Metodo que guarda en un fichero de texto los articulos favoritos del usuario utilizando el metodo obtenerFavorito
+	 * @throws IOException 
+	 */
+	 
+	/* 
+	public void guardarFavoritosEnFicheroTxt() throws IOException {
+		PrintWriter pw = null;
+		
+		
+		try {
+			String nomfich = Usuario.getNick();
+			nomfich = nomfich +".txt";
+			pw = new PrintWriter(new FileWriter(nomfich, true));
+			String texto = obtenerFavorito();
+			pw.println(texto);
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			pw.flush();
+			pw.close();
+		}
+	}
+	lo dejo comentado porque falta implementarlo*/
 
 }
 	

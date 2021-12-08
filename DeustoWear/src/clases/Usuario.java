@@ -209,6 +209,10 @@ public class Usuario {
 		Articulo f = favoritos.remove(id);
 	}
 	
+	public static void limpiarFavoritos() {
+		favoritos.clear();
+	}
+	
 	/**
 	 * Metodo que permite eliminar todos los articulos del carrito de usuario
 	 * @param carrito a eliminar

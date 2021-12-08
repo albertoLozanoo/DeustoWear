@@ -112,6 +112,11 @@ public class VentanaFavoritos extends JFrame {
 		btnEliminar.setBackground(new Color(204, 102, 51));
 		panelOeste.add(btnEliminar);
 		
+		JButton btnLimpiar = new JButton("Borrar todo");
+		btnLimpiar.setFont(new Font("Lato", Font.PLAIN, 19));
+		btnLimpiar.setBackground(new Color(204, 102, 51));
+		panelOeste.add(btnLimpiar);
+		
 		
 		
 		JPanel panelCentral = new JPanel();
@@ -173,6 +178,19 @@ public class VentanaFavoritos extends JFrame {
 				modeloArticulosFavoritos.remove(listaArticulosFavoritos.getSelectedIndex());
 				JOptionPane.showMessageDialog(null, "Art�culo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
 				Articulo a = listaArticulosFavoritos.getSelectedValue();
+	
+				panelCentral.updateUI();	
+			}
+		});
+		
+		btnLimpiar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				modeloArticulosFavoritos.setSize(0);
+				u.limpiarFavoritos();
+				JOptionPane.showMessageDialog(null, "Lista de favoritos eliminada ","DONE", JOptionPane.INFORMATION_MESSAGE);
 	
 				panelCentral.updateUI();	
 			}

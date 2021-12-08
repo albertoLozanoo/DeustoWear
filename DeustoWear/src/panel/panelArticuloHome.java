@@ -155,8 +155,10 @@ public class panelArticuloHome extends JPanel {
 				}else if(a instanceof Sudadera) {
 					Sudadera s = new Sudadera(a.getID(), a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(), ((Colores)cbColor.getSelectedItem()).toString(), a.getSexo(), a.getImagen(),((Sudadera) a).getCapucha());
 					u.addCarrito(s);
+				}else if(cbTalla.getSelectedItem().equals("Seleccione una talla...")|cbTalla.getSelectedItem().equals("Seleccione un color...")){
+					JOptionPane.showMessageDialog(null, "Seleccione un color y una talla","¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 				}
-				System.out.println("Articulo anyadido a carrito");
+				JOptionPane.showMessageDialog(null, "Artículo añadido a compras ","DONE", JOptionPane.INFORMATION_MESSAGE);
 				for(Articulo a : u.carrito) {
 					System.out.println(a);
 				}
@@ -173,8 +175,10 @@ public class panelArticuloHome extends JPanel {
 				}else if(a instanceof Sudadera) {
 					Sudadera s = new Sudadera(a.getID(), a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(), ((Colores)cbColor.getSelectedItem()).toString(), a.getSexo(), a.getImagen(),((Sudadera) a).getCapucha());
 					u.addFavorito(s);
+				}else if(cbTalla.getSelectedItem().equals("Seleccione una talla...")|cbTalla.getSelectedItem().equals("Seleccione un color...")){
+					JOptionPane.showMessageDialog(null, "Seleccione un color y una talla","¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 				}
-				System.out.println("Articulo anyadido a carrito");
+				JOptionPane.showMessageDialog(null, "Artículo añadido a favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
 				for(Articulo a : u.carrito) {
 					System.out.println(a);
 				}

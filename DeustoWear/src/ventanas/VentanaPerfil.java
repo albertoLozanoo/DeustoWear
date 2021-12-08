@@ -229,6 +229,10 @@ public class VentanaPerfil extends JFrame {
 		 */
 		btnEliminarVentas.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				
+					modeloListVentasUsuario.removeAllElements();;
+					
+				
 					try {
 						con = BD.initBD("baseDeDatos.db");
 						BD.eliminarVentas(con, u);

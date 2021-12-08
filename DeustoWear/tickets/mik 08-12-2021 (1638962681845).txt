@@ -1,0 +1,2 @@
+Pantalon [tipoPantalon=Corto, ID=123, name=pantalon, talla=L, precio=25.0, color=BLANCO, sexo=Mujer, imagen=imagenes/pantalones/pantalon1.png]
+TOTAL: 25.0 €

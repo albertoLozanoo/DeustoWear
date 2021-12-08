@@ -1,0 +1,5 @@
+Camiseta [ID=111, name=camiseta, talla=L, precio=10.0, color=BLANCO, sexo=Hombre, imagen=imagenes/camisetas/camiseta1.png]
+Camiseta [ID=111, name=camiseta, talla=L, precio=10.0, color=BLANCO, sexo=Hombre, imagen=imagenes/camisetas/camiseta1.png]
+Camiseta [ID=111, name=camiseta, talla=L, precio=10.0, color=BLANCO, sexo=Hombre, imagen=imagenes/camisetas/camiseta1.png]
+Camiseta [ID=111, name=camiseta, talla=L, precio=10.0, color=BLANCO, sexo=Hombre, imagen=imagenes/camisetas/camiseta1.png]
+TOTAL: 40.0 €

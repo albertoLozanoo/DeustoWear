@@ -311,6 +311,32 @@ public class VentanaInicio extends JFrame {
 		
 		/*EVENTOS*/
 		
+		Runnable r = new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while(true) {
+					btnRegistrarse.setForeground(Color.WHITE);
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					btnRegistrarse.setForeground(new Color(0, 0, 153));
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		Thread t = new Thread(r);
+		t.start();
+		
 		/**
 		 * Boton que al activarse cierra la ventana actual y abre la ventanaRegistro
 		 */
@@ -366,6 +392,7 @@ public class VentanaInicio extends JFrame {
 							JOptionPane.showMessageDialog(null, "Cargando WearHome, bienvenid@ "+ nick,"WELCOME", JOptionPane.INFORMATION_MESSAGE);
 							Usuario u = new Usuario(nick,c);
 							u.cargarFavoritosDelFichero();
+							u.cargarVentasDesdeFichero();
 							Handler handler = null;
 							try {
 								handler = new FileHandler("loggers/LogUserLogged");

@@ -1,11 +1,13 @@
 package clases;
 
 
+import java.io.Serializable;
+
 import enumeration.Colores;
 import enumeration.Sexo;
 import enumeration.Talla;
 
-public class Camiseta extends Articulo{
+public class Camiseta extends Articulo implements Serializable{
 	
 	/**
 	 * Constructor de la calse Camiseta

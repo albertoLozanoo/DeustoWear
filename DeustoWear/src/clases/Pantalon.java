@@ -1,12 +1,14 @@
 package clases;
 
 
+import java.io.Serializable;
+
 import enumeration.Colores;
 import enumeration.Sexo;
 import enumeration.Talla;
 import enumeration.TipoPantalon;
 
-public class Pantalon extends Articulo{
+public class Pantalon extends Articulo implements Serializable{
 	String tipoPantalon;
 	
 	/**

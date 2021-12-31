@@ -10,7 +10,14 @@ import java.awt.GridLayout;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import javax.swing.DefaultListModel;
@@ -29,6 +36,7 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.plaf.DimensionUIResource;
 import javax.swing.text.html.ImageView;
 
+import clases.Articulo;
 import clases.BD;
 import clases.DeustoException;
 import clases.Usuario;
@@ -54,6 +62,7 @@ public class VentanaPerfil extends JFrame {
 	 */
 	
 	public VentanaPerfil(JFrame va, Usuario u) throws DeustoException {
+		
 		
 		//cargarTMventasUsuarioAJlist();
 		System.out.println("Este es el logo " + u.getLogoAvatar());
@@ -104,7 +113,7 @@ public class VentanaPerfil extends JFrame {
 		panelNorte.setBackground(new Color(255, 102, 51));
 		panelNorte.setLayout(new GridLayout(0, 4, 0, 0));
 		
-		JButton btnEditar = new JButton("CAMBIAR CONTRASE\u00D1A");
+		JButton btnEditar = new JButton("CAMBIAR CONTRASEYA");
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setFont(new Font("Lato", Font.PLAIN, 19));
 		btnEditar.setBackground(new Color(204, 102, 51));
@@ -293,8 +302,11 @@ public class VentanaPerfil extends JFrame {
 			}
 		});
 		
+		
 	}
 	
-}
+	}
+
+	
 
 

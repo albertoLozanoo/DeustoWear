@@ -1,0 +1,2 @@
+Camiseta [ID=111, name=camiseta, talla=XS, precio=10.0, color=NARANJA, sexo=Hombre, imagen=imagenes/camisetas/camiseta1.png]
+TOTAL: 10.0 €

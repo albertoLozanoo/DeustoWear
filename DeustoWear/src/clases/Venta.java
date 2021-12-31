@@ -1,11 +1,12 @@
 package clases;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Venta {
+public class Venta implements Serializable{
 	
 	public String nick;
 	private int token;

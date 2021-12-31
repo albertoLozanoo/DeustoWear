@@ -182,6 +182,7 @@ public class panelArticuloHome extends JPanel {
 				for(Articulo a : u.carrito) {
 					System.out.println(a);
 				}
+				u.guardarFavoritosEnFichero();
 			}
 		});
 	}

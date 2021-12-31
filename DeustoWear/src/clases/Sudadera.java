@@ -1,11 +1,13 @@
 package clases;
 
 
+import java.io.Serializable;
+
 import enumeration.Colores;
 import enumeration.Sexo;
 import enumeration.Talla;
 
-public class Sudadera extends Articulo {
+public class Sudadera extends Articulo implements Serializable{
 	String capucha;
 	
 	/**

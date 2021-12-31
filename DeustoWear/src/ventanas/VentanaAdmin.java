@@ -9,7 +9,10 @@ import java.util.TreeMap;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import clases.Articulo;
 import clases.BD;
@@ -38,6 +41,10 @@ public class VentanaAdmin extends JFrame {
 	public JFrame ventanaAnterior,ventanaActual;
 	private JList<Articulo> listaArticulos;
 	private DefaultListModel<Articulo> modeloListaArticulos;
+	
+	private JTable tablaArticulos;
+	private DefaultTableModel modeloTablaArticulos= new DefaultTableModel();
+		
 	private TreeMap<Integer, Articulo> tmArticulosAdmin = new TreeMap<>();
 	
 	/**
@@ -150,12 +157,23 @@ public class VentanaAdmin extends JFrame {
 		JButton btnVentas = new JButton("Ver ventas totales");
 		panelSur.add(btnVentas);
 		
-		modeloListaArticulos = new DefaultListModel<Articulo>();
+		/*modeloListaArticulos = new DefaultListModel<Articulo>();
 		listaArticulos = new JList<Articulo>(modeloListaArticulos);
-		panelCentroDerechaLista.add(listaArticulos);
+		panelCentroDerechaLista.add(listaArticulos);*/
+		
+		String [] header = {"TAG","TALLA", "PRECIO","COLOR", "SEXO"};
+		modeloTablaArticulos.setColumnIdentifiers(header);
+			for(Articulo a : tmArticulosAdmin.values()) {
+				String dataRow[] = {a.getName(),a.getTalla(),String.valueOf(a.getPrecio()),a.getColor(),a.getSexo()};
+				modeloTablaArticulos.addRow(dataRow);	
+			}
+		
+		tablaArticulos = new JTable(modeloTablaArticulos);
+		JScrollPane scroll =new JScrollPane(tablaArticulos);
+		panelCentroDerechaLista.add(tablaArticulos);
 		
 		
-		anyadirArticulosALista();
+		//anyadirArticulosALista();
 		/**EVENTOS*/
 		/**
 		 * Boton que vuelve a la ventana Inicio
@@ -190,13 +208,13 @@ public class VentanaAdmin extends JFrame {
 	/**
 	 * Metodo que permite añadir los aritculos a la lista
 	 */
-	private void anyadirArticulosALista() {
+	/*private void anyadirArticulosALista() {
 		for(int clave : tmArticulosAdmin.keySet()) {
 			Articulo valor = tmArticulosAdmin.get(clave);
 			modeloListaArticulos.addElement(valor);
 		}
 		listaArticulos.setModel(modeloListaArticulos);
-	}
+	}*/
 	
 	
 }

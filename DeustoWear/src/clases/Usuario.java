@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.sql.Connection;
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import ventanas.VentanaInicio;
 
 
 
-public class Usuario {
+public class Usuario implements Serializable{
 	private static String nick;
 	private static String contraseya;
 	public static ArrayList<Articulo> carrito = new ArrayList<>();
@@ -98,7 +99,7 @@ public class Usuario {
 		Usuario.avatar = avatar;
 	}
 
-	public  HashMap<Integer, Venta> getHmVentasUsuario() {
+	public  HashMap<Integer,Venta> getHmVentasUsuario() {
 		return hmVentasUsuario;
 	}
 
@@ -241,6 +242,8 @@ public class Usuario {
 		return sumaTotal;
 	}
 	
+	
+	
 	/**
 	 * Metodo que guarda en un fichero binario los articulos favoritos del usaurio
 	 */
@@ -248,8 +251,11 @@ public class Usuario {
 		ObjectOutputStream oos = null;
 		
 		try {
-			oos = new ObjectOutputStream(new FileOutputStream(Usuario.getNick()+"FAVORITOS.DAT"));
-			oos.writeObject(favoritos);
+			oos = new ObjectOutputStream(new FileOutputStream(Usuario.getNick()+"&&favoritos.DAT"));
+			for(Articulo a : favoritos ) {
+				System.out.println(a);
+				oos.writeObject(favoritos);
+			}
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -264,13 +270,12 @@ public class Usuario {
 		}
 	}
 	
-	
 	/**
 	 * Metodo que carga el array de articulos favortios del usuario con la informacion del fichero favoritos
 	 */
 	public static void cargarFavoritosDelFichero() {
 		ObjectInputStream ois = null;
-		File f = new File(Usuario.getNick()+"FAVORITOS.DAT");
+		File f = new File(Usuario.getNick()+"&&favoritos.DAT");
 		if(f.exists()) {
 			try {
 				ois = new ObjectInputStream(new FileInputStream(f));
@@ -295,6 +300,66 @@ public class Usuario {
 			}
 		}
 	}
+	
+	/**
+	 * Metodo que permite guardar las ventas de un usuario en un fichero
+	 */
+	public static void guardarVentasEnFichero() {
+		ObjectOutputStream oos = null;
+		try {
+			oos = new ObjectOutputStream(new FileOutputStream(nick + "&&ventas.DAT"));
+			System.out.println("Escribiendo los datos del hm en el fichero...");
+			for (int clave : hmVentasUsuario.keySet()) {
+				for (Venta v : hmVentasUsuario.values()) { //recorro todos los articulos pertenecientes a cada clave
+					System.out.println(v);
+					oos.writeObject(hmVentasUsuario); //escribo en el fichero lo ue hay en el mapa
+				}
+			}
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (oos!= null)
+				try {
+					oos.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+		}
+	}
+	
+	/**
+	 * Metodo que permite cargar las ventas de un usuario de un fichero a un HM
+	 */
+	public static void cargarVentasDesdeFichero() {
+		ObjectInputStream ois = null;
+		try {
+			System.out.println("Cargando los datos desde el fichero...");
+			ois = new ObjectInputStream(new FileInputStream(nick + "&&ventas.DAT"));
+			hmVentasUsuario = (HashMap<Integer, Venta>) ois.readObject();
+			for(int clave : hmVentasUsuario.keySet()) {
+				for (Venta v : hmVentasUsuario.values()) { //recorro todas las caves del hashmap
+					System.out.println(v);
+				}
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			if (ois != null)
+				try {
+					ois.close();
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		}
 	
 
 	public static void comprar() {

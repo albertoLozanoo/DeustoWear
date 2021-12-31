@@ -8,9 +8,15 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.FileReader;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.regex.Pattern;
 
 import javax.swing.DefaultListModel;
@@ -21,13 +27,16 @@ import javax.swing.JList;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableModel;
 
 import clases.Articulo;
 import clases.BD;
 import clases.DeustoException;
-import clases.Usuario;;
+import clases.Usuario;
+import clases.Venta;;
 
 public class VentanaFavoritos extends JFrame {
 
@@ -35,8 +44,13 @@ public class VentanaFavoritos extends JFrame {
 	public static Connection con;
 	public static String nombreBD = "baseDeDatos.db";
 	private JFrame ventanaActual, ventanaAnterior;
+	 
 	private JList<Articulo> listaArticulosFavoritos;
-	private DefaultListModel<Articulo> modeloArticulosFavoritos;
+	private DefaultListModel<Articulo> modeloArticulosFavoritos; 
+	
+	private JTable tablaArticulos;
+	private DefaultTableModel modeloTablaArticulos= new DefaultTableModel();
+		
 	private JScrollPane scrollListaArticulosFavoritos;
 	
 
@@ -124,12 +138,26 @@ public class VentanaFavoritos extends JFrame {
 		panelCentral.setBackground(new Color(255, 153, 51));
 		panelCentral.setLayout(new GridLayout(1, 1, 0, 0));
 		
-		modeloArticulosFavoritos = new DefaultListModel<Articulo>();
+		/*modeloArticulosFavoritos = new DefaultListModel<Articulo>();
 		listaArticulosFavoritos = new JList<Articulo>(modeloArticulosFavoritos);
 		scrollListaArticulosFavoritos = new JScrollPane(listaArticulosFavoritos);
-		panelCentral.add(scrollListaArticulosFavoritos);
+		panelCentral.add(scrollListaArticulosFavoritos);*/
 		
-		cargarFavoritosDelFichero();
+		
+		String [] header = {"TAG","TALLA", "PRECIO","COLOR", "SEXO"};
+		modeloTablaArticulos.setColumnIdentifiers(header);
+		for(Articulo a : u.getFavoritos()) {
+			String dataRow[] = {a.getName(),a.getTalla(),String.valueOf(a.getPrecio()),a.getColor(),a.getSexo()};
+			modeloTablaArticulos.addRow(dataRow);	
+		}
+		
+		tablaArticulos = new JTable(modeloTablaArticulos);
+		JScrollPane scroll =new JScrollPane(tablaArticulos);
+		panelCentral.add(tablaArticulos);
+		
+		
+		
+		//cargarFavoritosDelFichero();
 		setVisible(true);
 		
 		/**
@@ -175,23 +203,23 @@ public class VentanaFavoritos extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				modeloArticulosFavoritos.remove(listaArticulosFavoritos.getSelectedIndex());
-				JOptionPane.showMessageDialog(null, "Art�culo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
-				Articulo a = listaArticulosFavoritos.getSelectedValue();
-	
+				int index = tablaArticulos.getSelectedRow();
+				u.eliminarFavorito(index);
+				modeloTablaArticulos.removeRow(tablaArticulos.getSelectedRow());
+				JOptionPane.showMessageDialog(null, "Articulo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
 				panelCentral.updateUI();	
 			}
 		});
+		
 		
 		btnLimpiar.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent arg0) {
 				// TODO Auto-generated method stub
-				modeloArticulosFavoritos.setSize(0);
+				modeloTablaArticulos.setRowCount(0);
 				u.limpiarFavoritos();
 				JOptionPane.showMessageDialog(null, "Lista de favoritos eliminada ","DONE", JOptionPane.INFORMATION_MESSAGE);
-	
 				panelCentral.updateUI();	
 			}
 		});
@@ -249,7 +277,7 @@ public class VentanaFavoritos extends JFrame {
 	/**
 	 * Metodo que permite cargar los favoritos del usuario en una lista
 	 */
-	private void cargarFavoritosDelFichero() {
+	/*private void cargarFavoritosDelFichero() {
 		// TODO Auto-generated method stub
 		modeloArticulosFavoritos.removeAllElements();
 		for(Articulo v: Usuario.getFavoritos()) {
@@ -257,7 +285,7 @@ public class VentanaFavoritos extends JFrame {
 		}
 		listaArticulosFavoritos.setModel(modeloArticulosFavoritos);
 		
-	}
+	}*/
 	
 	/**
 	 * Metodo que lee el fichero txt del usuario y lo carga en un array 

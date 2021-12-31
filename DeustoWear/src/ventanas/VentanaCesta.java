@@ -282,6 +282,7 @@ public class VentanaCesta extends JFrame {
 		btnEliminarArticulo.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 				int index = tablaArticulos.getSelectedRow();
+				u.eliminarArticulo(index);
 				double precioAreducir = Double.parseDouble((String)modeloTablaArticulos.getValueAt(index, 2));
 				modeloTablaArticulos.removeRow(tablaArticulos.getSelectedRow());
 				JOptionPane.showMessageDialog(null, "Artículo eliminado del carrito ","DONE", JOptionPane.INFORMATION_MESSAGE);
@@ -344,7 +345,7 @@ public class VentanaCesta extends JFrame {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-				
+				u.guardarVentasEnFichero();
 				ventanaActual.dispose();
 				//new VentanaFavoritos(va, u);
 			}

@@ -32,6 +32,9 @@ import javax.swing.JList;
 import java.awt.Font;
 import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
+import panel.panelAniadirCamiseta;
+import panel.panelAniadirPantalon;
+import panel.panelAniadirSudadera;
 import panel.panelArticuloHome;
 
 public class VentanaAdmin extends JFrame {
@@ -73,9 +76,16 @@ public class VentanaAdmin extends JFrame {
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
 		
+		JPanel panelSur = new JPanel();
+		panelSur.setBackground(new Color(0, 153, 204));
+		contentPane.add(panelSur, BorderLayout.SOUTH);
+		
 		JPanel panelIZQayadirArticulo = new JPanel();
 		panelCentro.add(panelIZQayadirArticulo);
 		panelIZQayadirArticulo.setLayout(new BorderLayout(0, 0));
+		panelAniadirCamiseta pc = new panelAniadirCamiseta();
+		panelIZQayadirArticulo.add(pc);
+		panelIZQayadirArticulo.updateUI();
 		
 		JPanel panelTituloIZQ = new JPanel();
 		panelTituloIZQ.setBackground(new Color(255, 102, 0));
@@ -89,6 +99,9 @@ public class VentanaAdmin extends JFrame {
 		JPanel panelIZQSur = new JPanel();
 		panelIZQSur.setBackground(new Color(255, 102, 0));
 		panelIZQayadirArticulo.add(panelIZQSur, BorderLayout.SOUTH);
+		
+		JPanel panelAniadirCentro = new JPanel();
+		panelIZQayadirArticulo.add(panelAniadirCentro, BorderLayout.CENTER);
 		
 		JButton btnCamiseta = new JButton("Camiseta");
 		btnCamiseta.setForeground(new Color(255, 255, 255));
@@ -145,17 +158,11 @@ public class VentanaAdmin extends JFrame {
 		JPanel panelCentroDerechaLista = new JPanel();
 		panelDerechaCentroLista.add(panelCentroDerechaLista, BorderLayout.CENTER);
 		
-		JPanel panelSur = new JPanel();
-		panelSur.setBackground(new Color(0, 153, 204));
-		contentPane.add(panelSur, BorderLayout.SOUTH);
-		
 		JButton btnInicio = new JButton("Inicio");
 		btnInicio.setForeground(new Color(255, 255, 255));
 		btnInicio.setBackground(new Color(255, 153, 0));
 		panelSur.add(btnInicio);
 		
-		JButton btnVentas = new JButton("Ver ventas totales");
-		panelSur.add(btnVentas);
 		
 		/*modeloListaArticulos = new DefaultListModel<Articulo>();
 		listaArticulos = new JList<Articulo>(modeloListaArticulos);
@@ -169,8 +176,7 @@ public class VentanaAdmin extends JFrame {
 			}
 		
 		tablaArticulos = new JTable(modeloTablaArticulos);
-		JScrollPane scroll =new JScrollPane(tablaArticulos);
-		panelCentroDerechaLista.add(tablaArticulos);
+		
 		
 		
 		//anyadirArticulosALista();
@@ -193,14 +199,33 @@ public class VentanaAdmin extends JFrame {
 			}
 		});
 		
-		/**
-		 * Boton que abre el panel para ver las ventas
-		 */
-		btnVentas.addActionListener(new ActionListener() {
-			
+		btnCamiseta.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				
+				panelAniadirCentro.removeAll();
+				panelAniadirCamiseta pc = new panelAniadirCamiseta();
+				panelAniadirCentro.add(pc);
+				panelAniadirCentro.updateUI();
+			}
+		});
+		
+		btnPantalon.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelAniadirCentro.removeAll();
+				panelAniadirPantalon pp = new panelAniadirPantalon();
+				panelAniadirCentro.add(pp);
+				panelAniadirCentro.updateUI();
+			}
+		});
+		
+		btnSudadera.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelAniadirCentro.removeAll();
+				panelAniadirSudadera ps = new panelAniadirSudadera();
+				panelAniadirCentro.add(ps);
+				panelAniadirCentro.updateUI();
 			}
 		});
 	}

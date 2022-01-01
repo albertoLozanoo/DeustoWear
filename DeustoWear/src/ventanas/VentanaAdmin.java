@@ -11,6 +11,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
@@ -28,6 +29,9 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import java.awt.Font;
@@ -37,12 +41,17 @@ import panel.panelAniadirCamiseta;
 import panel.panelAniadirPantalon;
 import panel.panelAniadirSudadera;
 import panel.panelArticuloHome;
+import panel.panelEliminarUsuario;
+import panel.panelVentasUsuarios;
 
 public class VentanaAdmin extends JFrame {
 
 	private JPanel contentPane;
 	public Connection con;
 	public JFrame ventanaAnterior,ventanaActual;
+	private JMenu menuHerramientas,menuExit;
+	private JMenuBar menuBar;
+	private JPanel panelCNTeliminarArticulo;
 	/*private JList<Articulo> listaArticulos;
 	private DefaultListModel<Articulo> modeloListaArticulos;*/
 	
@@ -56,22 +65,25 @@ public class VentanaAdmin extends JFrame {
 	 * @throws DeustoException 
 	 */
 	public VentanaAdmin(JFrame va,Usuario u) throws DeustoException {
+		
 		con = BD.initBD("baseDeDatos.db");
 		BD.cargarMapaUsuariosDeInfoBBDD(con);
 		VentanaInicio.tmArticulos = BD.cargarMapaArticulosDeInfoBBDD(con);
-		/*BD.insertarCamisetaBBDD(con, a1);
-		BD.insertarPantalonBBDD(con, a2);
-		BD.insertarSudaderaBBDD(con, a3);*/
 		BD.closeBD(con);
+		
 		ventanaAnterior = va;
 		ventanaActual = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(10, 10, 1000, 1000);
 		setVisible(true);
+		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(new BorderLayout(0, 0));
+		
+		JPanel panelNorte = new JPanel();
+		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
 		JPanel panelCentro = new JPanel();
 		contentPane.add(panelCentro, BorderLayout.CENTER);
@@ -122,7 +134,7 @@ public class VentanaAdmin extends JFrame {
 		btnPantalon.setFont(new Font("Lato", Font.BOLD, 15));
 		panelIZQSur.add(btnPantalon);
 		
-		JPanel panelCNTeliminarArticulo = new JPanel();
+		panelCNTeliminarArticulo = new JPanel();
 		panelCentro.add(panelCNTeliminarArticulo);
 		panelCNTeliminarArticulo.setLayout(new BorderLayout(0, 0));
 		
@@ -139,7 +151,7 @@ public class VentanaAdmin extends JFrame {
 		panelDCHsur.setBackground(new Color(255, 102, 0));
 		panelCNTeliminarArticulo.add(panelDCHsur, BorderLayout.SOUTH);
 		
-		JButton btnElimiarArticulo = new JButton("Eliminar Articulo");
+		JButton btnElimiarArticulo = new JButton("Eliminar Usuario");
 		btnElimiarArticulo.setForeground(new Color(255, 255, 255));
 		btnElimiarArticulo.setBackground(new Color(255, 153, 0));
 		btnElimiarArticulo.setFont(new Font("Lato", Font.BOLD, 15));
@@ -163,7 +175,31 @@ public class VentanaAdmin extends JFrame {
 		btnInicio.setForeground(new Color(255, 255, 255));
 		btnInicio.setBackground(new Color(255, 153, 0));
 		panelSur.add(btnInicio);
+		panelNorte.setLayout(new GridLayout(0, 1, 0, 0));
 		
+		menuBar = new JMenuBar();
+		panelNorte.add(menuBar);
+		
+		menuHerramientas = new JMenu("Herramientas");
+		menuHerramientas.setHorizontalAlignment(SwingConstants.LEFT);
+		menuBar.add(menuHerramientas);
+		
+		JMenuItem mntmVerVentas = new JMenuItem("Ver Ventas");
+		mntmVerVentas.setHorizontalAlignment(SwingConstants.LEFT);
+		menuHerramientas.add(mntmVerVentas);
+		
+		
+		JMenuItem mntmEliminar = new JMenuItem("Eliminar Usuario");
+		mntmEliminar.setHorizontalAlignment(SwingConstants.LEFT);
+		menuHerramientas.add(mntmEliminar);
+		
+		menuExit = new JMenu("Salir");
+		menuExit.setHorizontalAlignment(SwingConstants.LEFT);
+		menuBar.add(menuExit);
+		
+		JMenuItem mntmSalir = new JMenuItem("Salir de la app");
+		mntmSalir.setHorizontalAlignment(SwingConstants.LEFT);
+		menuExit.add(mntmSalir);
 		
 		/*modeloListaArticulos = new DefaultListModel<Articulo>();
 		listaArticulos = new JList<Articulo>(modeloListaArticulos);
@@ -177,6 +213,12 @@ public class VentanaAdmin extends JFrame {
 			}
 		tablaArticulos = new JTable(modeloTablaArticulos);
 		panelCentroDerechaLista.add(tablaArticulos);
+		
+		panelAniadirCentro.removeAll();
+		panelAniadirCamiseta pc2 = new panelAniadirCamiseta();
+		panelAniadirCentro.add(pc2);
+		panelAniadirCentro.updateUI();
+		
 		
 		
 		/**EVENTOS*/
@@ -246,6 +288,38 @@ public class VentanaAdmin extends JFrame {
 				modeloTablaArticulos.removeRow(tablaArticulos.getSelectedRow());
 				
 				panelCentro.updateUI();
+			}
+		});
+		
+		mntmSalir.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				System.exit(0);
+			}
+		});
+		
+		mntmVerVentas.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelCNTeliminarArticulo.removeAll();
+				panelVentasUsuarios pv = new panelVentasUsuarios();
+				panelCNTeliminarArticulo.add(pv);
+				panelCNTeliminarArticulo.updateUI();
+				
+			}
+		});
+		
+		mntmEliminar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelCentro.removeAll();
+				panelEliminarUsuario pe = new panelEliminarUsuario();
+				panelCentro.add(pe);
+				panelCentro.updateUI();
+				
 			}
 		});
 	}

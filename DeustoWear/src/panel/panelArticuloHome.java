@@ -116,8 +116,8 @@ public class panelArticuloHome extends JPanel {
 		colores.add(Colores.NARANJA);
 		colores.add(Colores.NEGRO);
 		
-		String sel = "Seleccione un color...";
-		cbColor.addItem(sel);
+		//String sel = "Seleccione un color...";
+		//cbColor.addItem(sel);
 		for(Colores c: colores) {
 			cbColor.addItem(c);
 		}
@@ -135,8 +135,8 @@ public class panelArticuloHome extends JPanel {
 		tallas.add(Talla.XL);
 		tallas.add(Talla.XXL);
 		
-		String sel2 = "Seleccione una talla...";
-		cbTalla.addItem(sel2);
+		//String sel2 = "Seleccione una talla...";
+		//cbTalla.addItem(sel2);
 		for(Talla t:tallas) {
 			cbTalla.addItem(t);
 		}
@@ -155,35 +155,38 @@ public class panelArticuloHome extends JPanel {
 				}else if(a instanceof Sudadera) {
 					Sudadera s = new Sudadera(a.getID(), a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(), ((Colores)cbColor.getSelectedItem()).toString(), a.getSexo(), a.getImagen(),((Sudadera) a).getCapucha());
 					u.addCarrito(s);
-				}else if(cbTalla.getSelectedItem().equals("Seleccione una talla...")|cbTalla.getSelectedItem().equals("Seleccione un color...")){
-					JOptionPane.showMessageDialog(null, "Seleccione un color y una talla","¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 				}
 				JOptionPane.showMessageDialog(null, "Artículo añadido a compras ","DONE", JOptionPane.INFORMATION_MESSAGE);
 				for(Articulo a : u.carrito) {
 					System.out.println(a);
 				}
+				
 			}
 		});
 		btnFavoritos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(a instanceof Camiseta){
-					Camiseta c = new Camiseta(a.getID(),a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(),((Colores)cbColor.getSelectedItem()).toString(), a.getSexo(), a.getImagen());
-					u.addFavorito(c);
-				}else if(a instanceof Pantalon) {
-					Pantalon p = new Pantalon(a.getID(), a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(),((Colores)cbColor.getSelectedItem()).toString(),a.getSexo(), a.getImagen(),((Pantalon) a).getTipoPantalon());
-					u.addFavorito(p);
-				}else if(a instanceof Sudadera) {
-					Sudadera s = new Sudadera(a.getID(), a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(), ((Colores)cbColor.getSelectedItem()).toString(), a.getSexo(), a.getImagen(),((Sudadera) a).getCapucha());
-					u.addFavorito(s);
-				}else if(cbTalla.getSelectedItem().equals("Seleccione una talla...")|cbTalla.getSelectedItem().equals("Seleccione un color...")){
-					JOptionPane.showMessageDialog(null, "Seleccione un color y una talla","¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+				
+				
+					if(a instanceof Camiseta){
+						Camiseta c = new Camiseta(a.getID(),a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(),((Colores)cbColor.getSelectedItem()).toString(), a.getSexo(), a.getImagen());
+						u.addFavorito(c);
+					}else if(a instanceof Pantalon) {
+						Pantalon p = new Pantalon(a.getID(), a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(),((Colores)cbColor.getSelectedItem()).toString(),a.getSexo(), a.getImagen(),((Pantalon) a).getTipoPantalon());
+						u.addFavorito(p);
+					}else if(a instanceof Sudadera) {
+						Sudadera s = new Sudadera(a.getID(), a.getName(), ((Talla)cbTalla.getSelectedItem()).toString(), a.getPrecio(), ((Colores)cbColor.getSelectedItem()).toString(), a.getSexo(), a.getImagen(),((Sudadera) a).getCapucha());
+						u.addFavorito(s);
+					}else if(cbTalla.getSelectedItem().equals("Seleccione una talla...")|cbTalla.getSelectedItem().equals("Seleccione un color...")){
+						JOptionPane.showMessageDialog(null, "Seleccione un color y una talla","¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+					}
+					JOptionPane.showMessageDialog(null, "Artículo añadido a favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
+					for(Articulo a : u.carrito) {
+						System.out.println(a);
+					}
+					u.guardarFavoritosEnFichero();
+					
 				}
-				JOptionPane.showMessageDialog(null, "Artículo añadido a favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
-				for(Articulo a : u.carrito) {
-					System.out.println(a);
-				}
-				u.guardarFavoritosEnFichero();
-			}
+			
 		});
 	}
 	

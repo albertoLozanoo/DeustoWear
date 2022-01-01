@@ -80,6 +80,8 @@ public class VentanaInicio extends JFrame {
 	public static TreeMap<String, Usuario> tmUsuarios = new TreeMap<>();
 	public static TreeMap<Integer,Articulo> tmArticulos = new TreeMap<>();
 	public static HashMap<Usuario,ArrayList<Venta>> hmVentasTotales = new HashMap<>();
+
+	
 	
 	private JPanel panelCentroIzquierda;
 	private JPanel panelCentroDerecha;
@@ -159,6 +161,8 @@ public class VentanaInicio extends JFrame {
 		BD.insertarPantalonBBDD(con, a2);
 		BD.insertarSudaderaBBDD(con, a3);*/
 		BD.closeBD(con);
+		
+		
 		ventanaActual = this;
 		setTitle("Bienvenido a DeustoWear");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

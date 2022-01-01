@@ -793,9 +793,10 @@ public class BD {
 				
 				Venta v = new Venta(nick, token);
 				if(hmVentasTotales.containsKey(nick)) {
-					hmVentasTotales.put(nick, new ArrayList());
+					hmVentasTotales.put(nick, new ArrayList<Venta>());
+					hmVentasTotales.get(nick).add(v);
 				}
-				hmVentasTotales.get(nick).add(v);
+				
 			}
 			rs.close();
 			return hmVentasTotales;

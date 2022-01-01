@@ -280,6 +280,9 @@ public class Usuario implements Serializable{
 			try {
 				ois = new ObjectInputStream(new FileInputStream(f));
 				favoritos = (ArrayList<Articulo>) ois.readObject();
+				for(Articulo a: favoritos) {
+					System.out.println(a);
+				}
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

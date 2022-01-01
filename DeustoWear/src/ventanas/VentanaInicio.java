@@ -153,6 +153,7 @@ public class VentanaInicio extends JFrame {
 		Articulo a3 = new Sudadera(332,"sudadera","XXL",30,"Rojo","Hombre","imagenes/sudaderas/sudadera1.png","Con Capucha");*/
 		setVisible(true);
 		
+		
 		con = BD.initBD("baseDeDatos.db");
 		BD.crearTablas(con);
 		tmUsuarios = BD.cargarMapaUsuariosDeInfoBBDD(con);

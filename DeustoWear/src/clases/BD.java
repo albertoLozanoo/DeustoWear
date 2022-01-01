@@ -20,6 +20,7 @@ import enumeration.Talla;
 import enumeration.TipoPantalon;
 
 
+
 public class BD {
 	
 	private static Logger logger = Logger.getLogger( "BaseDatos" );
@@ -915,6 +916,17 @@ public class BD {
 			}
 		}
 		return resul;
+	}
+	
+	public static boolean existeArticuloBoolean(Connection con,int id) throws SQLException {
+		Statement statement = con.createStatement();
+		String sent = "select * from Articulos where ID ="+id;
+		ResultSet rs = statement.executeQuery(sent);
+		boolean existe = false;
+		if(rs.next())
+			existe = true;
+		rs.close();
+		return existe;
 	}
 	
 	/*public static int estaRegistrado(Connection con, String nick) throws DeustoException {

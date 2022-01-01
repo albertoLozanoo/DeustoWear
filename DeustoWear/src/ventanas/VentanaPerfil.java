@@ -50,7 +50,6 @@ public class VentanaPerfil extends JFrame {
 	public static Connection con;
 	public static String nombreBD = "baseDeDatos.db";
 	private JFrame ventanaActual, ventanaAnterior;
-	private JLabel lblnumPedidos;
 	private DefaultListModel<Venta> modeloListVentasUsuario;
 	private JList<Venta> listaVentasUsuario;
 	private JScrollPane scrollListaVentas;
@@ -82,6 +81,7 @@ public class VentanaPerfil extends JFrame {
 		
 		
 		JPanel panelSur = new JPanel();
+		panelSur.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		panelSur.setBackground(new Color(255, 102, 51));
 		panelSur.setLayout(new GridLayout(0, 4, 0, 0));
@@ -109,21 +109,22 @@ public class VentanaPerfil extends JFrame {
 		panelSur.add(btnPerfil);
 		
 		JPanel panelNorte = new JPanel();
+		panelNorte.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
-		panelNorte.setBackground(new Color(255, 102, 51));
-		panelNorte.setLayout(new GridLayout(0, 4, 0, 0));
+		panelNorte.setBackground(new Color(255, 153, 0));
+		panelNorte.setLayout(new MigLayout("", "[580.00px][292px,grow,right]", "[33px]"));
 		
-		JButton btnEditar = new JButton("CAMBIAR CONTRASEYA");
+		JButton btnEditar = new JButton("Cambiar contraseya");
 		btnEditar.setForeground(Color.WHITE);
 		btnEditar.setFont(new Font("Lato", Font.PLAIN, 19));
-		btnEditar.setBackground(new Color(204, 102, 51));
-		panelNorte.add(btnEditar);
+		btnEditar.setBackground(new Color(255, 153, 0));
+		panelNorte.add(btnEditar, "cell 0 0,grow");
 		
-		JButton btnEliminarVentas = new JButton("ELIMINAR VENTAS");
-		btnEliminarVentas.setForeground(Color.WHITE);
+		JButton btnEliminarVentas = new JButton("Eliminar venta");
+		btnEliminarVentas.setForeground(new Color(255, 255, 255));
 		btnEliminarVentas.setFont(new Font("Lato", Font.PLAIN, 19));
-		btnEliminarVentas.setBackground(new Color(204, 102, 51));
-		panelNorte.add(btnEliminarVentas);
+		btnEliminarVentas.setBackground(new Color(255, 153, 0));
+		panelNorte.add(btnEliminarVentas, "cell 1 0,grow");
 		
 		
 		JPanel panelCentral = new JPanel();
@@ -132,8 +133,9 @@ public class VentanaPerfil extends JFrame {
 		panelCentral.setLayout(new GridLayout(1, 2, 0, 0));
 		
 		JPanel panelCentroIzquierda = new JPanel();
+		panelCentroIzquierda.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panelCentroIzquierda.setForeground(new Color(255, 255, 255));
-		panelCentroIzquierda.setBackground(new Color(255, 153, 0));
+		panelCentroIzquierda.setBackground(new Color(153, 204, 255));
 		panelCentral.add(panelCentroIzquierda);
 		panelCentroIzquierda.setLayout(new MigLayout("", "[378.00px,grow][1px]", "[93.00px][72.00][grow]"));
 		
@@ -166,28 +168,25 @@ public class VentanaPerfil extends JFrame {
 		
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(255, 153, 0));
+		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panel.setBackground(new Color(153, 204, 255));
 		panelCentral.add(panel);
-		panel.setLayout(new MigLayout("", "[152px,grow]", "[49.00][55.00px][grow]"));
+		panel.setLayout(new MigLayout("", "[152px,grow]", "[83.00][55.00px][grow]"));
 		
 		JLabel lblEnunciado = new JLabel("\tPedidos realizados:");
 		lblEnunciado.setHorizontalAlignment(SwingConstants.LEFT);
 		lblEnunciado.setForeground(new Color(255, 255, 255));
-		lblEnunciado.setFont(new Font("Lato", Font.BOLD, 24));
+		lblEnunciado.setFont(new Font("Dialog", Font.BOLD, 42));
 		panel.add(lblEnunciado, "cell 0 0,alignx center,aligny bottom");
-		
-		lblnumPedidos = new JLabel("Num. de Pedidos : ");
-		lblnumPedidos.setForeground(Color.WHITE);
-		lblnumPedidos.setFont(new Font("Lato", Font.PLAIN, 18));
-		lblnumPedidos.setHorizontalAlignment(SwingConstants.CENTER);
-		panel.add(lblnumPedidos, "cell 0 1,alignx center,aligny center");
 		
 		/**
 		 * Lista de ventas hechas por cliente
 		 */
 		modeloListVentasUsuario = new DefaultListModel<>();
 		listaVentasUsuario = new JList<Venta>(modeloListVentasUsuario);
-		scrollListaVentas = new JScrollPane(listaVentasUsuario);
+		listaVentasUsuario.setForeground(new Color(255, 255, 255));
+		listaVentasUsuario.setBackground(new Color(153, 204, 255));
+		//scrollListaVentas = new JScrollPane(listaVentasUsuario);
 		panel.add(listaVentasUsuario, "cell 0 2");
 		
 		for(int clave : u.getHmVentasUsuario().keySet()) {

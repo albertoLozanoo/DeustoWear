@@ -43,6 +43,7 @@ public class panelArticuloHome extends JPanel {
 		
 		setLayout(new BorderLayout(0, 0));
 		JPanel panelCentro = new JPanel();
+		panelCentro.setBackground(new Color(153, 204, 255));
 		add(panelCentro, BorderLayout.CENTER);
 		ImageIcon im = new ImageIcon(a.getImagen());
 		ImageIcon imagenConDimensiones = new ImageIcon(im.getImage().getScaledInstance(300,300,ImageView.CENTER));
@@ -54,7 +55,7 @@ public class panelArticuloHome extends JPanel {
 		panelCentro.add(lblImagenLoop);
 		
 		JPanel panelSur = new JPanel();
-		panelSur.setBackground(new Color(51, 153, 255));
+		panelSur.setBackground(new Color(153, 204, 255));
 		add(panelSur, BorderLayout.SOUTH);
 		panelSur.setLayout(new MigLayout("", "[196.00,grow][grow,center]", "[55.00][48.00][45.00][][47.00][]"));
 		

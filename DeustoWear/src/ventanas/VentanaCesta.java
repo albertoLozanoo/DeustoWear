@@ -59,6 +59,7 @@ import javax.swing.JOptionPane;
 
 import java.awt.FlowLayout;
 import javax.swing.BoxLayout;
+import javax.swing.border.BevelBorder;
 
 public class VentanaCesta extends JFrame {
 
@@ -92,6 +93,7 @@ public class VentanaCesta extends JFrame {
 		scrollAreaResumen = new JScrollPane(ticket);
 		
 		JPanel panelNorte = new JPanel();
+		panelNorte.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelNorte.setBackground(new Color(255, 153, 0));
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new MigLayout("", "[59.00][372.00,grow,center]", "[]"));
@@ -155,6 +157,7 @@ public class VentanaCesta extends JFrame {
 		
 		
 		JPanel panelSur = new JPanel();
+		panelSur.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelSur.setBackground(new Color(255, 102, 51));
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		panelSur.setLayout(new GridLayout(0, 4, 0, 0));
@@ -192,6 +195,8 @@ public class VentanaCesta extends JFrame {
 		panelCentro.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelCentroSur = new JPanel();
+		panelCentroSur.setBackground(new Color(153, 204, 255));
+		panelCentroSur.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panelCentro.add(panelCentroSur, BorderLayout.SOUTH);
 		panelCentroSur.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
@@ -222,10 +227,14 @@ public class VentanaCesta extends JFrame {
 		panelCentroSur.add(btnPagar);
 		
 		JPanel panelCentroCentro = new JPanel();
+		panelCentroCentro.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panelCentroCentro.setBackground(new Color(153, 204, 255));
 		panelCentro.add(panelCentroCentro, BorderLayout.CENTER);
 		panelCentroCentro.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		JPanel panelCentroDerecha = new JPanel();
+		panelCentroDerecha.setBackground(new Color(153, 204, 255));
+		panelCentroDerecha.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		contentPane.add(panelCentroDerecha, BorderLayout.EAST);
 		panelCentroDerecha.setLayout(new MigLayout("", "[207px][1px]", "[202.00px][grow]"));
 		
@@ -260,7 +269,7 @@ public class VentanaCesta extends JFrame {
 		}
 		
 		tablaArticulos = new JTable(modeloTablaArticulos);
-		JScrollPane scroll =new JScrollPane(tablaArticulos);
+		//JScrollPane scroll =new JScrollPane(tablaArticulos);
 		panelCentroCentro.add(tablaArticulos);
 		
 		

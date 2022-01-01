@@ -36,6 +36,7 @@ import java.util.TreeMap;
 
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+import javax.swing.border.BevelBorder;
 
 
 
@@ -67,6 +68,7 @@ public class VentanaHome extends JFrame {
 		contentPane.setBackground(new Color(0, 153, 255));
 		
 		JPanel panelNorte = new JPanel();
+		panelNorte.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelNorte.setBackground(new Color(255, 153, 0));
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setLayout(new MigLayout("", "[59.00][372.00,grow,center]", "[]"));
@@ -87,6 +89,7 @@ public class VentanaHome extends JFrame {
 		panelNorte.add(lblTitulo, "cell 1 0,alignx center,aligny center");
 		
 		JPanel panelWest = new JPanel();
+		panelWest.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelWest.setBackground(new Color(255, 153, 0));
 		contentPane.add(panelWest, BorderLayout.WEST);
 		panelWest.setLayout(new MigLayout("", "[106.00][109.00,grow]", "[][][][][][][][][][][][][][][][][][][]"));
@@ -145,6 +148,7 @@ public class VentanaHome extends JFrame {
 		panelWest.add(btnBuscar, "cell 0 18 2 1,alignx center,aligny center");
 		
 		JPanel panelSur = new JPanel();
+		panelSur.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelSur.setBackground(new Color(255, 102, 51));
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		panelSur.setLayout(new GridLayout(0, 4, 0, 0));
@@ -174,7 +178,8 @@ public class VentanaHome extends JFrame {
 		panelSur.add(btnPerfil);
 		
 		panelCentro = new JPanel();
-		panelCentro.setBackground(new Color(255, 153, 51));
+		panelCentro.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panelCentro.setBackground(new Color(153, 204, 255));
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(0, 3, 0, 0));
 	

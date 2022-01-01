@@ -66,6 +66,7 @@ import java.util.logging.Handler;
 import java.util.logging.Level;
 
 import java.util.logging.SimpleFormatter;
+import javax.swing.border.BevelBorder;
 
 public class VentanaInicio extends JFrame {
 
@@ -174,35 +175,39 @@ public class VentanaInicio extends JFrame {
 		contentPane.setLayout(new BorderLayout(0, 0));
 		
 		panelNorte = new JPanel();
+		panelNorte.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelNorte.setBackground(new Color(51, 153, 255));
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
 		panelCentro = new JPanel();
+		panelCentro.setBackground(new Color(255, 102, 0));
+		panelCentro.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		contentPane.add(panelCentro, BorderLayout.CENTER);
 		panelCentro.setLayout(new GridLayout(1, 0, 0, 0));
 		
 		panelCentroIzquierda = new JPanel();
-		panelCentroIzquierda.setBackground(new Color(204, 102, 0));
+		panelCentroIzquierda.setBackground(new Color(255, 102, 0));
 		panelCentro.add(panelCentroIzquierda);
 		panelCentroIzquierda.setLayout(new BorderLayout(10, 10));
 		
 		panelNorteInsideIzquierda = new JPanel();
 		panelNorteInsideIzquierda.setBackground(new Color(255, 102, 0));
 		panelCentroIzquierda.add(panelNorteInsideIzquierda, BorderLayout.NORTH);
+		panelNorteInsideIzquierda.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		
 		lblIzquierdaFrase1 = new JLabel("Confianza");
-		lblIzquierdaFrase1.setFont(new Font("Lato", Font.BOLD, 18));
+		lblIzquierdaFrase1.setFont(new Font("Dialog", Font.BOLD, 22));
 		lblIzquierdaFrase1.setForeground(new Color(255, 255, 255));
 		panelNorteInsideIzquierda.add(lblIzquierdaFrase1);
 		
 		lblIzquierdaFrase2 = new JLabel("Perseverancia");
 		lblIzquierdaFrase2.setForeground(new Color(255, 255, 255));
-		lblIzquierdaFrase2.setFont(new Font("Lato", Font.BOLD, 18));
+		lblIzquierdaFrase2.setFont(new Font("Dialog", Font.BOLD, 22));
 		panelNorteInsideIzquierda.add(lblIzquierdaFrase2);
 		
 		lblIzquierdaFrase3 = new JLabel("Constancia");
 		lblIzquierdaFrase3.setForeground(new Color(255, 255, 255));
-		lblIzquierdaFrase3.setFont(new Font("Lato", Font.BOLD, 18));
+		lblIzquierdaFrase3.setFont(new Font("Dialog", Font.BOLD, 22));
 		panelNorteInsideIzquierda.add(lblIzquierdaFrase3);
 		
 		panelCentroInsideIzquierda = new JPanel();
@@ -259,6 +264,7 @@ public class VentanaInicio extends JFrame {
 		txtContraseya.setColumns(25);
 		
 		panelNorteInside = new JPanel();
+		panelNorteInside.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelNorteInside.setForeground(new Color(255, 255, 255));
 		panelNorteInside.setBackground(new Color(255, 102, 0));
 		panelCentroDerechaArriba.add(panelNorteInside, BorderLayout.NORTH);
@@ -280,6 +286,7 @@ public class VentanaInicio extends JFrame {
 		panelCentroDerechaAbajo.add(lblDerechos, "cell 0 0,alignx right,aligny bottom");
 		
 		panelSur = new JPanel();
+		panelSur.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelSur.setBackground(new Color(255, 153, 0));
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		panelNorte.setLayout(new MigLayout("", "[936.00px,grow,center]", "[30px][][30px]"));

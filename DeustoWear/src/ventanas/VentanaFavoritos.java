@@ -36,11 +36,13 @@ import clases.Articulo;
 import clases.BD;
 import clases.DeustoException;
 import clases.Usuario;
-import clases.Venta;;
+import clases.Venta;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.border.BevelBorder;;
 
 public class VentanaFavoritos extends JFrame {
 
-	private JPanel contentPane;
+	private JPanel contentPane,panelCentral;
 	public static Connection con;
 	public static String nombreBD = "baseDeDatos.db";
 	private JFrame ventanaActual, ventanaAnterior;
@@ -76,6 +78,7 @@ public class VentanaFavoritos extends JFrame {
 		
 		
 		JPanel panelSur = new JPanel();
+		panelSur.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		panelSur.setBackground(new Color(255, 102, 51));
 		panelSur.setLayout(new GridLayout(0, 4, 0, 0));
@@ -105,8 +108,9 @@ public class VentanaFavoritos extends JFrame {
 		
 		
 		JPanel panelNorte = new JPanel();
+		panelNorte.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
-		panelNorte.setBackground(new Color(255, 102, 51));
+		panelNorte.setBackground(new Color(255, 153, 0));
 		
 		JLabel lblCabecera = new JLabel("Articulos favoritos de " + Usuario.getNick());
 		lblCabecera.setHorizontalAlignment(SwingConstants.CENTER);
@@ -118,24 +122,54 @@ public class VentanaFavoritos extends JFrame {
 		
 		
 		JPanel panelOeste = new JPanel();
-		contentPane.add(panelOeste, BorderLayout.WEST);
+		contentPane.add(panelOeste, BorderLayout.EAST);
 		panelOeste.setBackground(new Color(0, 153, 255));
-	
-		JButton btnEliminar = new JButton("Eliminar");
-		btnEliminar.setFont(new Font("Lato", Font.PLAIN, 19));
-		btnEliminar.setBackground(new Color(204, 102, 51));
-		panelOeste.add(btnEliminar);
+		panelOeste.setLayout(new MigLayout("", "[103px]", "[33px][][][][][][][][][]"));
+		
+			JButton btnEliminar = new JButton("Eliminar");
+			btnEliminar.setForeground(new Color(255, 255, 255));
+			btnEliminar.setFont(new Font("Lato", Font.PLAIN, 19));
+			btnEliminar.setBackground(new Color(204, 102, 51));
+			panelOeste.add(btnEliminar, "cell 0 6,alignx center,aligny top");
+			btnEliminar.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					int index = tablaArticulos.getSelectedRow();
+					u.eliminarFavorito(index);
+					modeloTablaArticulos.removeRow(tablaArticulos.getSelectedRow());
+					JOptionPane.showMessageDialog(null, "Articulo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
+					panelCentral.updateUI();	
+				}
+			});
 		
 		JButton btnLimpiar = new JButton("Borrar todo");
+		btnLimpiar.setForeground(new Color(255, 255, 255));
 		btnLimpiar.setFont(new Font("Lato", Font.PLAIN, 19));
 		btnLimpiar.setBackground(new Color(204, 102, 51));
-		panelOeste.add(btnLimpiar);
+		panelOeste.add(btnLimpiar, "cell 0 8,alignx center,aligny top");
+		
+		
+		btnLimpiar.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent arg0) {
+				// TODO Auto-generated method stub
+				modeloTablaArticulos.setRowCount(0);
+				u.limpiarFavoritos();
+				JOptionPane.showMessageDialog(null, "Lista de favoritos eliminada ","DONE", JOptionPane.INFORMATION_MESSAGE);
+				panelCentral.updateUI();	
+			}
+		});
 		
 		
 		
 		JPanel panelCentral = new JPanel();
+		panelCentral.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panelCentral.setForeground(new Color(0, 0, 0));
 		getContentPane().add(panelCentral, BorderLayout.CENTER);
-		panelCentral.setBackground(new Color(255, 153, 51));
+		panelCentral.setBackground(new Color(153, 204, 255));
 		panelCentral.setLayout(new GridLayout(1, 1, 0, 0));
 		
 		/*modeloArticulosFavoritos = new DefaultListModel<Articulo>();
@@ -152,7 +186,8 @@ public class VentanaFavoritos extends JFrame {
 		}
 		
 		tablaArticulos = new JTable(modeloTablaArticulos);
-		JScrollPane scroll =new JScrollPane(tablaArticulos);
+		tablaArticulos.setBackground(new Color(153, 204, 255));
+		//JScrollPane scroll =new JScrollPane(tablaArticulos);
 		panelCentral.add(tablaArticulos);
 		
 		
@@ -198,31 +233,6 @@ public class VentanaFavoritos extends JFrame {
 		/**
 		 * Boton que permite eliminar un fvorito de su Array
 		 */
-		btnEliminar.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				int index = tablaArticulos.getSelectedRow();
-				u.eliminarFavorito(index);
-				modeloTablaArticulos.removeRow(tablaArticulos.getSelectedRow());
-				JOptionPane.showMessageDialog(null, "Articulo eliminado de favoritos ","DONE", JOptionPane.INFORMATION_MESSAGE);
-				panelCentral.updateUI();	
-			}
-		});
-		
-		
-		btnLimpiar.addActionListener(new ActionListener() {
-			
-			@Override
-			public void actionPerformed(ActionEvent arg0) {
-				// TODO Auto-generated method stub
-				modeloTablaArticulos.setRowCount(0);
-				u.limpiarFavoritos();
-				JOptionPane.showMessageDialog(null, "Lista de favoritos eliminada ","DONE", JOptionPane.INFORMATION_MESSAGE);
-				panelCentral.updateUI();	
-			}
-		});
 		
 		/**
 		 * Boton que lleva a la ventana Home

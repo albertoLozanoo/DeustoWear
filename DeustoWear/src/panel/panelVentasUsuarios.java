@@ -18,6 +18,7 @@ import java.util.HashMap;
 import javax.swing.JLabel;
 import javax.swing.JButton;
 import java.awt.Color;
+import java.awt.Font;
 
 public class panelVentasUsuarios extends JPanel {
 	
@@ -44,18 +45,18 @@ public class panelVentasUsuarios extends JPanel {
 		setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelNorte = new JPanel();
-		panelNorte.setBackground(new Color(255, 153, 0));
+		panelNorte.setBackground(new Color(255, 102, 0));
 		panelNorte.setForeground(new Color(255, 255, 255));
 		add(panelNorte, BorderLayout.NORTH);
 		
 		JLabel lblTituloNorte = new JLabel("REGISTRO DE VENTAS");
+		lblTituloNorte.setFont(new Font("Tahoma", Font.BOLD, 25));
+		lblTituloNorte.setForeground(new Color(255, 255, 255));
 		panelNorte.add(lblTituloNorte);
 		
-		JPanel panelSur = new JPanel();
-		panelSur.setBackground(new Color(51, 153, 255));
-		add(panelSur, BorderLayout.SOUTH);
-		
 		JPanel panelCentro = new JPanel();
+		panelCentro.setBackground(new Color(153, 204, 255));
+		panelCentro.setForeground(new Color(153, 204, 255));
 		add(panelCentro, BorderLayout.CENTER);
 		
 		

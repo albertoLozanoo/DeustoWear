@@ -22,6 +22,9 @@ class MiJUnit {
 			BD.insertarCamisetaBBDD(con, c);
 			int contDespuesDeInsertar = BD.contarArticulos(con);
 			assertTrue(contAntesDeInsertar == contDespuesDeInsertar - 1);
+			
+			//Eliminamos el articulo que acabamos de insertar para dejar intacta la BBDD
+			BD.eliminarArticuloBBDD(con, 121);
 			BD.closeBD(con);
 		} catch (DeustoException e) {
 			// TODO Auto-generated catch block
@@ -46,6 +49,7 @@ class MiJUnit {
 					assertTrue(contAntesDeEliminar == contDespuesDeEliminar + 1);
 				}
 			}
+			//Añadimos el articulo que acabamos de insertar para dejar intacta la BBDD
 			Pantalon p = new Pantalon(123, "pantalon", "M", 25, "Azul","Mujer","imagenes/pantalones/pantalon1.png","Corto");
 			BD.insertarPantalonBBDD(con, p);
 			BD.closeBD(con);

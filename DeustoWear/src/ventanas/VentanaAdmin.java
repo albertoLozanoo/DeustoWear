@@ -43,6 +43,7 @@ import panel.panelAniadirSudadera;
 import panel.panelArticuloHome;
 import panel.panelEliminarUsuario;
 import panel.panelVentasUsuarios;
+import javax.swing.border.BevelBorder;
 
 public class VentanaAdmin extends JFrame {
 
@@ -90,6 +91,7 @@ public class VentanaAdmin extends JFrame {
 		panelCentro.setLayout(new GridLayout(0, 2, 0, 0));
 		
 		JPanel panelSur = new JPanel();
+		panelSur.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelSur.setBackground(new Color(0, 153, 204));
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
@@ -101,6 +103,7 @@ public class VentanaAdmin extends JFrame {
 		panelIZQayadirArticulo.updateUI();
 		
 		JPanel panelTituloIZQ = new JPanel();
+		panelTituloIZQ.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelTituloIZQ.setBackground(new Color(255, 102, 0));
 		panelIZQayadirArticulo.add(panelTituloIZQ, BorderLayout.NORTH);
 		
@@ -110,10 +113,13 @@ public class VentanaAdmin extends JFrame {
 		panelTituloIZQ.add(lblAnyadirArticulo);
 		
 		JPanel panelIZQSur = new JPanel();
+		panelIZQSur.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelIZQSur.setBackground(new Color(255, 102, 0));
 		panelIZQayadirArticulo.add(panelIZQSur, BorderLayout.SOUTH);
 		
 		JPanel panelAniadirCentro = new JPanel();
+		panelAniadirCentro.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panelAniadirCentro.setBackground(new Color(153, 204, 255));
 		panelIZQayadirArticulo.add(panelAniadirCentro, BorderLayout.CENTER);
 		
 		JButton btnCamiseta = new JButton("Camiseta");
@@ -139,6 +145,7 @@ public class VentanaAdmin extends JFrame {
 		panelCNTeliminarArticulo.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelTituloDCH = new JPanel();
+		panelTituloDCH.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelTituloDCH.setBackground(new Color(255, 102, 0));
 		panelCNTeliminarArticulo.add(panelTituloDCH, BorderLayout.NORTH);
 		
@@ -148,6 +155,7 @@ public class VentanaAdmin extends JFrame {
 		panelTituloDCH.add(lblEliminarArticulo);
 		
 		JPanel panelDCHsur = new JPanel();
+		panelDCHsur.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelDCHsur.setBackground(new Color(255, 102, 0));
 		panelCNTeliminarArticulo.add(panelDCHsur, BorderLayout.SOUTH);
 		
@@ -162,42 +170,60 @@ public class VentanaAdmin extends JFrame {
 		panelDerechaCentroLista.setLayout(new BorderLayout(0, 0));
 		
 		JPanel panelTituloListaArticulos = new JPanel();
+		panelTituloListaArticulos.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
+		panelTituloListaArticulos.setBackground(new Color(102, 204, 255));
 		panelDerechaCentroLista.add(panelTituloListaArticulos, BorderLayout.NORTH);
 		
 		JLabel lblListaArticulos = new JLabel("Lista de articulos");
+		lblListaArticulos.setForeground(new Color(255, 255, 255));
 		lblListaArticulos.setFont(new Font("Lato", Font.BOLD, 23));
 		panelTituloListaArticulos.add(lblListaArticulos);
 		
 		JPanel panelCentroDerechaLista = new JPanel();
+		panelCentroDerechaLista.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
+		panelCentroDerechaLista.setBackground(new Color(153, 204, 255));
 		panelDerechaCentroLista.add(panelCentroDerechaLista, BorderLayout.CENTER);
 		
-		JButton btnInicio = new JButton("Inicio");
+		JButton btnInicio = new JButton("INICIO");
+		btnInicio.setFont(new Font("Tahoma", Font.BOLD, 15));
 		btnInicio.setForeground(new Color(255, 255, 255));
 		btnInicio.setBackground(new Color(255, 153, 0));
 		panelSur.add(btnInicio);
 		panelNorte.setLayout(new GridLayout(0, 1, 0, 0));
 		
 		menuBar = new JMenuBar();
+		menuBar.setForeground(new Color(255, 255, 255));
+		menuBar.setBackground(new Color(255, 153, 51));
 		panelNorte.add(menuBar);
 		
 		menuHerramientas = new JMenu("Herramientas");
+		menuHerramientas.setForeground(new Color(255, 255, 255));
+		menuHerramientas.setBackground(new Color(255, 153, 0));
 		menuHerramientas.setHorizontalAlignment(SwingConstants.LEFT);
 		menuBar.add(menuHerramientas);
 		
 		JMenuItem mntmVerVentas = new JMenuItem("Ver Ventas");
+		mntmVerVentas.setForeground(new Color(255, 255, 255));
+		mntmVerVentas.setBackground(new Color(255, 153, 0));
 		mntmVerVentas.setHorizontalAlignment(SwingConstants.LEFT);
 		menuHerramientas.add(mntmVerVentas);
 		
 		
 		JMenuItem mntmEliminar = new JMenuItem("Eliminar Usuario");
+		mntmEliminar.setForeground(new Color(255, 255, 255));
+		mntmEliminar.setBackground(new Color(255, 153, 0));
 		mntmEliminar.setHorizontalAlignment(SwingConstants.LEFT);
 		menuHerramientas.add(mntmEliminar);
 		
 		menuExit = new JMenu("Salir");
+		menuExit.setForeground(new Color(255, 255, 255));
+		menuExit.setBackground(new Color(255, 51, 0));
 		menuExit.setHorizontalAlignment(SwingConstants.LEFT);
 		menuBar.add(menuExit);
 		
 		JMenuItem mntmSalir = new JMenuItem("Salir de la app");
+		mntmSalir.setBackground(new Color(255, 153, 0));
+		mntmSalir.setForeground(new Color(255, 255, 255));
 		mntmSalir.setHorizontalAlignment(SwingConstants.LEFT);
 		menuExit.add(mntmSalir);
 		

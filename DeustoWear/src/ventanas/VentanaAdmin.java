@@ -28,6 +28,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Color;
@@ -42,13 +43,13 @@ public class VentanaAdmin extends JFrame {
 	private JPanel contentPane;
 	public Connection con;
 	public JFrame ventanaAnterior,ventanaActual;
-	private JList<Articulo> listaArticulos;
-	private DefaultListModel<Articulo> modeloListaArticulos;
+	/*private JList<Articulo> listaArticulos;
+	private DefaultListModel<Articulo> modeloListaArticulos;*/
 	
 	private JTable tablaArticulos;
 	private DefaultTableModel modeloTablaArticulos= new DefaultTableModel();
 		
-	private TreeMap<Integer, Articulo> tmArticulosAdmin = new TreeMap<>();
+	//private TreeMap<Integer, Articulo> tmArticulosAdmin = new TreeMap<>();
 	
 	/**
 	 * Create the frame.
@@ -57,7 +58,7 @@ public class VentanaAdmin extends JFrame {
 	public VentanaAdmin(JFrame va,Usuario u) throws DeustoException {
 		con = BD.initBD("baseDeDatos.db");
 		BD.cargarMapaUsuariosDeInfoBBDD(con);
-		tmArticulosAdmin = BD.cargarMapaArticulosDeInfoBBDD(con);
+		VentanaInicio.tmArticulos = BD.cargarMapaArticulosDeInfoBBDD(con);
 		/*BD.insertarCamisetaBBDD(con, a1);
 		BD.insertarPantalonBBDD(con, a2);
 		BD.insertarSudaderaBBDD(con, a3);*/
@@ -65,7 +66,7 @@ public class VentanaAdmin extends JFrame {
 		ventanaAnterior = va;
 		ventanaActual = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 711, 421);
+		setBounds(10, 10, 1000, 1000);
 		setVisible(true);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -168,19 +169,18 @@ public class VentanaAdmin extends JFrame {
 		listaArticulos = new JList<Articulo>(modeloListaArticulos);
 		panelCentroDerechaLista.add(listaArticulos);*/
 		
-		String [] header = {"TAG","TALLA", "PRECIO","COLOR", "SEXO"};
+		String [] header = {"ID","TAG","TALLA", "PRECIO","COLOR", "SEXO"};
 		modeloTablaArticulos.setColumnIdentifiers(header);
-			for(Articulo a : tmArticulosAdmin.values()) {
-				String dataRow[] = {a.getName(),a.getTalla(),String.valueOf(a.getPrecio()),a.getColor(),a.getSexo()};
+			for(Articulo a : VentanaInicio.tmArticulos.values()) {
+				String dataRow[] = {String.valueOf(a.getID()),a.getName(),a.getTalla(),String.valueOf(a.getPrecio()),a.getColor(),a.getSexo()};
 				modeloTablaArticulos.addRow(dataRow);	
 			}
-		
 		tablaArticulos = new JTable(modeloTablaArticulos);
+		panelCentroDerechaLista.add(tablaArticulos);
 		
 		
-		
-		//anyadirArticulosALista();
 		/**EVENTOS*/
+		
 		/**
 		 * Boton que vuelve a la ventana Inicio
 		 */
@@ -226,6 +226,26 @@ public class VentanaAdmin extends JFrame {
 				panelAniadirSudadera ps = new panelAniadirSudadera();
 				panelAniadirCentro.add(ps);
 				panelAniadirCentro.updateUI();
+			}
+		});
+		
+		btnElimiarArticulo.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				int index = tablaArticulos.getSelectedRow();
+				int id = Integer.parseInt((String) modeloTablaArticulos.getValueAt(index, 0));
+				
+				try {
+					con = BD.initBD("baseDeDatos.db");
+					BD.eliminarArticuloBBDD(con,id );
+					BD.closeBD(con);
+					JOptionPane.showMessageDialog(null, "Artículo eliminado de la BBDD ","DONE", JOptionPane.INFORMATION_MESSAGE);
+				} catch (DeustoException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				modeloTablaArticulos.removeRow(tablaArticulos.getSelectedRow());
+				
+				panelCentro.updateUI();
 			}
 		});
 	}

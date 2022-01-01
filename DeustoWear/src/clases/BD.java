@@ -875,4 +875,78 @@ public class BD {
 		return resul;
 	}
 	
+	/**
+	 * Metodo que comprueba si existe un Articulo con ese ID en la BBDD
+	 * @param con Connection con la BBDD
+	 * @param id del articulo a verificar
+	 * @return int:
+	 * Si es 1: Articulo ya registrado
+	 * Si es 0: Articulo no registrado
+	 * @throws DeustoException
+	 */
+	public static int existeArticulo(Connection con, int id) throws DeustoException{
+		String sent = "SELECT ID FROM Articulos where ID="+id;
+		Statement st = null;
+		int resul = 0;
+		
+		try {
+			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
+			ResultSet rs = st.executeQuery(sent);
+			if(rs.next()) {
+				if(rs.getInt("ID") == id) ;
+					resul = 1;
+				}else {
+					resul = 0;
+				}
+			rs.close();
+		} catch (SQLException e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
+		}
+		return resul;
+	}
+	
+	/*public static int estaRegistrado(Connection con, String nick) throws DeustoException {
+		String sentencia = "SELECT Nick FROM Usuarios WHERE Nick ='" + nick + "'";
+		Statement st = null;
+		int resul = 0;
+		
+		try {
+			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
+			ResultSet rs = st.executeQuery(sentencia);
+			if(rs.next()) {
+				if(rs.getString("Nick").equals(nick));
+				resul = 1;
+			}else {
+				resul = 0;
+			}
+			rs.close();
+		} catch (Exception e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
+		}
+		return resul;
+	}*/
 }
+	
+	

@@ -1,14 +1,24 @@
 package panel;
 
 import java.awt.BorderLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Connection;
+import java.util.ArrayList;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+import clases.BD;
+import clases.Camiseta;
+import clases.DeustoException;
+import clases.Sudadera;
 import net.miginfocom.swing.MigLayout;
 
 public class panelAniadirSudadera extends JPanel {
@@ -16,6 +26,7 @@ public class panelAniadirSudadera extends JPanel {
 	private JTextField txtName;
 	private JTextField txtPrecio;
 	private JTextField txtURL;
+	private Connection con;
 
 	/**
 	 * Create the panel.
@@ -32,8 +43,8 @@ public class panelAniadirSudadera extends JPanel {
 		JPanel panelSur = new JPanel();
 		add(panelSur, BorderLayout.SOUTH);
 		
-		JButton btnAniadirCamiseta = new JButton("Aniadir Sudadera");
-		panelSur.add(btnAniadirCamiseta);
+		JButton btnAniadirSudadera = new JButton("Aniadir Sudadera");
+		panelSur.add(btnAniadirSudadera);
 		
 		JPanel panelCentro = new JPanel();
 		add(panelCentro, BorderLayout.CENTER);
@@ -69,8 +80,8 @@ public class panelAniadirSudadera extends JPanel {
 		JLabel lblColor = new JLabel("Color");
 		panelCentro.add(lblColor, "cell 0 8");
 		
-		JComboBox comboBox = new JComboBox();
-		panelCentro.add(comboBox, "cell 0 9,growx");
+		JComboBox cbColor = new JComboBox();
+		panelCentro.add(cbColor, "cell 0 9,growx");
 		
 		JLabel lblSexo = new JLabel("Sexo");
 		panelCentro.add(lblSexo, "cell 0 10");
@@ -96,6 +107,86 @@ public class panelAniadirSudadera extends JPanel {
 		
 		JRadioButton rdbtnSinCapucha = new JRadioButton("Sin capucha");
 		panelCentro.add(rdbtnSinCapucha, "cell 0 15");
+		
+		ArrayList<String> colores = new ArrayList<>();
+		colores.add("AZUL");
+		colores.add("BLANCO");
+		colores.add("DEUSTO");
+		colores.add("NARANJA");
+		colores.add("NEGRO");
+		
+		String sel = "Seleccione un color...";
+		cbColor.addItem(sel);
+		for(String c: colores) {
+			cbColor.addItem(c);
+		}
+	
+		
+		ArrayList<String> tallas = new ArrayList<>();
+		tallas.add("XS");
+		tallas.add("S");
+		tallas.add("M");
+		tallas.add("L");
+		tallas.add("XL");
+		tallas.add("XXL");
+		
+		String sel2 = "Seleccione una talla...";
+		cbTalla.addItem(sel2);
+		for(String t:tallas) {
+			cbTalla.addItem(t);
+		}
 
+		ButtonGroup bgSexo = new ButtonGroup();
+		bgSexo.add(rdbtnSexoHombre);
+		bgSexo.add(rdbtnSexoMujer);
+		
+		ButtonGroup bgCapucha = new ButtonGroup();
+		bgCapucha.add(rdbtnConCapucha);
+		bgCapucha.add(rdbtnSinCapucha);
+		
+		btnAniadirSudadera.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int id = Integer.parseInt((txtID.getText()));
+				String name = txtName.getText();
+				String talla = (String) cbTalla.getSelectedItem();
+				Double precio = Double.parseDouble((txtPrecio.getText()));
+				String color =(String) cbColor.getSelectedItem();
+				String sexo = "";
+				if(rdbtnSexoHombre.isSelected()) {
+					sexo = "Hombre";
+				}else if(rdbtnSexoMujer.isSelected()){
+					sexo = "Mujer";
+				}
+				String img =  "imagenes/sudaderas/"+txtURL.getText()+".png";
+				String capucha = "";
+				if(rdbtnConCapucha.isSelected()) {
+					capucha = "Con capucha";
+				}else if(rdbtnSinCapucha.isSelected()){
+					capucha = "Sin capucha";
+				}
+				
+				try {
+					con = BD.initBD("baseDeDatos.db");
+					int existeArticulo = BD.existeArticulo(con, id);
+					BD.closeBD(con);
+					if(existeArticulo == 0 && id!=0 && !name.equals("")&& !talla.equals("Seleccione una talla...") && precio>0.0 && !color.equals("Seleccione un color...") && !sexo.equals("") && !img.equals("")) {
+						Sudadera s = new Sudadera(id,name,talla,precio,color,sexo,img,capucha);
+						System.out.println(s);
+						JOptionPane.showMessageDialog(null, "Articulo registrado con exito", "APPROVED", JOptionPane.INFORMATION_MESSAGE);
+						con = BD.initBD("baseDeDatos.db");
+						BD.insertarSudaderaBBDD(con, s);
+						BD.closeBD(con);
+						System.out.println("Sudadera insertada con exito en la BBDD");
+					}else {
+						JOptionPane.showMessageDialog(null, "ERROR, Es posible que:\n	+Ese ID ya esta registrado\n	+Algun campo esta vacio","ERROR", JOptionPane.ERROR_MESSAGE);
+						txtID.setText("");
+					}
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+			}
+		});
 	}
 }

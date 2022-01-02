@@ -745,7 +745,38 @@ public class BD {
 			return tmSudaderas;
 		}
 	
-	
+	/**
+	 * Metodo que actualiza los campos de un articulo de la BBDD 
+	 * @param id del articulo que queremos modifcar
+	 * @param name nuevo a modificar
+	 * @param talla nuevo a modificar
+	 * @param precio nuevo a modificar
+	 * @param color nuevo a modificar
+	 * @param sexo nuevo a modificar
+	 * @throws DeustoException 
+	 */
+	public static void modificarArticulo(Connection con, int id, String name, String talla, double precio, String color, String sexo) throws DeustoException {
+		String sent = "UPDATE Articulos SET Name='"+name+"', Talla ='"+talla+"', Precio ="+precio+",Color = '"+color+"',Sexo ='"+sexo+"', WHERE ID =" +id;
+		Statement st = null;
+		
+		try {
+			st = con.createStatement();
+			logger.log( Level.INFO, "Statement: " + st );
+			st.executeUpdate(sent);
+		} catch (SQLException e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
+		}
+	}
 	/**
 	 * Metodo que permite registrar una nueva venta en la tabla Ventas de la BBDD
 	 * @param con

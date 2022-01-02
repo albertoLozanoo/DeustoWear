@@ -4,8 +4,12 @@ import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.TreeMap;
+import java.util.Vector;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -13,7 +17,12 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
+import javax.swing.event.TableModelEvent;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.text.TabableView;
 
 import clases.Articulo;
 import clases.BD;
@@ -36,6 +45,8 @@ import javax.swing.JOptionPane;
 
 import java.awt.Font;
 import java.awt.Color;
+import java.awt.Component;
+
 import net.miginfocom.swing.MigLayout;
 import panel.panelAniadirCamiseta;
 import panel.panelAniadirPantalon;
@@ -56,9 +67,10 @@ public class VentanaAdmin extends JFrame {
 	/*private JList<Articulo> listaArticulos;
 	private DefaultListModel<Articulo> modeloListaArticulos;*/
 	
-	private JTable tablaArticulos;
-	private DefaultTableModel modeloTablaArticulos= new DefaultTableModel();
+	private JTable tablaArticulos = new JTable();
+	private DefaultTableModel modeloTablaArticulos;
 		
+	private static Logger logger = Logger.getLogger( "Admin" );
 	//private TreeMap<Integer, Articulo> tmArticulosAdmin = new TreeMap<>();
 	
 	/**
@@ -234,14 +246,95 @@ public class VentanaAdmin extends JFrame {
 		listaArticulos = new JList<Articulo>(modeloListaArticulos);
 		panelCentroDerechaLista.add(listaArticulos);*/
 		
-		String [] header = {"ID","TAG","TALLA", "PRECIO","COLOR", "SEXO"};
-		modeloTablaArticulos.setColumnIdentifiers(header);
+		
+		/**
+		 * TABLA DE ARTICULOS
+		 */
+		Vector<String> cabeceras = new Vector<String>(Arrays.asList("ID","TAG","TALLA","PRECIO","COLOR","SEXO"));
+		modeloTablaArticulos = new DefaultTableModel(new Vector<Vector<Object>>(),cabeceras);
+		//String [] header = {"ID","TAG","TALLA", "PRECIO","COLOR", "SEXO"};
+		modeloTablaArticulos.setColumnIdentifiers(cabeceras);
 			for(Articulo a : VentanaInicio.tmArticulos.values()) {
 				String dataRow[] = {String.valueOf(a.getID()),a.getName(),a.getTalla(),String.valueOf(a.getPrecio()),a.getColor(),a.getSexo()};
 				modeloTablaArticulos.addRow(dataRow);	
 			}
-		tablaArticulos = new JTable(modeloTablaArticulos);
+		tablaArticulos.setModel(modeloTablaArticulos);
 		panelCentroDerechaLista.add(tablaArticulos);
+		
+		
+		tablaArticulos.getColumnModel().getColumn(0).setMinWidth(40);
+		tablaArticulos.getColumnModel().getColumn(0).setMaxWidth(40);
+		tablaArticulos.getColumnModel().getColumn(1).setPreferredWidth(150);
+		tablaArticulos.getColumnModel().getColumn(2).setPreferredWidth(35);
+		tablaArticulos.getColumnModel().getColumn(3).setMinWidth(40);
+		tablaArticulos.getColumnModel().getColumn(3).setMaxWidth(40);		
+		tablaArticulos.getColumnModel().getColumn(4).setMinWidth(100);
+		tablaArticulos.getColumnModel().getColumn(4).setMaxWidth(100);
+		tablaArticulos.getColumnModel().getColumn(5).setMinWidth(100);
+		tablaArticulos.getColumnModel().getColumn(5).setMaxWidth(100);
+		
+		tablaArticulos.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+			
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+					int row, int column) {
+				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				if(column == 3) {
+					double precio = Double.parseDouble(String.valueOf(value));
+					if(precio>15) {
+						c.setBackground(Color.red);
+						c.setForeground(Color.WHITE);
+					}else {
+						c.setBackground(Color.white);
+						c.setForeground(Color.black);
+					}
+				}
+				return c;
+			}
+		});
+		
+		tablaArticulos.getModel().addTableModelListener(new TableModelListener() {
+			
+			@Override
+			public void tableChanged(TableModelEvent e) {
+				// TODO Auto-generated method stub
+				int fila = e.getFirstRow();
+				int id = Integer.parseInt((String) modeloTablaArticulos.getValueAt(fila, 0));
+				String name = (String) modeloTablaArticulos.getValueAt(fila, 1);
+				String talla = (String) modeloTablaArticulos.getValueAt(fila, 2);
+				double precio = Double.parseDouble((String) modeloTablaArticulos.getValueAt(fila, 3));
+				String color = (String) modeloTablaArticulos.getValueAt(fila, 4);
+				String sexo = (String) modeloTablaArticulos.getValueAt(fila, 5);
+				
+				try {
+					con = BD.initBD("baseDeDatos.db");
+					BD.modificarArticulo(con, id, name, talla, precio, color, sexo);
+					System.out.println("Articulo modificado correctamente");
+					logger.log( Level.INFO, "Articulo modificado correctamente" );
+					BD.closeBD(con);
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		
+		/*tablaArticulos.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+			
+			@Override
+			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,int row, int column) {
+				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+				if(column==3) {
+					if( Integer.parseInt(value.toString()) > 10.0){
+						c.setBackground(new Color(100,100,100) );
+					}
+				}
+				return c;
+			}
+		});*/
+		
+		
 		
 		panelAniadirCentro.removeAll();
 		panelAniadirCamiseta pc2 = new panelAniadirCamiseta();

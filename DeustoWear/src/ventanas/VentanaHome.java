@@ -36,6 +36,7 @@ import java.util.TreeMap;
 
 import javax.swing.JComboBox;
 import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
 import javax.swing.border.BevelBorder;
 
 
@@ -48,6 +49,7 @@ public class VentanaHome extends JFrame {
 	private JFrame ventanaActual,ventanaAnterior;
 	private JButton btnLogo;
 	private ButtonGroup bg;
+	private JScrollPane scrollCentral;
 	
 	/**
 	 * Create the frame.
@@ -60,7 +62,8 @@ public class VentanaHome extends JFrame {
 		
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1446, 793);
+		setBounds(50, 50, 1650, 950);
+		setTitle("Home");
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -125,21 +128,6 @@ public class VentanaHome extends JFrame {
 		
 		
 		
-		JRadioButton rdbtnHombre = new JRadioButton("Hombre");
-		rdbtnHombre.setForeground(new Color(255, 255, 255));
-		rdbtnHombre.setFont(new Font("Lato", Font.PLAIN, 18));
-		rdbtnHombre.setBackground(new Color(255, 153, 0));
-		panelWest.add(rdbtnHombre, "cell 0 11,alignx left,aligny center");
-		
-		JRadioButton rdbtnMujer = new JRadioButton("Mujer");
-		rdbtnMujer.setForeground(new Color(255, 255, 255));
-		rdbtnMujer.setFont(new Font("Lato", Font.PLAIN, 18));
-		rdbtnMujer.setBackground(new Color(255, 153, 0));
-		panelWest.add(rdbtnMujer, "cell 0 13,alignx left,aligny center");
-		
-		bg = new ButtonGroup();
-		bg.add(rdbtnHombre);
-		bg.add(rdbtnMujer);
 		
 		JButton btnBuscar = new JButton("Buscar");
 		btnBuscar.setForeground(new Color(255, 255, 255));
@@ -185,6 +173,11 @@ public class VentanaHome extends JFrame {
 	
 		this.cargarPaneles();
 		
+		scrollCentral = new JScrollPane();
+		scrollCentral.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_NEVER);
+		scrollCentral.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+		contentPane.add(scrollCentral);
+		scrollCentral.setViewportView(panelCentro);
 		
 		/**
 		 * Boton que lleva a la ventana Perfil

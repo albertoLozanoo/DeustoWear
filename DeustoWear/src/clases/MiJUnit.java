@@ -1,8 +1,12 @@
 package clases;
 
 import static org.junit.Assert.assertTrue;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.Test;
 
 
@@ -10,6 +14,44 @@ class MiJUnit {
 
 	public Connection con;
 	public Camiseta c = new Camiseta(121, "camisetaPrueba", "XS", 0.99, "NEGRO", "Hombre", "imagenes/camisetas/camiseta1.png");
+	
+	/**
+	 * Test que comprueba que la conexion con la BBDD es correcta
+	 */
+	@Test
+	public void testAbrirConexion() {
+		boolean conectado = false;
+		try {
+			con = BD.initBD("baseDeDatos.db");
+			if(con!=null) {
+				conectado = true;
+			}else {
+				conectado = false;
+			}
+			assertTrue(conectado);
+			BD.closeBD(con);
+		} catch (DeustoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+
+	/**
+	 * Metodo que compruba si hay articulos en la BBDD, comprobando el metodo contarArticulos()
+	 */
+	@Test
+	public void testGetProductos() {
+		try {
+			con = BD.initBD("baseDeDatos.db");
+			int numArticulos = BD.contarArticulos(con);
+			assertNotEquals(0, numArticulos);
+		} catch (DeustoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
 	/**
 	 * Test que comprueba si el metodo añadir Camiseta funciona correctamente
@@ -59,5 +101,6 @@ class MiJUnit {
 			e.printStackTrace();
 		}
 	}
+	
 
 }

@@ -83,7 +83,8 @@ public class VentanaCesta extends JFrame {
 		ventanaActual = this;
 		setVisible(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1046, 593);
+		setBounds(50, 50, 1650, 750);
+		setTitle("Cesta de " + u.getNick());
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

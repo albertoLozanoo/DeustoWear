@@ -75,11 +75,11 @@ public class VentanaRegistroo extends JFrame {
 		ventanaAnterior=va;
 		ventanaActual = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1058, 664);
+		setBounds(50, 50, 1176, 639);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
-		contentPane.setBackground(new Color(51, 153, 255));
+		contentPane.setBackground(new Color(255, 102, 0));
 		contentPane.setLayout(new BorderLayout(10, 10));
 		
 		JPanel panelNorte = new JPanel();
@@ -89,15 +89,15 @@ public class VentanaRegistroo extends JFrame {
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
 		JPanel panelWest = new JPanel();
-		panelWest.setBackground(new Color(51, 153, 255));
+		panelWest.setBackground(new Color(255, 102, 0));
 		contentPane.add(panelWest, BorderLayout.WEST);
 		
 		JPanel panelEste = new JPanel();
-		panelEste.setBackground(new Color(51, 153, 255));
+		panelEste.setBackground(new Color(255, 102, 0));
 		contentPane.add(panelEste, BorderLayout.EAST);
 		
 		JPanel panelSur = new JPanel();
-		panelSur.setBackground(new Color(51, 153, 255));
+		panelSur.setBackground(new Color(255, 102, 0));
 		contentPane.add(panelSur, BorderLayout.SOUTH);
 		
 		JPanel panelCentro = new JPanel();
@@ -127,13 +127,13 @@ public class VentanaRegistroo extends JFrame {
 		panelCentroDerechaInput.setLayout(new MigLayout("", "[212px,grow]", "[82.00px][28px][26px][28px][][][37.00px][24.00,top][26.00][40.00][28.00][]"));
 		
 		JLabel lblTituloRegistro = new JLabel("REGISTRO");
-		lblTituloRegistro.setForeground(new Color(255, 255, 255));
+		lblTituloRegistro.setForeground(new Color(255, 153, 0));
 		lblTituloRegistro.setBackground(new Color(255, 102, 0));
 		lblTituloRegistro.setFont(new Font("Dialog", Font.BOLD, 42));
 		panelCentroDerechaInput.add(lblTituloRegistro, "cell 0 0,alignx center,aligny bottom");
 		
 		JLabel lblNick = new JLabel("Nick :");
-		lblNick.setForeground(new Color(0, 0, 153));
+		lblNick.setForeground(new Color(255, 255, 255));
 		lblNick.setBackground(new Color(0, 0, 0));
 		lblNick.setHorizontalAlignment(SwingConstants.CENTER);
 		lblNick.setFont(new Font("Lato", Font.BOLD, 21));
@@ -147,7 +147,7 @@ public class VentanaRegistroo extends JFrame {
 		panelCentroDerechaInput.add(txtNick, "cell 0 3,growx,aligny center");
 		
 		JLabel lblContraseya = new JLabel("Contraseya :");
-		lblContraseya.setForeground(new Color(0, 0, 153));
+		lblContraseya.setForeground(new Color(255, 255, 255));
 		lblContraseya.setFont(new Font("Lato", Font.BOLD, 21));
 		panelCentroDerechaInput.add(lblContraseya, "cell 0 5,alignx center,aligny center");
 		
@@ -159,7 +159,7 @@ public class VentanaRegistroo extends JFrame {
 		panelCentroDerechaInput.add(txtContraseya, "cell 0 6,growx,aligny center");
 		
 		JLabel lblAvatar = new JLabel("Avatar :");
-		lblAvatar.setForeground(new Color(0, 0, 153));
+		lblAvatar.setForeground(new Color(255, 255, 255));
 		lblAvatar.setFont(new Font("Lato", Font.BOLD, 21));
 		panelCentroDerechaInput.add(lblAvatar, "cell 0 8,alignx center");
 		
@@ -302,6 +302,14 @@ public class VentanaRegistroo extends JFrame {
 						
 						JOptionPane.showMessageDialog(null, "Usuario registrado correctamente", "REGISTRO CORRECTO", JOptionPane.INFORMATION_MESSAGE);
 						vaciarCampos();
+						ventanaActual.dispose();
+						try {
+							new VentanaInicio();
+							
+						} catch (DeustoException e1) {
+							// TODO Auto-generated catch block
+							e1.printStackTrace();
+						}
 					}else {
 						JOptionPane.showMessageDialog(null, "Nick ya en uso, prueba con otro distinto", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 						txtNick.setText("");

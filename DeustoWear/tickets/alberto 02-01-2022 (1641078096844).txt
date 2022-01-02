@@ -1,0 +1,4 @@
+Camiseta [ID=111, name=camiseta, talla=XS, precio=10.0, color=AZUL, sexo=Hombre, imagen=imagenes/camisetas/camiseta1.png]
+Pantalon [tipoPantalon=Corto, ID=123, name=pantalon, talla=XS, precio=25.0, color=AZUL, sexo=Mujer, imagen=imagenes/pantalones/pantalon1.png]
+Sudadera [capucha=Con Capucha, ID=332, name=sudadera, talla=XS, precio=30.0, color=AZUL, sexo=Hombre, imagen=imagenes/sudaderas/sudadera1.png]
+TOTAL: 65.0 €

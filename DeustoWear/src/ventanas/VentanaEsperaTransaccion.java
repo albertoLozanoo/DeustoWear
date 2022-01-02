@@ -24,6 +24,7 @@ public class VentanaEsperaTransaccion extends JFrame{
 			setBounds(200, 200, 500, 100);
 			setTitle("Ya casi esta unos segundos mas " + u.getNick() + " ...");
 			pCentral = new JPanel();
+			setTitle("Wait please...");
 			getContentPane().add(pCentral,BorderLayout.CENTER);
 			
 			Runnable r = new Runnable() {

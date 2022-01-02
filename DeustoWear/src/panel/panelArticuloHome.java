@@ -31,6 +31,7 @@ import enumeration.Talla;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.Font;
+import javax.swing.border.BevelBorder;
 
 public class panelArticuloHome extends JPanel {
 
@@ -40,6 +41,7 @@ public class panelArticuloHome extends JPanel {
 	 * Create the panel.corazon favorito
 	 */
 	public panelArticuloHome(Articulo a) {
+		setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		
 		setLayout(new BorderLayout(0, 0));
 		JPanel panelCentro = new JPanel();

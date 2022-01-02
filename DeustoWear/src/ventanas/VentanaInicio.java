@@ -22,6 +22,8 @@ import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.beans.PropertyChangeListener;
 import java.io.IOException;
 import java.sql.Connection;
@@ -105,6 +107,8 @@ public class VentanaInicio extends JFrame {
 	private JPanel panelNorteInsideIzquierda;
 	private JPanel panelCentroInsideIzquierda;
 	private JButton btnLogo;
+	private JButton btnVisualizar;
+	private JButton btnOcultar;
 	
 	//private static Logger log; 
 
@@ -168,7 +172,7 @@ public class VentanaInicio extends JFrame {
 		ventanaActual = this;
 		setTitle("Bienvenido a DeustoWear");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1176, 639);
+		setBounds(50, 50, 1176, 639);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -176,7 +180,7 @@ public class VentanaInicio extends JFrame {
 		
 		panelNorte = new JPanel();
 		panelNorte.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
-		panelNorte.setBackground(new Color(51, 153, 255));
+		panelNorte.setBackground(new Color(153, 204, 255));
 		contentPane.add(panelNorte, BorderLayout.NORTH);
 		
 		panelCentro = new JPanel();
@@ -191,6 +195,7 @@ public class VentanaInicio extends JFrame {
 		panelCentroIzquierda.setLayout(new BorderLayout(10, 10));
 		
 		panelNorteInsideIzquierda = new JPanel();
+		panelNorteInsideIzquierda.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelNorteInsideIzquierda.setBackground(new Color(255, 102, 0));
 		panelCentroIzquierda.add(panelNorteInsideIzquierda, BorderLayout.NORTH);
 		panelNorteInsideIzquierda.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
@@ -211,6 +216,7 @@ public class VentanaInicio extends JFrame {
 		panelNorteInsideIzquierda.add(lblIzquierdaFrase3);
 		
 		panelCentroInsideIzquierda = new JPanel();
+		panelCentroInsideIzquierda.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
 		panelCentroInsideIzquierda.setBackground(new Color(255, 102, 0));
 		panelCentroIzquierda.add(panelCentroInsideIzquierda, BorderLayout.CENTER);
 		
@@ -221,7 +227,6 @@ public class VentanaInicio extends JFrame {
 		panelCentroInsideIzquierda.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 		btnLogo.setIcon(imagenConDimensiones);
 		btnLogo.setPreferredSize(new DimensionUIResource(350, 300));
-		btnLogo.setIcon(imagenConDimensiones);
 		panelCentroInsideIzquierda.add(btnLogo);
 		
 		
@@ -231,17 +236,17 @@ public class VentanaInicio extends JFrame {
 		panelCentroDerecha.setLayout(new BoxLayout(panelCentroDerecha, BoxLayout.Y_AXIS));
 		
 		panelCentroDerechaArriba = new JPanel();
-		panelCentroDerechaArriba.setBackground(new Color(0, 153, 255));
+		panelCentroDerechaArriba.setBackground(new Color(153, 204, 255));
 		panelCentroDerecha.add(panelCentroDerechaArriba);
 		panelCentroDerechaArriba.setLayout(new BorderLayout(10, 10));
 		
 		panelCentroInside = new JPanel();
-		panelCentroInside.setBackground(new Color(51, 153, 255));
+		panelCentroInside.setBackground(new Color(153, 204, 255));
 		panelCentroDerechaArriba.add(panelCentroInside, BorderLayout.CENTER);
-		panelCentroInside.setLayout(new MigLayout("", "[160.00,grow]", "[][][][][][][][][][][][][][]"));
+		panelCentroInside.setLayout(new MigLayout("", "[160.00,grow]", "[][][][][][][][][][64.00][59.00][20.00,grow][][]"));
 		
 		lblNick = new JLabel("Nick :");
-		lblNick.setForeground(new Color(0, 0, 153));
+		lblNick.setForeground(new Color(255, 255, 255));
 		lblNick.setFont(new Font("Lato", Font.BOLD, 31));
 		panelCentroInside.add(lblNick, "cell 0 2,alignx center,aligny center");
 		
@@ -253,15 +258,9 @@ public class VentanaInicio extends JFrame {
 		
 		lblContraseya = new JLabel("Contraseya :");
 		lblContraseya.setBackground(new Color(240, 240, 240));
-		lblContraseya.setForeground(new Color(0, 0, 153));
+		lblContraseya.setForeground(new Color(255, 255, 255));
 		lblContraseya.setFont(new Font("Lato", Font.BOLD, 31));
-		panelCentroInside.add(lblContraseya, "cell 0 8,alignx center,aligny center");
-		
-		txtContraseya = new JPasswordField();
-		txtContraseya.setBackground(new Color(255, 153, 0));
-		txtContraseya.setHorizontalAlignment(SwingConstants.CENTER);
-		panelCentroInside.add(txtContraseya, "cell 0 11,alignx center,aligny center");
-		txtContraseya.setColumns(25);
+		panelCentroInside.add(lblContraseya, "cell 0 7,alignx center,aligny center");
 		
 		panelNorteInside = new JPanel();
 		panelNorteInside.setBorder(new BevelBorder(BevelBorder.RAISED, null, null, null, null));
@@ -293,81 +292,74 @@ public class VentanaInicio extends JFrame {
 		
 		
 		txtpnRegistrado = new JTextPane();
-		txtpnRegistrado.setBackground(new Color(255, 153, 102));
+		txtpnRegistrado.setEditable(false);
+		txtpnRegistrado.setBackground(new Color(255, 102, 0));
 		txtpnRegistrado.setForeground(Color.WHITE);
 		panelNorte.add(txtpnRegistrado, "cell 0 0,alignx center");
 		txtpnRegistrado.setFont(new Font("Verdana", Font.BOLD, 19));
 		txtpnRegistrado.setText("¿Todavia no te has registrado?");
 		
-
-		btnIniciarSesion = new JButton("Iniciar Sesion");
-		btnIniciarSesion.setForeground(new Color(0, 0, 153));
-		btnIniciarSesion.setBackground(new Color(153, 255, 153));
-		btnIniciarSesion.setFont(new Font("Lato", Font.BOLD, 20));
-		panelSur.add(btnIniciarSesion);
-		
 		btnRegistrarse = new JButton("Haz click aqui para registrarte");
 		btnRegistrarse.setForeground(new Color(255, 255, 255));
 		btnRegistrarse.setFont(new Font("Verdana", Font.PLAIN, 14));
 		panelNorte.add(btnRegistrarse, "cell 0 1,alignx center,aligny center");
-		btnRegistrarse.setBackground(new Color(255, 153, 102));
+		btnRegistrarse.setBackground(new Color(255, 102, 0));
 		
 		lblRegistrarEsGratis = new JLabel("Registrarse gratis");
-		lblRegistrarEsGratis.setForeground(Color.BLUE);
+		lblRegistrarEsGratis.setBackground(new Color(255, 255, 255));
+		lblRegistrarEsGratis.setForeground(new Color(255, 102, 0));
 		lblRegistrarEsGratis.setFont(new Font("Lato", Font.BOLD | Font.ITALIC, 15));
 		panelNorte.add(lblRegistrarEsGratis, "cell 0 2,aligny top");
 		
 		txtNick.setForeground(new Color(255,255,255));
+		
+		txtContraseya = new JPasswordField();
+		txtContraseya.setBackground(new Color(255, 153, 0));
+		txtContraseya.setHorizontalAlignment(SwingConstants.CENTER);
+		panelCentroInside.add(txtContraseya, "flowx,cell 0 9,alignx center,aligny center");
+		txtContraseya.setColumns(25);
 		txtContraseya.setForeground(new Color(255,255,255));
 		
+		txtContraseya.setEchoChar('*');
 		
-		/*EVENTOS*/
 		
-		Runnable r = new Runnable() {
-			
+		ImageIcon imVisualizar = new ImageIcon("imagenes/iconoVerContraseya.png");
+		ImageIcon imagenConDimensionesVisualizar = new ImageIcon(imVisualizar.getImage().getScaledInstance(40,40,ImageView.CENTER));
+		
+		ImageIcon imOcultar = new ImageIcon("imagenes/iconoOcultarContraseya.png");
+		ImageIcon imagenConDimensionesOcultar = new ImageIcon(imOcultar.getImage().getScaledInstance(40,40,ImageView.CENTER));
+		btnOcultar = new JButton();
+		btnOcultar.setBackground(new Color(255,255,255));
+		btnOcultar.setPreferredSize(new DimensionUIResource(10, 10));
+		btnOcultar.setIcon(imagenConDimensionesOcultar);
+		panelCentroInside.add(btnOcultar, "flowx,cell 0 10,alignx center,aligny top");
+		btnOcultar.addMouseListener(new MouseAdapter() {
 			@Override
-			public void run() {
-				// TODO Auto-generated method stub
-				while(true) {
-					btnRegistrarse.setForeground(Color.WHITE);
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-					btnRegistrarse.setForeground(new Color(0, 0, 153));
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+			public void mouseClicked(MouseEvent e) {
+				txtContraseya.setEchoChar('*');
 			}
-		};
-		Thread t = new Thread(r);
-		t.start();
+		});
+		btnVisualizar = new JButton();
+		btnVisualizar.setBackground(new Color(255,255,255));
+		btnVisualizar.setPreferredSize(new DimensionUIResource(10, 10));
+		btnVisualizar.setIcon(imagenConDimensionesVisualizar);
+		panelCentroInside.add(btnVisualizar, "cell 0 10,alignx center,aligny top");
 		
-		/**
-		 * Boton que al activarse cierra la ventana actual y abre la ventanaRegistro
-		 */
-		btnRegistrarse.addActionListener(new ActionListener() {
-			
+		btnVisualizar.addMouseListener(new MouseAdapter() {
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				txtNick.setText("");
-				txtContraseya.setText("");
-				ventanaActual.dispose();
-				new VentanaRegistroo(ventanaActual);
-				//new VentantaRegistro(ventanaActual);
+			public void mouseClicked(MouseEvent e) {
+				if(e.getSource()==btnVisualizar)
+					txtContraseya.setEchoChar((char)0);
 			}
 		});
 		
-		/**
-		 * Boton que al activarse verifica si el usuario esta registrado ya en la BBDD
-		 * Ademas si los campos son rellenados con admin, entraremos en la VentanAdministrador
-		 */
+
+		btnIniciarSesion = new JButton("Iniciar Sesion");
+		panelCentroInside.add(btnIniciarSesion, "cell 0 12,alignx center");
+		btnIniciarSesion.setForeground(new Color(0, 0, 153));
+		btnIniciarSesion.setBackground(new Color(255, 153, 0));
+		btnIniciarSesion.setFont(new Font("Dialog", Font.BOLD, 18));
+	
 		btnIniciarSesion.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -446,6 +438,56 @@ public class VentanaInicio extends JFrame {
 				
 			
 		});
+		
+		
+		
+		/*EVENTOS*/
+		
+		Runnable r = new Runnable() {
+			
+			@Override
+			public void run() {
+				// TODO Auto-generated method stub
+				while(true) {
+					btnRegistrarse.setForeground(Color.WHITE);
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					btnRegistrarse.setForeground(new Color(0, 0, 153));
+					try {
+						Thread.sleep(500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+		Thread t = new Thread(r);
+		t.start();
+		
+		/**
+		 * Boton que al activarse cierra la ventana actual y abre la ventanaRegistro
+		 */
+		btnRegistrarse.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				txtNick.setText("");
+				txtContraseya.setText("");
+				ventanaActual.dispose();
+				new VentanaRegistroo(ventanaActual);
+				//new VentantaRegistro(ventanaActual);
+			}
+		});
+		
+		/**
+		 * Boton que al activarse verifica si el usuario esta registrado ya en la BBDD
+		 * Ademas si los campos son rellenados con admin, entraremos en la VentanAdministrador
+		 */
 	}
 	
 	/**

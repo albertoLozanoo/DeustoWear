@@ -745,6 +745,7 @@ public class BD {
 			return tmSudaderas;
 		}
 	
+	
 	/**
 	 * Metodo que permite registrar una nueva venta en la tabla Ventas de la BBDD
 	 * @param con

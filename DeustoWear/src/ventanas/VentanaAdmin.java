@@ -46,7 +46,7 @@ import panel.panelVentasUsuarios;
 import javax.swing.border.BevelBorder;
 
 public class VentanaAdmin extends JFrame {
-
+	public JPanel panelCentroDerechaLista;
 	private JPanel contentPane;
 	public Connection con;
 	public JFrame ventanaAnterior,ventanaActual;
@@ -75,8 +75,9 @@ public class VentanaAdmin extends JFrame {
 		ventanaAnterior = va;
 		ventanaActual = this;
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(10, 10, 1000, 1000);
+		setBounds(50, 50, 1650, 950);
 		setVisible(true);
+		setTitle("ADMIN");
 		
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -159,7 +160,9 @@ public class VentanaAdmin extends JFrame {
 		panelDCHsur.setBackground(new Color(255, 102, 0));
 		panelCNTeliminarArticulo.add(panelDCHsur, BorderLayout.SOUTH);
 		
-		JButton btnElimiarArticulo = new JButton("Eliminar Usuario");
+		
+		
+		JButton btnElimiarArticulo = new JButton("Eliminar Articulo");
 		btnElimiarArticulo.setForeground(new Color(255, 255, 255));
 		btnElimiarArticulo.setBackground(new Color(255, 153, 0));
 		btnElimiarArticulo.setFont(new Font("Lato", Font.BOLD, 15));
@@ -179,7 +182,7 @@ public class VentanaAdmin extends JFrame {
 		lblListaArticulos.setFont(new Font("Lato", Font.BOLD, 23));
 		panelTituloListaArticulos.add(lblListaArticulos);
 		
-		JPanel panelCentroDerechaLista = new JPanel();
+		panelCentroDerechaLista = new JPanel();
 		panelCentroDerechaLista.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panelCentroDerechaLista.setBackground(new Color(153, 204, 255));
 		panelDerechaCentroLista.add(panelCentroDerechaLista, BorderLayout.CENTER);
@@ -209,7 +212,7 @@ public class VentanaAdmin extends JFrame {
 		menuHerramientas.add(mntmVerVentas);
 		
 		
-		JMenuItem mntmEliminar = new JMenuItem("Eliminar Usuario");
+		JMenuItem mntmEliminar = new JMenuItem("Eliminar Articulo");
 		mntmEliminar.setForeground(new Color(255, 255, 255));
 		mntmEliminar.setBackground(new Color(255, 153, 0));
 		mntmEliminar.setHorizontalAlignment(SwingConstants.LEFT);
@@ -244,8 +247,6 @@ public class VentanaAdmin extends JFrame {
 		panelAniadirCamiseta pc2 = new panelAniadirCamiseta();
 		panelAniadirCentro.add(pc2);
 		panelAniadirCentro.updateUI();
-		
-		
 		
 		/**EVENTOS*/
 		

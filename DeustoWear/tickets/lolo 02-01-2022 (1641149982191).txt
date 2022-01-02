@@ -1,0 +1,3 @@
+Camiseta [ID=111, name=camiseta, talla=XS, precio=10.0, color=AZUL, sexo=Hombre, imagen=imagenes/camisetas/camiseta1.png]
+Camiseta [ID=221, name=camiseta2, talla=XS, precio=9.0, color=AZUL, sexo=Hombre, imagen=imagenes/camisetas/camiseta2.png]
+TOTAL: 19.0 €

@@ -70,9 +70,9 @@ public class VentanaPerfil extends JFrame {
 		ventanaActual = this;
 		setVisible(true);
 		ventanaActual = this;
-		setTitle("Su perfil");
+		setTitle("Profile: " + u.getNick());
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1192, 781);
+		setBounds(50, 50, 1650, 750);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);

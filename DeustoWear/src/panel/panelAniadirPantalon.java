@@ -20,6 +20,8 @@ import clases.Camiseta;
 import clases.DeustoException;
 import clases.Pantalon;
 import net.miginfocom.swing.MigLayout;
+import ventanas.VentanaAdmin;
+
 import java.awt.Font;
 import java.awt.Color;
 

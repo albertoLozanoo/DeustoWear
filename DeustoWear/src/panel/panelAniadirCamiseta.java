@@ -212,6 +212,12 @@ public class panelAniadirCamiseta extends JPanel {
 						BD.insertarCamisetaBBDD(con, c);
 						BD.closeBD(con);
 						System.out.println("Camiseta insertada con exito en BBDD");
+						txtID.setText("");
+						txtName.setText("");
+						cbTalla.setSelectedIndex(1);
+						txtPrecio.setText("");
+						cbColor.setSelectedIndex(1);
+						txtURL.setText("");
 					}else {
 						JOptionPane.showMessageDialog(null, "ERROR, Es posible que:\n	+Ese ID ya esta registrado\n	+Algun campo esta vacio","ERROR", JOptionPane.ERROR_MESSAGE);
 						txtID.setText("");

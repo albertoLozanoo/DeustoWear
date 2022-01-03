@@ -265,7 +265,7 @@ public class VentanaRegistroo extends JFrame {
 					}
 					if(valor == 0) {
 						Usuario u = new Usuario(nick, contraseya,avatar);
-						VentanaInicio.tmUsuarios.put(u.getNick(), u);
+						VentanaInicio.tmUsuarios.put(u.getNick(), u.getContraseya());
 						try {
 							con2 = BD.initBD("baseDeDatos.db");
 						} catch (DeustoException e2) {

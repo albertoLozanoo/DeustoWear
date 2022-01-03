@@ -5,7 +5,10 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.TreeMap;
 import java.util.logging.FileHandler;
@@ -69,11 +72,16 @@ public class BD {
 	 * Metodo que crea las tablas necesarias en la BBDD
 	 * @param con Conexion
 	 * @throws DeustoException 
+	 * 
+	 * 
+	 * int numArticulos = rs.getInt("Num Articulo");
+				double precioTotal = rs.getDouble("Precio total");
+				String fVenta = rs.getString("fVenta");
 	 */
 	public static void crearTablas(Connection con) throws DeustoException {
 		String sent1 = "CREATE TABLE IF NOT EXISTS Articulos(ID Integer,Name String, Talla String,Precio Double,Color String, Sexo String, Imagen String, TipoPantalon String, Capucha String, TipoArticulo String)";
 		String sent2 = "CREATE TABLE IF NOT EXISTS Usuarios(Nick String, Contraseya String, Avatar String)";
-		String sent3 = "CREATE TABLE IF NOT EXISTS Ventas(Nick String, Token long)";
+		String sent3 = "CREATE TABLE IF NOT EXISTS Ventas(Nick String, Token long, NumArticulos int, PrecioTotal Double,fVenta String)";
 		
 		Statement st = null;
 		
@@ -504,8 +512,10 @@ public class BD {
 	 * @return TreeMap<String,Usuario> tmUsuario
 	 * @throws DeustoException 
 	 */
-	public static TreeMap<String, Usuario> cargarMapaUsuariosDeInfoBBDD(Connection con) throws DeustoException{
-		TreeMap<String, Usuario> tmUsuario = new TreeMap<>();
+	
+	
+	public static TreeMap<String, String> cargarMapaUsuariosDeInfoBBDD(Connection con) throws DeustoException{
+		TreeMap<String, String> tmUsuario = new TreeMap<>();
 		Statement stmt = null;
 		
 		String sentSQL = "SELECT Nick,Contraseya FROM Usuarios";
@@ -516,8 +526,9 @@ public class BD {
 			while(rs.next()) { 
 				String nick = rs.getString("Nick");
 				String contraseya = rs.getString("Contraseya");
-				Usuario u = new Usuario(nick,contraseya);
-				tmUsuario.put(nick, u);
+				tmUsuario.put(nick, contraseya);
+				
+			
 			}
 			rs.close();
 			stmt.close();
@@ -756,7 +767,7 @@ public class BD {
 	 * @throws DeustoException 
 	 */
 	public static void modificarArticulo(Connection con, int id, String name, String talla, double precio, String color, String sexo) throws DeustoException {
-		String sent = "UPDATE Articulos SET Name='"+name+"', Talla ='"+talla+"', Precio ="+precio+",Color = '"+color+"',Sexo ='"+sexo+"', WHERE ID =" +id;
+		String sent = "UPDATE Articulos SET Name='"+name+"', Talla ='"+talla+"', Precio ="+precio+",Color = '"+color+"',Sexo ='"+sexo+"' WHERE ID =" +id;
 		Statement st = null;
 		
 		try {
@@ -783,10 +794,14 @@ public class BD {
 	 * @param u Usuario al que registrar una nueva ventas
 	 * @throws DeustoException
 	 */
+	
+	
 	public static void registrarVenta(Connection con,Usuario u) throws DeustoException {
-		String sent = "INSERT INTO Ventas VALUES('"+u.getNick()+"','"+System.currentTimeMillis()+"')";
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Date fVenta = new Date(System.currentTimeMillis());
+		String fechaVentaString = sdf.format(fVenta);
+		String sent = "INSERT INTO ventas VALUES('"+u.getNick()+"',"+System.currentTimeMillis()+","+u.getCarrito().size()+","+0+",'"+fechaVentaString+"')";
 		Statement st = null;
-		
 		try {
 			st = con.createStatement();
 			logger.log( Level.INFO, "Statement: " + st );
@@ -814,7 +829,7 @@ public class BD {
 	 */
 	public static HashMap<String,ArrayList<Venta>> conseguirVentasTotales(Connection con) throws DeustoException {
 		HashMap<String, ArrayList<Venta>> hmVentasTotales = new HashMap<>();
-		String sent = "SELECT * FROM Ventas";
+		String sent = "SELECT * FROM ventas";
 		Statement st = null;
 		try {
 			st = con.createStatement();
@@ -823,9 +838,19 @@ public class BD {
 			while(rs.next()) {
 				String nick = rs.getString("Nick");
 				int token = rs.getInt("Token");
+				int numArticulos = rs.getInt("NumArticulos");
+				double precioTotal = rs.getDouble("PrecioTotal");
+				String fVenta = rs.getString("fVenta");
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				Date fVentaDate;
+				try {
+					fVentaDate = sdf.parse(fVenta);
+				} catch (ParseException e) {
+					fVentaDate = new Date(System.currentTimeMillis());
+				}
 				
-				Venta v = new Venta(nick, token);
-				if(hmVentasTotales.containsKey(nick)) {
+				Venta v = new Venta(nick, token,numArticulos,precioTotal,fVentaDate);
+				if(!hmVentasTotales.containsKey(nick)) {
 					hmVentasTotales.put(nick, new ArrayList<Venta>());
 					hmVentasTotales.get(nick).add(v);
 				}
@@ -950,15 +975,88 @@ public class BD {
 		return resul;
 	}
 	
-	public static boolean existeArticuloBoolean(Connection con,int id) throws SQLException {
-		Statement statement = con.createStatement();
-		String sent = "select * from Articulos where ID ="+id;
-		ResultSet rs = statement.executeQuery(sent);
+	public static boolean existeArticuloBoolean(Connection con,int id) throws SQLException, DeustoException {
 		boolean existe = false;
-		if(rs.next())
-			existe = true;
-		rs.close();
+		Statement st = con.createStatement();
+		String sent = "select * from Articulos where ID ="+id;
+		try {
+			ResultSet rs = st.executeQuery(sent);
+			if(rs.next())
+				existe = true;
+			rs.close();
+		} catch(SQLException e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		} finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
+		}
 		return existe;
+	}
+	
+	public static ArrayList<String> conseguirNombresDeUsuarios(Connection con) throws DeustoException, SQLException{
+		Statement st = con.createStatement();
+		String sent = "SELECT Nick FROM usuarios";
+		ArrayList<String> aNombres = new ArrayList<>();
+		try {
+			ResultSet rs = st.executeQuery(sent);
+			while(rs.next()) {
+				String n = rs.getString("Nick");
+				aNombres.add(n);
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		}finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
+		}
+		
+		return aNombres;
+	}
+	
+	public static ArrayList<Venta> obtenerComprasUsuario(Connection con, String nick){
+		ArrayList<Venta> a = new ArrayList<>();
+		String sent = "SELECT * FROM ventas WHERE Nick='"+nick+"'";
+		try {
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery(sent);
+			while(rs.next()) {
+				int token = rs.getInt("Token");
+				int numArticulos = rs.getInt("NumArticulos");
+				double precioTotal = rs.getDouble("PrecioTotal");
+				String fVenta = rs.getString("fVenta");
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				Date fVentaDate;
+				try {
+					fVentaDate = sdf.parse(fVenta);
+				} catch (ParseException e) {
+					fVentaDate = new Date(System.currentTimeMillis());
+				}
+				Venta v = new Venta(nick,token,numArticulos,precioTotal,fVentaDate);
+				a.add(v);
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return a;
 	}
 	
 	/*public static int estaRegistrado(Connection con, String nick) throws DeustoException {

@@ -13,9 +13,9 @@ public class Venta implements Serializable{
 	private ArrayList<Articulo> arrayArticulos;
 	private int numArticulos;
 	private double precioTotal;
-	private long fechaVenta;
+	private Date fechaVenta;
 	
-	public Venta(int token, ArrayList<Articulo> arrayArticulos, int numArticulos,int precioTotal, long fechaVenta) {
+	public Venta(int token, ArrayList<Articulo> arrayArticulos, int numArticulos,int precioTotal, Date fechaVenta) {
 		super();
 		this.token = token;
 		this.arrayArticulos = arrayArticulos;
@@ -37,6 +37,16 @@ public class Venta implements Serializable{
 		this.nick = nick;
 		this.token = token;
 	}
+	
+	public Venta(String nick,int token,int numArticulos,double precioTotal,Date fechaVenta) {
+		this.nick = nick;
+		this.token = token;
+		this.numArticulos = numArticulos;
+		this.precioTotal = precioTotal;
+		this.fechaVenta = fechaVenta;
+	}
+
+
 
 
 	public int getToken() {
@@ -74,11 +84,11 @@ public class Venta implements Serializable{
 
 	
 
-	public long getFechaVenta() {
+	public Date getFechaVenta() {
 		return fechaVenta;
 	}
 
-	public void setFechaVenta(long fechaVenta) {
+	public void setFechaVenta(Date fechaVenta) {
 		this.fechaVenta = fechaVenta;
 	}
 	

@@ -1,0 +1,2 @@
+Pantalon [tipoPantalon=Corto, ID=123, name=pantalon, talla=XS, precio=24.0, color=AZUL, sexo=Mujer, imagen=imagenes/pantalones/pantalon1.png]
+TOTAL: 24.0 €

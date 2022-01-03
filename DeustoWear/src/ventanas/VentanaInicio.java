@@ -80,7 +80,7 @@ public class VentanaInicio extends JFrame {
 	private static Logger logger = Logger.getLogger("LogUserLogged"); 
 	
 	
-	public static TreeMap<String, Usuario> tmUsuarios = new TreeMap<>();
+	public static TreeMap<String, String> tmUsuarios = new TreeMap<>();
 	public static TreeMap<Integer,Articulo> tmArticulos = new TreeMap<>();
 	public static HashMap<Usuario,ArrayList<Venta>> hmVentasTotales = new HashMap<>();
 
@@ -128,11 +128,11 @@ public class VentanaInicio extends JFrame {
 		});
 	}
 	
-	public static TreeMap<String, Usuario> getTmUsuarios() {
+	public static TreeMap<String, String> getTmUsuarios() {
 		return tmUsuarios;
 	}
 
-	public static void setTmUsuarios(TreeMap<String, Usuario> tmUsuarios) {
+	public static void setTmUsuarios(TreeMap<String, String> tmUsuarios) {
 		VentanaInicio.tmUsuarios = tmUsuarios;
 	}
 

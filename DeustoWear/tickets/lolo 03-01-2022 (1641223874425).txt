@@ -1,0 +1,4 @@
+Camiseta [ID=761, name=camiseta4, talla=XS, precio=9.0, color=AZUL, sexo=Hombre, imagen=imagenes/camisetas/camiseta4.png]
+Pantalon [tipoPantalon=Corto, ID=555, name=pantalon3, talla=L, precio=14.0, color=NARANJA, sexo=Mujer, imagen=imagenes/pantalones/pantalon3.png]
+Pantalon [tipoPantalon=Corto, ID=556, name=pantalon4, talla=M, precio=19.0, color=DEUSTO, sexo=Hombre, imagen=imagenes/pantalones/pantalon4.png]
+TOTAL: 42.0 €

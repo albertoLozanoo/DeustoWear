@@ -1,0 +1,4 @@
+Camiseta [ID=494, name=camiseta5, talla=XS, precio=9.0, color=AZUL, sexo=Mujer, imagen=imagenes/camisetas/camiseta5.png]
+Sudadera [capucha=Con capucha, ID=552, name=sudadera5, talla=M, precio=19.0, color=NARANJA, sexo=Mujer, imagen=imagenes/sudaderas/sudadera5.png]
+Pantalon [tipoPantalon=Corto, ID=554, name=pantalon2, talla=M, precio=14.0, color=NEGRO, sexo=Mujer, imagen=imagenes/pantalones/pantalon2.png]
+TOTAL: 42.0 €

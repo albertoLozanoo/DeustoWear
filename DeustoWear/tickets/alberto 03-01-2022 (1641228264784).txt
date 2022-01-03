@@ -1,0 +1,4 @@
+Camiseta [ID=494, name=camiseta5, talla=M, precio=9.0, color=DEUSTO, sexo=Mujer, imagen=imagenes/camisetas/camiseta5.png]
+Pantalon [tipoPantalon=Corto, ID=554, name=pantalon2, talla=M, precio=14.0, color=NARANJA, sexo=Mujer, imagen=imagenes/pantalones/pantalon2.png]
+Pantalon [tipoPantalon=, ID=557, name=pantalon5, talla=S, precio=39.0, color=BLANCO, sexo=Hombre, imagen=imagenes/pantalones/pantalon5.png]
+TOTAL: 62.0 €

@@ -12,6 +12,7 @@ import java.io.PrintWriter;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.sql.Connection;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -371,7 +372,11 @@ public class Usuario implements Serializable{
 			precioTotal = precioTotal + a.getPrecio();
 		}
 		int token = (int)(Math.random()*100);
-		ventaActual = new Venta(token,carrito,carrito.size(),(int)precioTotal , System.currentTimeMillis());
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		Date fVenta = new Date(System.currentTimeMillis());
+		sdf.format(fVenta);
+		System.out.println(fVenta);
+		ventaActual = new Venta(token,carrito,carrito.size(),(int)precioTotal , fVenta);
 		
 		hmVentasUsuario.put(token, ventaActual);
 		numVentas = numVentas + 1;

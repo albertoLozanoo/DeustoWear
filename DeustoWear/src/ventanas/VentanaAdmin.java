@@ -3,6 +3,7 @@ package ventanas;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -15,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTree;
 import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.event.TableModelEvent;
@@ -23,6 +25,8 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import javax.swing.text.TabableView;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import clases.Articulo;
 import clases.BD;
@@ -61,7 +65,7 @@ public class VentanaAdmin extends JFrame {
 	private JPanel contentPane;
 	public Connection con;
 	public JFrame ventanaAnterior,ventanaActual;
-	private JMenu menuHerramientas,menuExit;
+	private JMenu menuHerramientas,menuExit,menuEliminar;
 	private JMenuBar menuBar;
 	private JPanel panelCNTeliminarArticulo;
 	/*private JList<Articulo> listaArticulos;
@@ -69,6 +73,14 @@ public class VentanaAdmin extends JFrame {
 	
 	private JTable tablaArticulos = new JTable();
 	private DefaultTableModel modeloTablaArticulos;
+	
+	
+	/**
+	 * TreeModel
+	 */
+	
+	private JTree arbol;
+	private DefaultTreeModel modeloArbol;
 		
 	private static Logger logger = Logger.getLogger( "Admin" );
 	//private TreeMap<Integer, Articulo> tmArticulosAdmin = new TreeMap<>();
@@ -223,12 +235,23 @@ public class VentanaAdmin extends JFrame {
 		mntmVerVentas.setHorizontalAlignment(SwingConstants.LEFT);
 		menuHerramientas.add(mntmVerVentas);
 		
+		menuEliminar = new JMenu("Eliminar");
+		menuEliminar.setForeground(new Color(0,0,0));
+		menuEliminar.setBackground(new Color(255, 153, 51));
+		menuEliminar.setHorizontalAlignment(SwingConstants.LEFT);
+		menuHerramientas.add(menuEliminar);
 		
-		JMenuItem mntmEliminar = new JMenuItem("Eliminar Articulo");
-		mntmEliminar.setForeground(new Color(255, 255, 255));
-		mntmEliminar.setBackground(new Color(255, 153, 0));
-		mntmEliminar.setHorizontalAlignment(SwingConstants.LEFT);
-		menuHerramientas.add(mntmEliminar);
+		JMenuItem mntmEliminarUsuario = new JMenuItem("Eliminar Usuario");
+		mntmEliminarUsuario.setForeground(new Color(255, 255, 255));
+		mntmEliminarUsuario.setBackground(new Color(255, 153, 0));
+		mntmEliminarUsuario.setHorizontalAlignment(SwingConstants.LEFT);
+		menuEliminar.add(mntmEliminarUsuario);
+		
+		JMenuItem mntmEliminarArticulo = new JMenuItem("Eliminar Articulo");
+		mntmEliminarArticulo.setForeground(new Color(255, 255, 255));
+		mntmEliminarArticulo.setBackground(new Color(255, 153, 0));
+		mntmEliminarArticulo.setHorizontalAlignment(SwingConstants.LEFT);
+		menuEliminar.add(mntmEliminarArticulo);
 		
 		menuExit = new JMenu("Salir");
 		menuExit.setForeground(new Color(255, 255, 255));
@@ -258,8 +281,13 @@ public class VentanaAdmin extends JFrame {
 				String dataRow[] = {String.valueOf(a.getID()),a.getName(),a.getTalla(),String.valueOf(a.getPrecio()),a.getColor(),a.getSexo()};
 				modeloTablaArticulos.addRow(dataRow);	
 			}
+		panelCentroDerechaLista.setLayout(new BorderLayout(0, 0));
+		tablaArticulos.setBackground(new Color(153, 204, 255));
 		tablaArticulos.setModel(modeloTablaArticulos);
 		panelCentroDerechaLista.add(tablaArticulos);
+		
+
+		
 		
 		
 		tablaArticulos.getColumnModel().getColumn(0).setMinWidth(40);
@@ -333,6 +361,8 @@ public class VentanaAdmin extends JFrame {
 				return c;
 			}
 		});*/
+		
+		
 		
 		
 		
@@ -424,25 +454,49 @@ public class VentanaAdmin extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				panelCNTeliminarArticulo.removeAll();
-				panelVentasUsuarios pv = new panelVentasUsuarios();
-				panelCNTeliminarArticulo.add(pv);
+				panelVentasUsuarios pv;
+				try {
+					pv = new panelVentasUsuarios();
+					panelCNTeliminarArticulo.add(pv);
+					panelCNTeliminarArticulo.updateUI();
+				} catch (DeustoException | SQLException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				
+				
+			}
+		});
+		
+		mntmEliminarUsuario.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				panelCNTeliminarArticulo.removeAll();
+				panelEliminarUsuario pe = new panelEliminarUsuario();
+				panelCNTeliminarArticulo.add(pe);
 				panelCNTeliminarArticulo.updateUI();
 				
 			}
 		});
 		
-		mntmEliminar.addActionListener(new ActionListener() {
+		mntmEliminarArticulo.addActionListener(new ActionListener() {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				panelCentro.removeAll();
-				panelEliminarUsuario pe = new panelEliminarUsuario();
-				panelCentro.add(pe);
-				panelCentro.updateUI();
+				ventanaActual.dispose();
+				try {
+					new VentanaAdmin(ventanaActual, u);
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 				
 			}
 		});
 	}
+	
+
 	
 	/**
 	 * Metodo que permite añadir los aritculos a la lista

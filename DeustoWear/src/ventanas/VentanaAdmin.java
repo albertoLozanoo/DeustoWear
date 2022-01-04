@@ -282,7 +282,7 @@ public class VentanaAdmin extends JFrame {
 				modeloTablaArticulos.addRow(dataRow);	
 			}
 		panelCentroDerechaLista.setLayout(new BorderLayout(0, 0));
-		tablaArticulos.setBackground(new Color(153, 204, 255));
+		tablaArticulos.setBackground(Color.WHITE);
 		tablaArticulos.setModel(modeloTablaArticulos);
 		panelCentroDerechaLista.add(tablaArticulos);
 		
@@ -307,20 +307,20 @@ public class VentanaAdmin extends JFrame {
 			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 					int row, int column) {
 				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-				if(column == 3) {
-					double precio = Double.parseDouble(String.valueOf(value));
-					if(precio>15) {
-						c.setBackground(Color.red);
-						c.setForeground(Color.WHITE);
+				String precioS = String.valueOf(modeloTablaArticulos.getValueAt(row, 3));
+				double precioD = Double.parseDouble(String.valueOf(precioS));
+				if(precioD > 15 && column == 3) {
+						c.setForeground(Color.RED);
 					}else {
-						c.setBackground(Color.white);
 						c.setForeground(Color.black);
 					}
-				}
+		
 				return c;
 			}
+	
 		});
 		
+
 		tablaArticulos.getModel().addTableModelListener(new TableModelListener() {
 			
 			@Override

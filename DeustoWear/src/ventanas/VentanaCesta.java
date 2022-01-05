@@ -309,6 +309,8 @@ public class VentanaCesta extends JFrame {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				
+				int resp = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres finalizar la compra de "+precioTotal + "€?");
+				if(resp==0) {
 				new VentanaEsperaTransaccion(va, u);
 				Connection con = null;
 				long s;
@@ -358,7 +360,7 @@ public class VentanaCesta extends JFrame {
 				u.guardarVentasEnFichero();
 				ventanaActual.dispose();
 				//new VentanaFavoritos(va, u);
-			}
+			}}
 		});
 		
 		/**

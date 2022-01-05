@@ -1,0 +1,3 @@
+Camiseta [ID=111, name=camiseta, talla=XS, precio=9.0, color=AZUL, sexo=Hombre, imagen=imagenes/camisetas/camiseta1.png]
+Pantalon [tipoPantalon=Corto, ID=123, name=pantalon, talla=XS, precio=24.0, color=AZUL, sexo=Mujer, imagen=imagenes/pantalones/pantalon1.png]
+TOTAL: 33.0 €

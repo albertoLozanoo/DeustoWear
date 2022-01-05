@@ -198,6 +198,7 @@ public class VentanaHome extends JFrame {
 			
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				
 				ventanaActual.dispose();
 				try {
 					new VentanaInicio();

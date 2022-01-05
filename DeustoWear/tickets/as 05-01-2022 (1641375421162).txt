@@ -1,0 +1,2 @@
+Sudadera [capucha=Con Capucha, ID=332, name=sudadera, talla=XS, precio=29.0, color=AZUL, sexo=Hombre, imagen=imagenes/sudaderas/sudadera1.png]
+TOTAL: 29.0 €

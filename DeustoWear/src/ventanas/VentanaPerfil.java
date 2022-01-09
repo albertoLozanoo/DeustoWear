@@ -171,7 +171,7 @@ public class VentanaPerfil extends JFrame {
 		panel.setBorder(new BevelBorder(BevelBorder.LOWERED, null, null, null, null));
 		panel.setBackground(new Color(153, 204, 255));
 		panelCentral.add(panel);
-		panel.setLayout(new MigLayout("", "[152px,grow]", "[83.00][55.00px][grow]"));
+		panel.setLayout(new MigLayout("", "[152px,grow,center]", "[83.00][55.00px][grow]"));
 		
 		JLabel lblEnunciado = new JLabel("\tPedidos realizados:");
 		lblEnunciado.setHorizontalAlignment(SwingConstants.LEFT);
@@ -187,7 +187,7 @@ public class VentanaPerfil extends JFrame {
 		listaVentasUsuario.setForeground(new Color(255, 255, 255));
 		listaVentasUsuario.setBackground(new Color(153, 204, 255));
 		//scrollListaVentas = new JScrollPane(listaVentasUsuario);
-		panel.add(listaVentasUsuario, "cell 0 2");
+		panel.add(listaVentasUsuario, "cell 0 2,alignx center,aligny center");
 		
 		for(int clave : u.getHmVentasUsuario().keySet()) {
 			Venta valor = u.getHmVentasUsuario().get(clave);

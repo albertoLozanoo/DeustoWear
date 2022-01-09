@@ -364,8 +364,12 @@ public class Usuario implements Serializable{
 				}
 			}
 		}
+
 	
 
+	/**
+	 * Metodo que realiza la compra de un usuario creando una instancia de la clase venta con token como fecha de la propia ventas
+	 */
 	public static void comprar() {
 		double precioTotal = 0;
 		for(Articulo a : carrito) {

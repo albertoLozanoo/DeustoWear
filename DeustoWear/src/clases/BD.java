@@ -569,7 +569,7 @@ public class BD {
 					int ID = rs.getInt("ID");
 					String name = rs.getString("Name");
 					String talla = rs.getString("Talla");
-					int precio = rs.getInt("Precio");
+					Double precio = rs.getDouble("Precio");
 					String color = rs.getString("Color");
 					String sexo = rs.getString("Sexo");
 					String imagen = rs.getString("Imagen");
@@ -975,6 +975,15 @@ public class BD {
 		return resul;
 	}
 	
+	/**
+	 * Metodo que comrpueba si existe un aritculo ya registrado en la BBDD con el ID pasado por parametro
+	 * @param con Connection
+	 * @param id del Articulo a comprobar
+	 * @return true: si el ID esta registrado en la BBDD 
+	 * 		   false: si el id no esta registrado en la BBDD
+	 * @throws SQLException
+	 * @throws DeustoException
+	 */
 	public static boolean existeArticuloBoolean(Connection con,int id) throws SQLException, DeustoException {
 		boolean existe = false;
 		Statement st = con.createStatement();
@@ -1000,6 +1009,13 @@ public class BD {
 		return existe;
 	}
 	
+	/**
+	 * Metodo que devuelve en un ArrayList todos los nicks de los Usuarios registrados en la BBDD
+	 * @param con Connection
+	 * @return ArrayList con el nick de todos los usuarios
+	 * @throws DeustoException
+	 * @throws SQLException
+	 */
 	public static ArrayList<String> conseguirNombresDeUsuarios(Connection con) throws DeustoException, SQLException{
 		Statement st = con.createStatement();
 		String sent = "SELECT Nick FROM usuarios";
@@ -1029,6 +1045,12 @@ public class BD {
 		return aNombres;
 	}
 	
+	/**
+	 * Metodo que devuelve en un ArrayList todas las ventas que ha realizado un usuario en concreto pasado por parametro
+	 * @param con Connection
+	 * @param nick del usuario a conseguir las ventas
+	 * @return ArrayList de todas las ventas de ese usuario
+	 */
 	public static ArrayList<Venta> obtenerComprasUsuario(Connection con, String nick){
 		ArrayList<Venta> a = new ArrayList<>();
 		String sent = "SELECT * FROM ventas WHERE Nick='"+nick+"'";

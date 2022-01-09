@@ -146,6 +146,11 @@ public class panelVentasUsuarios extends JPanel {
 		
 	}
 	
+	/**
+	 * Metodo que crea el arbol de usuarios cargando cada nodo con un nombre de usuario registrado en la BBDD
+	 * @throws DeustoException
+	 * @throws SQLException
+	 */
 	private void crearModeloArbol() throws DeustoException, SQLException {
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("USUARIOS");
 		modeloArbol = new DefaultTreeModel(raiz);

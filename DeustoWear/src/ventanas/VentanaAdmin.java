@@ -293,7 +293,8 @@ public class VentanaAdmin extends JFrame {
 		tablaArticulos.getColumnModel().getColumn(0).setMinWidth(40);
 		tablaArticulos.getColumnModel().getColumn(0).setMaxWidth(40);
 		tablaArticulos.getColumnModel().getColumn(1).setPreferredWidth(150);
-		tablaArticulos.getColumnModel().getColumn(2).setPreferredWidth(35);
+		tablaArticulos.getColumnModel().getColumn(3).setMinWidth(30);
+		tablaArticulos.getColumnModel().getColumn(3).setMaxWidth(30);
 		tablaArticulos.getColumnModel().getColumn(3).setMinWidth(40);
 		tablaArticulos.getColumnModel().getColumn(3).setMaxWidth(40);		
 		tablaArticulos.getColumnModel().getColumn(4).setMinWidth(100);
@@ -314,7 +315,20 @@ public class VentanaAdmin extends JFrame {
 					}else {
 						c.setForeground(Color.black);
 					}
-		
+				
+				String sexo = String.valueOf(modeloTablaArticulos.getValueAt(row, 5));
+				if(sexo.equals("Mujer") || sexo.equals("Hombre") && (column == 5)){
+					if(sexo.equals("Mujer") && column == 5) {
+						c.setBackground((new Color(255,182,193)));
+						c.setForeground(new Color(199,21,133));
+					}else if(sexo.equals("Hombre") && column == 5) {
+						c.setBackground((new Color(135,206,250)));
+						c.setForeground(new Color(0,0,139));
+					}else{
+						c.setBackground(Color.WHITE);
+						c.setForeground(Color.black);
+					}	
+				}
 				return c;
 			}
 	

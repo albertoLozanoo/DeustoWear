@@ -26,10 +26,10 @@ import ventanas.VentanaInicio;
 
 
 public class Usuario implements Serializable{
-	private String nick;
+	private static String nick;
 	private String contraseya;
 	private ArrayList<Articulo> carrito ;
-	private ArrayList<Articulo> favoritos;
+	private static ArrayList<Articulo> favoritos;
 	private String avatar;
 	private int numVentas;
 	
@@ -63,7 +63,7 @@ public class Usuario implements Serializable{
 		carrito = new ArrayList<>();
 		favoritos = new ArrayList<>();
 	}
-	public String getNick() {
+	public static String getNick() {
 		return nick;
 	}
 
@@ -136,7 +136,7 @@ public class Usuario implements Serializable{
 	 * Metodo que devulve la lista de favoritos del usaurio
 	 * @return
 	 */
-	public  ArrayList<Articulo> getFavoritos() {
+	public static  ArrayList<Articulo> getFavoritos() {
 		return favoritos;
 	}
 
@@ -435,7 +435,7 @@ public class Usuario implements Serializable{
 	 * Metodo que usaremos para obtener la informacion del array favoritos que cargaremos al fichero de texto
 	 * @return cadena con la informacion de favoritos 
 	 */
-	/*
+	
 	private String obtenerFavorito() {
 	
 		String texto = "";
@@ -445,7 +445,6 @@ public class Usuario implements Serializable{
 		return texto; 
 		
 	}
-	lo dejo comentado porque falta implementarlo*/
 	
 	
 	/** 
@@ -453,7 +452,7 @@ public class Usuario implements Serializable{
 	 * @throws IOException 
 	 */
 	 
-	/* 
+	
 	public void guardarFavoritosEnFicheroTxt() throws IOException {
 		PrintWriter pw = null;
 		
@@ -472,7 +471,7 @@ public class Usuario implements Serializable{
 			pw.close();
 		}
 	}
-	lo dejo comentado porque falta implementarlo*/
+
 
 }
 	

@@ -132,7 +132,7 @@ public class VentanaAdmin extends JFrame {
 		panelTituloIZQ.setBackground(new Color(255, 102, 0));
 		panelIZQayadirArticulo.add(panelTituloIZQ, BorderLayout.NORTH);
 		
-		JLabel lblAnyadirArticulo = new JLabel("A\u00D1ADIR ARTICULO");
+		JLabel lblAnyadirArticulo = new JLabel("AÑADIR ARTICULO");
 		lblAnyadirArticulo.setForeground(new Color(255, 255, 255));
 		lblAnyadirArticulo.setFont(new Font("Lato", Font.BOLD, 20));
 		panelTituloIZQ.add(lblAnyadirArticulo);
@@ -448,7 +448,7 @@ public class VentanaAdmin extends JFrame {
 					con = BD.initBD("baseDeDatos.db");
 					BD.eliminarArticuloBBDD(con,id );
 					BD.closeBD(con);
-					JOptionPane.showMessageDialog(null, "Artï¿½culo eliminado de la BBDD ","DONE", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Articulo eliminado de la BBDD ","DONE", JOptionPane.INFORMATION_MESSAGE);
 				} catch (DeustoException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();

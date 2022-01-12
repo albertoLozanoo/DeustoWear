@@ -310,7 +310,7 @@ public class VentanaCesta extends JFrame {
 			
 			public void actionPerformed(ActionEvent arg0) {
 				
-				int resp = JOptionPane.showConfirmDialog(null, "¿Estás seguro de que quieres finalizar la compra de "+precioTotal + "€?");
+				int resp = JOptionPane.showConfirmDialog(null, "�Estas seguro de que quieres finalizar la compra de "+precioTotal + "€?");
 				if(resp==0) {
 				new VentanaEsperaTransaccion(va, u);
 				Connection con = null;

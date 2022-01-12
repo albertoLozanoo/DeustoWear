@@ -299,7 +299,7 @@ public class VentanaInicio extends JFrame {
 		txtpnRegistrado.setForeground(Color.WHITE);
 		panelNorte.add(txtpnRegistrado, "cell 0 0,alignx center");
 		txtpnRegistrado.setFont(new Font("Verdana", Font.BOLD, 19));
-		txtpnRegistrado.setText("ï¿½Todavia no te has registrado?");
+		txtpnRegistrado.setText("¿Todavia no te has registrado?");
 		
 		btnRegistrarse = new JButton("Haz click aqui para registrarte");
 		btnRegistrarse.setForeground(new Color(255, 255, 255));

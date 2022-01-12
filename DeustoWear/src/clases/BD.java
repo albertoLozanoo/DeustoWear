@@ -167,7 +167,7 @@ public class BD {
 			logger.log( Level.INFO, "Statement: " + st );
 			ResultSet rs = st.executeQuery(sentencia);
 			if(rs.next()) { //Hemos encontrado una tupla que cumple la condici�n
-				if(rs.getString("Contraseya").equals(c)) {
+				if(rs.getString("Contrasenya").equals(c)) {
 					resul = 2;
 				}else {
 					resul = 1;
@@ -525,7 +525,7 @@ public class BD {
 			ResultSet rs = stmt.executeQuery(sentSQL);
 			while(rs.next()) { 
 				String nick = rs.getString("Nick");
-				String contraseya = rs.getString("Contraseya");
+				String contraseya = rs.getString("Contrasenya");
 				tmUsuario.put(nick, contraseya);
 				
 			

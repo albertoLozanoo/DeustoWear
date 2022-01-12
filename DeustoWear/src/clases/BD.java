@@ -150,12 +150,12 @@ public class BD {
 		return resul;
 	}
 	/**
-	 * Método que recibe los datos de un Usuario y comprueba que está registrado en la BBDD
+	 * Mï¿½todo que recibe los datos de un Usuario y comprueba que estï¿½ registrado en la BBDD
 	 * @param nom nombre del usuario
-	 * @param con contraseña del usuario
-	 * @return 0 si el usuario no está registrado
-	 * 		   1 si el usuario está registrado pero la contraseña no es correcta
-	 * 		   2 si el usuario está registrado y la contraseña es correcta
+	 * @param con contraseï¿½a del usuario
+	 * @return 0 si el usuario no estï¿½ registrado
+	 * 		   1 si el usuario estï¿½ registrado pero la contraseï¿½a no es correcta
+	 * 		   2 si el usuario estï¿½ registrado y la contraseï¿½a es correcta
 	 * @throws DeustoException 
 	 */
 	public static int obtenerUsuario(Connection con, String nick, String c) throws DeustoException {
@@ -166,7 +166,7 @@ public class BD {
 			st = con.createStatement();
 			logger.log( Level.INFO, "Statement: " + st );
 			ResultSet rs = st.executeQuery(sentencia);
-			if(rs.next()) { //Hemos encontrado una tupla que cumple la condición
+			if(rs.next()) { //Hemos encontrado una tupla que cumple la condiciï¿½n
 				if(rs.getString("Contraseya").equals(c)) {
 					resul = 2;
 				}else {
@@ -193,12 +193,12 @@ public class BD {
 	}
 	
 	/**
-	 * Método que recibe los datos de un Articulo y comprueba que está registrado en la BBDD
+	 * Mï¿½todo que recibe los datos de un Articulo y comprueba que estï¿½ registrado en la BBDD
 	 * @param nom nombre del Artiuclo
-	 * @param con contraseña del Articulo
-	 * @return 0 si el Articulo no está registrado
-	 * 		   1 si el Articulo está registrado pero la contraseña no es correcta
-	 * 		   2 si el usuario está registrado y la contraseña es correcta
+	 * @param con contraseï¿½a del Articulo
+	 * @return 0 si el Articulo no estï¿½ registrado
+	 * 		   1 si el Articulo estï¿½ registrado pero la contraseï¿½a no es correcta
+	 * 		   2 si el usuario estï¿½ registrado y la contraseï¿½a es correcta
 	 * @throws DeustoException 
 	 */
 	public static int obtenerArticulo(Connection con, int ID, String name) throws DeustoException {
@@ -209,7 +209,7 @@ public class BD {
 			st = con.createStatement();
 			logger.log( Level.INFO, "Statement: " + st );
 			ResultSet rs = st.executeQuery(sentencia);
-			if(rs.next()) { //Hemos encontrado una tupla que cumple la condición
+			if(rs.next()) { //Hemos encontrado una tupla que cumple la condiciï¿½n
 				if(rs.getString("ID").equals(ID)) {
 					resul = 2;
 				}else {
@@ -279,7 +279,7 @@ public class BD {
 			st = con.createStatement();
 			logger.log( Level.INFO, "Statement: " + st );
 			ResultSet rs = st.executeQuery(sent);
-			if(rs.next()) { //Hemos encontrado una tupla que cumple la condición
+			if(rs.next()) { //Hemos encontrado una tupla que cumple la condiciï¿½n
 				String avatar = rs.getString("Avatar");
 				rs.close();
 				return avatar;
@@ -301,10 +301,10 @@ public class BD {
 	}
 	
 	/**
-	 * Método que permite al usuario cambiar su contraseña y se actualiza su info en la BD
+	 * Mï¿½todo que permite al usuario cambiar su contraseï¿½a y se actualiza su info en la BD
 	 * @param con Conexion
-	 * @param nick El nick del usuario al que le vamos a cambiar la contraseña
-	 * @param c La nueva contraseña
+	 * @param nick El nick del usuario al que le vamos a cambiar la contraseï¿½a
+	 * @param c La nueva contraseï¿½a
 	 * @throws DeustoException 
 	 */
 	public static void cambiarContrasenya(Connection con, String nick, String c) throws DeustoException {
@@ -507,8 +507,8 @@ public class BD {
 	
 	
 	/**
-	 * Método que obtiene un mapa con los Usuarios de la BBDD
-	 * @param con Conexión con la BBDD
+	 * Mï¿½todo que obtiene un mapa con los Usuarios de la BBDD
+	 * @param con Conexiï¿½n con la BBDD
 	 * @return TreeMap<String,Usuario> tmUsuario
 	 * @throws DeustoException 
 	 */
@@ -550,8 +550,8 @@ public class BD {
 	
 	
 	/**
-	 * Método que obtiene un mapa con los Articulos de la BBDD
-	 * @param con Conexión con la BBDD
+	 * Mï¿½todo que obtiene un mapa con los Articulos de la BBDD
+	 * @param con Conexiï¿½n con la BBDD
 	 * @return TreeMap<String,Articulo>
 	 * @throws DeustoException 
 	 */
@@ -1053,11 +1053,16 @@ public class BD {
 	 */
 	public static ArrayList<Venta> obtenerComprasUsuario(Connection con, String nick){
 		ArrayList<Venta> a = new ArrayList<>();
-		String sent = "SELECT * FROM ventas WHERE Nick='"+nick+"'";
+		String sent;
+		if(nick.equals("USUARIOS"))
+			sent = "SELECT * FROM VENTAS";
+		else
+			sent = "SELECT * FROM ventas WHERE Nick='"+nick+"'";
 		try {
 			Statement st = con.createStatement();
 			ResultSet rs = st.executeQuery(sent);
 			while(rs.next()) {
+				String nickbd = rs.getString("nick");
 				int token = rs.getInt("Token");
 				int numArticulos = rs.getInt("NumArticulos");
 				double precioTotal = rs.getDouble("PrecioTotal");
@@ -1069,7 +1074,7 @@ public class BD {
 				} catch (ParseException e) {
 					fVentaDate = new Date(System.currentTimeMillis());
 				}
-				Venta v = new Venta(nick,token,numArticulos,precioTotal,fVentaDate);
+				Venta v = new Venta(nickbd,token,numArticulos,precioTotal,fVentaDate);
 				a.add(v);
 			}
 			rs.close();
@@ -1112,6 +1117,43 @@ public class BD {
 		}
 		return resul;
 	}*/
+	
+	
+	/**
+	 * Metodo que devuelve en un ArrayList todos los nicks de los Usuarios registrados en la BBDD
+	 * @param con Connection
+	 * @return ArrayList con el nick de todos los usuarios
+	 * @throws DeustoException
+	 * @throws SQLException
+	 */
+	public static ArrayList<String> conseguirNombresDeUsuariosDeLasVentas(Connection con) throws DeustoException, SQLException{
+		Statement st = con.createStatement();
+		String sent = "SELECT DISTINCT(Nick) FROM ventas";
+		ArrayList<String> aNombres = new ArrayList<>();
+		try {
+			ResultSet rs = st.executeQuery(sent);
+			while(rs.next()) {
+				String n = rs.getString("Nick");
+				aNombres.add(n);
+			}
+			rs.close();
+			st.close();
+		} catch (SQLException e) {
+			logger.log( Level.SEVERE, "Excepcion", e );
+			throw new DeustoException("ERROR! STATEMENT FAILED");
+		}finally {
+			if(st!=null) {
+				try {
+					st.close();
+				} catch (Exception e) {
+					logger.log( Level.SEVERE, "Excepcion", e );
+					throw new DeustoException("ERROR! CLOSING STATEMENT FAILED");
+				}
+			}
+		}
+		
+		return aNombres;
+	}
 }
 	
 	

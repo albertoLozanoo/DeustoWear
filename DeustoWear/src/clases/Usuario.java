@@ -26,12 +26,12 @@ import ventanas.VentanaInicio;
 
 
 public class Usuario implements Serializable{
-	private static String nick;
-	private static String contraseya;
-	public static ArrayList<Articulo> carrito = new ArrayList<>();
-	public static ArrayList<Articulo> favoritos = new ArrayList<>();
-	public static String avatar;
-	public static int numVentas;
+	private String nick;
+	private String contraseya;
+	private ArrayList<Articulo> carrito ;
+	private ArrayList<Articulo> favoritos;
+	private String avatar;
+	private int numVentas;
 	
 	public static Venta ventaActual = new Venta();
 	public static HashMap<Integer, Venta> hmVentasUsuario = new HashMap<>();
@@ -52,14 +52,18 @@ public class Usuario implements Serializable{
 	public Usuario(String nick,String contraseya) {
 		this.nick = nick;
 		this.contraseya = contraseya;
+		carrito = new ArrayList<>();
+		favoritos = new ArrayList<>();
 	}
 	
 	public Usuario(String nick,String contrseya, String avatar) {
 		this.nick = nick;
 		this.contraseya = contrseya;
 		this.avatar = avatar;
+		carrito = new ArrayList<>();
+		favoritos = new ArrayList<>();
 	}
-	public static  String getNick() {
+	public String getNick() {
 		return nick;
 	}
 
@@ -75,12 +79,12 @@ public class Usuario implements Serializable{
 		this.contraseya = contraseya;
 	}
 
-	public static ArrayList<Articulo> getCarrito() {
+	public ArrayList<Articulo> getCarrito() {
 		return carrito;
 	}
 
-	public  void setCarrito(ArrayList<Articulo> carrito) {
-		Usuario.carrito = carrito;
+	public void setCarrito(ArrayList<Articulo> carrito) {
+		this.carrito = carrito;
 	}
 	
 
@@ -89,7 +93,7 @@ public class Usuario implements Serializable{
 	}
 
 	public  void setLogoAvatar(String logoAvatar) {
-		Usuario.avatar = logoAvatar;
+		this.avatar = logoAvatar;
 	}
 	
 	public  String getAvatar() {
@@ -97,7 +101,7 @@ public class Usuario implements Serializable{
 	}
 
 	public  void setAvatar(String avatar) {
-		Usuario.avatar = avatar;
+		this.avatar = avatar;
 	}
 
 	public  HashMap<Integer,Venta> getHmVentasUsuario() {
@@ -132,7 +136,7 @@ public class Usuario implements Serializable{
 	 * Metodo que devulve la lista de favoritos del usaurio
 	 * @return
 	 */
-	public static  ArrayList<Articulo> getFavoritos() {
+	public  ArrayList<Articulo> getFavoritos() {
 		return favoritos;
 	}
 
@@ -141,7 +145,7 @@ public class Usuario implements Serializable{
 	 * @param favoritos
 	 */
 	public  void setFavoritos(ArrayList<Articulo> favoritos) {
-		Usuario.favoritos = favoritos;
+		this.favoritos = favoritos;
 	}
 
 	/**
@@ -166,7 +170,7 @@ public class Usuario implements Serializable{
 	 * @param a Articulo a a�adir 
 	 * @return devuelve true si lo puede a�aadir, false en caso contrario
 	 */
-	public static void addFavorito(Articulo a) {
+	public  void addFavorito(Articulo a) {
 		if( a !=null && !favoritos.contains(a)) {
 			favoritos.add(a);
 		}
@@ -176,7 +180,7 @@ public class Usuario implements Serializable{
 	 * Metodo que permite a�adir un articulo al carrito del usuario
 	 * @param a Artiuclo a a�adir en el carrito
 	 */
-	public static void addCarrito(Articulo a) {
+	public void addCarrito(Articulo a) {
 		if(a !=null) {
 			carrito.add(a);
 		}
@@ -185,7 +189,7 @@ public class Usuario implements Serializable{
 	/**
 	 * Metodo que permite eliminar todos los articulos del carrito del usario
 	 */
-	public static void limpiarCarrito() {
+	public void limpiarCarrito() {
 		carrito.clear();
 	}
 	
@@ -211,7 +215,7 @@ public class Usuario implements Serializable{
 		Articulo f = favoritos.remove(id);
 	}
 	
-	public static void limpiarFavoritos() {
+	public void limpiarFavoritos() {
 		favoritos.clear();
 	}
 	
@@ -235,7 +239,7 @@ public class Usuario implements Serializable{
 	 * Metodo que recorre el carrito del usuario y consgie la sumaTotal del precio
 	 * @return sumaTotal, cantidad total a pagar
 	 */
-	public static double sumaTotalAPagar() {
+	public double sumaTotalAPagar() {
 		double sumaTotal = 0.0;
 		for(Articulo a: getCarrito()) {
 			sumaTotal = sumaTotal + a.getPrecio();
@@ -248,15 +252,17 @@ public class Usuario implements Serializable{
 	/**
 	 * Metodo que guarda en un fichero binario los articulos favoritos del usaurio
 	 */
-	public static void guardarFavoritosEnFichero() {
+	public void guardarFavoritosEnFichero() {
 		ObjectOutputStream oos = null;
-		
+		System.out.println("Guardando los favoritos en el fichero");
 		try {
-			oos = new ObjectOutputStream(new FileOutputStream(Usuario.getNick()+"&&favoritos.DAT"));
+			oos = new ObjectOutputStream(new FileOutputStream(getNick()+"&&favoritos.DAT"));
+			System.out.println("Mostrando los artículos que vamos a guardar");
 			for(Articulo a : favoritos ) {
 				System.out.println(a);
 				oos.writeObject(favoritos);
 			}
+			oos.writeObject(favoritos);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
@@ -274,13 +280,14 @@ public class Usuario implements Serializable{
 	/**
 	 * Metodo que carga el array de articulos favortios del usuario con la informacion del fichero favoritos
 	 */
-	public static void cargarFavoritosDelFichero() {
+	public void cargarFavoritosDelFichero() {
 		ObjectInputStream ois = null;
-		File f = new File(Usuario.getNick()+"&&favoritos.DAT");
+		File f = new File(this.getNick()+"&&favoritos.DAT");
 		if(f.exists()) {
 			try {
 				ois = new ObjectInputStream(new FileInputStream(f));
 				favoritos = (ArrayList<Articulo>) ois.readObject();
+				System.out.println("Cargamos los favoritos desde el fichero");
 				for(Articulo a: favoritos) {
 					System.out.println(a);
 				}
@@ -308,17 +315,18 @@ public class Usuario implements Serializable{
 	/**
 	 * Metodo que permite guardar las ventas de un usuario en un fichero
 	 */
-	public static void guardarVentasEnFichero() {
+	public void guardarVentasEnFichero() {
 		ObjectOutputStream oos = null;
 		try {
 			oos = new ObjectOutputStream(new FileOutputStream(nick + "&&ventas.DAT"));
 			System.out.println("Escribiendo los datos del hm en el fichero...");
-			for (int clave : hmVentasUsuario.keySet()) {
+			/*for (int clave : hmVentasUsuario.keySet()) {
 				for (Venta v : hmVentasUsuario.values()) { //recorro todos los articulos pertenecientes a cada clave
 					System.out.println(v);
 					oos.writeObject(hmVentasUsuario); //escribo en el fichero lo ue hay en el mapa
 				}
-			}
+			}*/
+			oos.writeObject(hmVentasUsuario);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -337,30 +345,34 @@ public class Usuario implements Serializable{
 	/**
 	 * Metodo que permite cargar las ventas de un usuario de un fichero a un HM
 	 */
-	public static void cargarVentasDesdeFichero() {
+	public void cargarVentasDesdeFichero() {
 		ObjectInputStream ois = null;
-		try {
-			System.out.println("Cargando los datos desde el fichero...");
-			ois = new ObjectInputStream(new FileInputStream(nick + "&&ventas.DAT"));
-			hmVentasUsuario = (HashMap<Integer, Venta>) ois.readObject();
-			for(int clave : hmVentasUsuario.keySet()) {
-				for (Venta v : hmVentasUsuario.values()) { //recorro todas las caves del hashmap
-					System.out.println(v);
-				}
-			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			if (ois != null)
-				try {
-					ois.close();
-				} catch (IOException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+		File f = new File(nick + "&&ventas.DAT");
+			if(f.exists()) {
+			try {
+				System.out.println("Cargando los datos desde el fichero...");
+				ois = new ObjectInputStream(new FileInputStream(nick + "&&ventas.DAT"));
+				hmVentasUsuario = (HashMap<Integer, Venta>) ois.readObject();
+				/*for(int clave : hmVentasUsuario.keySet()) {
+					for (Venta v : hmVentasUsuario.values()) { //recorro todas las caves del hashmap
+						System.out.println(v);
+					}
+				}*/
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}finally {
+				if (ois != null)
+					try {
+						ois.close();
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			}
 		}
@@ -370,7 +382,7 @@ public class Usuario implements Serializable{
 	/**
 	 * Metodo que realiza la compra de un usuario creando una instancia de la clase venta con token como fecha de la propia ventas
 	 */
-	public static void comprar() {
+	public void comprar() {
 		double precioTotal = 0;
 		for(Articulo a : carrito) {
 			precioTotal = precioTotal + a.getPrecio();
@@ -395,7 +407,7 @@ public class Usuario implements Serializable{
 	 * @param i variable que ira aumentando a medida que recorra el array
 	 * @return
 	 */
-	public static int obtenerSumaArrayInt(ArrayList<Integer> a,int i) {
+	public int obtenerSumaArrayInt(ArrayList<Integer> a,int i) {
 		if(i<a.size()) {
 			Integer valor = a.get(i);
 			return valor = valor + obtenerSumaArrayInt(a, i+1);
@@ -409,7 +421,7 @@ public class Usuario implements Serializable{
 	 * @param a ArrayList<Integer>
 	 * @param i variable que ira aumentando a medida que recorra el array
 	 */
-	public static void muestraArrayInt(ArrayList<Integer> a,int i) {
+	public void muestraArrayInt(ArrayList<Integer> a,int i) {
 		if(i<a.size()) {
 			Integer valor = a.get(i);
 			System.out.println(valor);

@@ -3,21 +3,32 @@ package panel;
 import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 
 import clases.Articulo;
 import clases.BD;
 import clases.DeustoException;
 import clases.Usuario;
 import ventanas.VentanaInicio;
+import ventanas.VentanaRegistroo;
 
 import java.awt.BorderLayout;
+import java.util.ArrayList;
 import java.util.TreeMap;
 
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.Action;
 import javax.swing.JButton;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.beans.PropertyChangeListener;
 import java.sql.Connection;
+import java.sql.SQLException;
+
 import javax.swing.border.BevelBorder;
 
 public class panelEliminarUsuario extends JPanel {
@@ -73,17 +84,39 @@ public class panelEliminarUsuario extends JPanel {
 		}
 		
 		for(String nick : tmUsuarios.keySet()) {
-			for(String contraseya: tmUsuarios.values()) {
 				
-				String dataRow [] = {nick,contraseya};
+				String dataRow [] = {nick,tmUsuarios.get(nick)};
 				modeloTablaUsuarios.addRow(dataRow);
-			}
 		}
 		tablaUsuarios = new JTable(modeloTablaUsuarios);
 		panelCentro.add(tablaUsuarios);
 		
 		
+		btnEliminarUsuario.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				int index = tablaUsuarios.getSelectedRow();
+				String nick = (String) tablaUsuarios.getValueAt(index, 0);
+				
+				try {
+					Connection con = BD.initBD("baseDeDatos.db");
+					BD.eliminarUsuarioBBDD(con, nick);
+					BD.closeBD(con);
+					JOptionPane.showMessageDialog(null, "Usuario eliminado de la BBDD ","DONE", JOptionPane.INFORMATION_MESSAGE);
+				} catch (DeustoException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
+				modeloTablaUsuarios.removeRow(tablaUsuarios.getSelectedRow());
+				panelCentro.updateUI();
+				
+			}
+		});
+		
 		
 	}
+	
+
 
 }

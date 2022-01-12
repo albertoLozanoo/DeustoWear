@@ -1,12 +1,12 @@
 package clases;
 
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertNotEquals;
 
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 
 
 class MiJUnit {
@@ -53,7 +53,7 @@ class MiJUnit {
 	}
 	
 	/**
-	 * Test que comprueba si el metodo añadir Camiseta funciona correctamente
+	 * Test que comprueba si el metodo aï¿½adir Camiseta funciona correctamente
 	 */
 	@Test
 	public void testInsertarNuevaCamiseta() {
@@ -90,7 +90,7 @@ class MiJUnit {
 					assertTrue(contAntesDeEliminar == contDespuesDeEliminar + 1);
 				}
 			}
-			//Añadimos el articulo que acabamos de insertar para dejar intacta la BBDD
+			//Aï¿½adimos el articulo que acabamos de insertar para dejar intacta la BBDD
 			Pantalon p = new Pantalon(123, "pantalon", "M", 25, "Azul","Mujer","imagenes/pantalones/pantalon1.png","Corto");
 			BD.insertarPantalonBBDD(con, p);
 			BD.closeBD(con);

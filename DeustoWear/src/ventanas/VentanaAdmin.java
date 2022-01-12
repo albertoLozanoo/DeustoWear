@@ -328,6 +328,10 @@ public class VentanaAdmin extends JFrame {
 						c.setBackground(Color.WHITE);
 						c.setForeground(Color.black);
 					}	
+				}else {
+					c.setBackground(Color.WHITE);
+					c.setForeground(Color.black);
+				
 				}
 				return c;
 			}
@@ -444,7 +448,7 @@ public class VentanaAdmin extends JFrame {
 					con = BD.initBD("baseDeDatos.db");
 					BD.eliminarArticuloBBDD(con,id );
 					BD.closeBD(con);
-					JOptionPane.showMessageDialog(null, "Artículo eliminado de la BBDD ","DONE", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Artï¿½culo eliminado de la BBDD ","DONE", JOptionPane.INFORMATION_MESSAGE);
 				} catch (DeustoException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -513,7 +517,7 @@ public class VentanaAdmin extends JFrame {
 
 	
 	/**
-	 * Metodo que permite añadir los aritculos a la lista
+	 * Metodo que permite aï¿½adir los aritculos a la lista
 	 */
 	/*private void anyadirArticulosALista() {
 		for(int clave : tmArticulosAdmin.keySet()) {

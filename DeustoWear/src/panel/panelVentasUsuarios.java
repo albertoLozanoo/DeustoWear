@@ -81,13 +81,30 @@ public class panelVentasUsuarios extends JPanel {
 		
 		String [] header = {"USUARIO","TOKEN","NUM-ART","PRECIO TOTAL","FECHA"};
 		modeloTablaVentasUsuarios.setColumnIdentifiers(header);
-		for(String value : hmVentasTotales.keySet()) {
+		/*for(String value : hmVentasTotales.keySet()) {
 			for(ArrayList<Venta> av : hmVentasTotales.values()) {
 				for(Venta v : av) {
 					String dataRow[] = {value,String.valueOf(v.getToken()),String.valueOf(v.getNumArticulos()),String.valueOf(v.getPrecioTotal()),v.getFechaVenta().toString()};
 					modeloTablaVentasUsuarios.addRow(dataRow);
 				}
 			}
+		}*/
+		ArrayList<Venta> a = new ArrayList<Venta>();
+		try {
+			con = BD.initBD("baseDeDatos.db");
+			a = BD.obtenerComprasUsuario(con, "USUARIOS");
+			BD.closeBD(con);
+		} catch (DeustoException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		while(modeloTablaVentasUsuarios.getRowCount()>0)
+			modeloTablaVentasUsuarios.removeRow(0);
+		for(Venta v : a) {
+			String [] fila = {v.nick,String.valueOf(v.getToken()),String.valueOf(v.getNumArticulos()),String.valueOf(v.getPrecioTotal()),sdf.format(v.getFechaVenta())};
+			modeloTablaVentasUsuarios.addRow(fila);
 		}
 		panelCentro.setLayout(new BorderLayout(0, 0));
 		
@@ -123,6 +140,7 @@ public class panelVentasUsuarios extends JPanel {
 			public void valueChanged(TreeSelectionEvent e) {
 				TreePath t = e.getPath();
 				String nick = t.getLastPathComponent().toString();
+				System.out.println(nick);
 				ArrayList<Venta> a = new ArrayList<Venta>();
 				try {
 					con = BD.initBD("baseDeDatos.db");
@@ -137,7 +155,7 @@ public class panelVentasUsuarios extends JPanel {
 				while(modeloTablaVentasUsuarios.getRowCount()>0)
 					modeloTablaVentasUsuarios.removeRow(0);
 				for(Venta v : a) {
-					String [] fila = {nick,String.valueOf(v.getToken()),String.valueOf(v.getNumArticulos()),String.valueOf(v.getPrecioTotal()),sdf.format(v.getFechaVenta())};
+					String [] fila = {v.nick,String.valueOf(v.getToken()),String.valueOf(v.getNumArticulos()),String.valueOf(v.getPrecioTotal()),sdf.format(v.getFechaVenta())};
 					modeloTablaVentasUsuarios.addRow(fila);
 				}
 				
@@ -155,7 +173,7 @@ public class panelVentasUsuarios extends JPanel {
 		DefaultMutableTreeNode raiz = new DefaultMutableTreeNode("USUARIOS");
 		modeloArbol = new DefaultTreeModel(raiz);
 		con = BD.initBD("baseDeDatos.db");
-		ArrayList<String> nombresUsuarios = BD.conseguirNombresDeUsuarios(con);
+		ArrayList<String> nombresUsuarios = BD.conseguirNombresDeUsuariosDeLasVentas(con);
 		BD.closeBD(con);
 		int i=0;
 		for(String name: nombresUsuarios) {

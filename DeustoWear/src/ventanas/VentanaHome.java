@@ -236,7 +236,11 @@ public class VentanaHome extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				ventanaActual.dispose();
-				new VentanaFavoritos(ventanaActual,u);
+				System.out.println("Vamos a cargar los siguientes favoritos");
+				for(Articulo a: VentanaInicio.u.getFavoritos())
+					System.out.println(a);
+				new VentanaFavoritos(ventanaActual,VentanaInicio.u);
+				//new VentanaFavoritos(ventanaActual,u);
 				//new VentanaPerfil(ventanaActual);
 			}
 		});

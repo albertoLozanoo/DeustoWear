@@ -35,6 +35,7 @@ import javax.swing.table.DefaultTableModel;
 import clases.Articulo;
 import clases.BD;
 import clases.DeustoException;
+import clases.GestionFicheros;
 import clases.Usuario;
 import clases.Venta;
 import net.miginfocom.swing.MigLayout;
@@ -112,7 +113,7 @@ public class VentanaFavoritos extends JFrame {
 		getContentPane().add(panelNorte, BorderLayout.NORTH);
 		panelNorte.setBackground(new Color(255, 153, 0));
 		
-		JLabel lblCabecera = new JLabel("Articulos favoritos de " + Usuario.getNick());
+		JLabel lblCabecera = new JLabel("Articulos favoritos de " + VentanaInicio.u.getNick());
 		lblCabecera.setHorizontalAlignment(SwingConstants.CENTER);
 		lblCabecera.setBackground(new Color(255, 255, 255));
 		lblCabecera.setFont(new Font("Lato", Font.BOLD, 28));
@@ -177,18 +178,19 @@ public class VentanaFavoritos extends JFrame {
 		scrollListaArticulosFavoritos = new JScrollPane(listaArticulosFavoritos);
 		panelCentral.add(scrollListaArticulosFavoritos);*/
 		
-		
+		//VentanaInicio.u.setFavoritos(GestionFicheros.cargarFavoritos(VentanaInicio.u.getNick()));
 		String [] header = {"TAG","TALLA", "PRECIO","COLOR", "SEXO"};
 		modeloTablaArticulos.setColumnIdentifiers(header);
-		for(Articulo a : u.getFavoritos()) {
-			String dataRow[] = {a.getName(),a.getTalla(),String.valueOf(a.getPrecio()),a.getColor(),a.getSexo()};
+		//for(Articulo a : VentanaInicio.u.getFavoritos()) {
+		for(Articulo b: GestionFicheros.cargarFavoritos(VentanaInicio.u.getNick())) {
+			String dataRow[] = {b.getName(),b.getTalla(),String.valueOf(b.getPrecio()),b.getColor(),b.getSexo()};
 			modeloTablaArticulos.addRow(dataRow);	
 		}
 		
 		tablaArticulos = new JTable(modeloTablaArticulos);
 		tablaArticulos.setBackground(new Color(153, 204, 255));
-		//JScrollPane scroll =new JScrollPane(tablaArticulos);
-		panelCentral.add(tablaArticulos);
+		JScrollPane scroll =new JScrollPane(tablaArticulos);
+		panelCentral.add(scroll);
 		
 		
 		

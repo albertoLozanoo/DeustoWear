@@ -48,6 +48,7 @@ import clases.Articulo;
 import clases.BD;
 import clases.Camiseta;
 import clases.DeustoException;
+import clases.GestionFicheros;
 import clases.Pantalon;
 import clases.Sudadera;
 import clases.Usuario;
@@ -77,6 +78,7 @@ public class VentanaInicio extends JFrame {
 	private JButton btnIniciarSesion,btnRegistrarse;
 	private JFrame ventanaActual;
 	public static Connection con;
+	public static Usuario u = new Usuario();
 	private static Logger logger = Logger.getLogger("LogUserLogged"); 
 	
 	
@@ -297,7 +299,7 @@ public class VentanaInicio extends JFrame {
 		txtpnRegistrado.setForeground(Color.WHITE);
 		panelNorte.add(txtpnRegistrado, "cell 0 0,alignx center");
 		txtpnRegistrado.setFont(new Font("Verdana", Font.BOLD, 19));
-		txtpnRegistrado.setText("¿Todavia no te has registrado?");
+		txtpnRegistrado.setText("ï¿½Todavia no te has registrado?");
 		
 		btnRegistrarse = new JButton("Haz click aqui para registrarte");
 		btnRegistrarse.setForeground(new Color(255, 255, 255));
@@ -383,19 +385,20 @@ public class VentanaInicio extends JFrame {
 						e2.printStackTrace();
 					}
 					if((resul == 0) && !nick.equals("admin") && !c.equals("admin")){
-						JOptionPane.showMessageDialog(null, "Todavia no te has registrado","¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "Todavia no te has registrado","ï¿½ï¿½ERROR!!", JOptionPane.ERROR_MESSAGE);
 						txtNick.setText("");
 						txtContraseya.setText("");
 					}else if(resul==1) {
-						JOptionPane.showMessageDialog(null, "La contraseña no es correcta","¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "La contraseï¿½a no es correcta","ï¿½ï¿½ERROR!!", JOptionPane.ERROR_MESSAGE);
 						
 						txtContraseya.setText("");
 					}else {
 						if((resul == 2) && (!nick.equals("admin") && !c.equals("admin"))){
 							
 							JOptionPane.showMessageDialog(null, "Cargando WearHome, bienvenid@ "+ nick,"WELCOME", JOptionPane.INFORMATION_MESSAGE);
-							Usuario u = new Usuario(nick,c);
-							u.cargarFavoritosDelFichero();
+							u = new Usuario(nick,c);
+							//u.cargarFavoritosDelFichero();
+							u.setFavoritos(GestionFicheros.cargarFavoritos(nick));
 							u.cargarVentasDesdeFichero();
 							Handler handler = null;
 							try {

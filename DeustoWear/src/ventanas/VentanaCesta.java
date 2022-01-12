@@ -270,8 +270,9 @@ public class VentanaCesta extends JFrame {
 		}
 		
 		tablaArticulos = new JTable(modeloTablaArticulos);
-		//JScrollPane scroll =new JScrollPane(tablaArticulos);
+		JScrollPane scroll =new JScrollPane(tablaArticulos);
 		panelCentroCentro.add(tablaArticulos);
+		panelCentroCentro.add(scroll);
 		
 		
 		/*EVENTOS*/
@@ -295,7 +296,7 @@ public class VentanaCesta extends JFrame {
 				u.eliminarArticulo(index);
 				double precioAreducir = Double.parseDouble((String)modeloTablaArticulos.getValueAt(index, 2));
 				modeloTablaArticulos.removeRow(tablaArticulos.getSelectedRow());
-				JOptionPane.showMessageDialog(null, "Artículo eliminado del carrito ","DONE", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "Artï¿½culo eliminado del carrito ","DONE", JOptionPane.INFORMATION_MESSAGE);
 				precioTotal = precioTotal - precioAreducir;
 				lblPrecioTotalInput.setText(""+ precioTotal);
 				panelCentro.updateUI();
@@ -321,7 +322,7 @@ public class VentanaCesta extends JFrame {
 					e1.printStackTrace();
 				}
 				u.comprar();
-				//JOptionPane.showMessageDialog(null, "Compra registrada con exito " + u.getNick() + "\n gracias por tu visita te dejamos con tus \n articulos favoritos","¡¡GRACIAS!!", JOptionPane.INFORMATION_MESSAGE);
+				//JOptionPane.showMessageDialog(null, "Compra registrada con exito " + u.getNick() + "\n gracias por tu visita te dejamos con tus \n articulos favoritos","ï¿½ï¿½GRACIAS!!", JOptionPane.INFORMATION_MESSAGE);
 				Runnable r = new Runnable() {
 					public void run() {
 						for(int i=255;i>=0;i--) {
@@ -455,7 +456,7 @@ public class VentanaCesta extends JFrame {
 	private void cargarCarritoEnTextArea() {
 		String texto = "";
 		double total = 0;
-		for(Articulo a : u.carrito) {
+		for(Articulo a : VentanaInicio.u.getCarrito()) {
 			texto = texto + a + "\n";
 			total = total + a.getPrecio();
 		}

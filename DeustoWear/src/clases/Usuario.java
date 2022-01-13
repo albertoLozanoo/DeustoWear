@@ -26,10 +26,10 @@ import ventanas.VentanaInicio;
 
 
 public class Usuario implements Serializable{
-	private static String nick;
+	private String nick;
 	private String contraseya;
 	private ArrayList<Articulo> carrito ;
-	private static ArrayList<Articulo> favoritos;
+	private ArrayList<Articulo> favoritos;
 	private String avatar;
 	private int numVentas;
 	
@@ -63,7 +63,7 @@ public class Usuario implements Serializable{
 		carrito = new ArrayList<>();
 		favoritos = new ArrayList<>();
 	}
-	public static String getNick() {
+	public String getNick() {
 		return nick;
 	}
 
@@ -136,7 +136,7 @@ public class Usuario implements Serializable{
 	 * Metodo que devulve la lista de favoritos del usaurio
 	 * @return
 	 */
-	public static  ArrayList<Articulo> getFavoritos() {
+	public  ArrayList<Articulo> getFavoritos() {
 		return favoritos;
 	}
 

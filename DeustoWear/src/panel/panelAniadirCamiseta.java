@@ -6,6 +6,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.regex.Pattern;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -187,8 +188,10 @@ public class panelAniadirCamiseta extends JPanel {
 		btnAniadirCamiseta.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				String ERname = "(camiseta){1}[0-9]{1,3}";
 				int id = Integer.parseInt((txtID.getText()));
 				String name = txtName.getText();
+				boolean correctoName = Pattern.matches(ERname, name);
 				String talla = (String) cbTalla.getSelectedItem();
 				Double precio = Double.parseDouble((txtPrecio.getText()));
 				String color =(String) cbColor.getSelectedItem();
@@ -198,13 +201,16 @@ public class panelAniadirCamiseta extends JPanel {
 				}else if(rdbtnSexoMujer.isSelected()){
 					sexo = "Mujer";
 				}
-				String img =  "imagenes/camisetas/"+txtURL.getText()+".png";
+				String url = txtURL.getText();
+				String ERurl = "(0-9){1,3}";
+				boolean correctoUrl = Pattern.matches(ERurl, url);
+				String img =  "imagenes/camisetas/"+url+".png";
 				
 				try {
 					con = BD.initBD("baseDeDatos.db");
 					int existeArticulo = BD.existeArticulo(con, id);
 					BD.closeBD(con);
-					if(existeArticulo == 0 && id!=0 && !name.equals("")&& !talla.equals("Seleccione una talla...") && precio>0.0 && !color.equals("Seleccione un color...") && !sexo.equals("") && !img.equals("")) {
+					if(correctoName && correctoUrl && existeArticulo == 0 && id<1000 && id>0 && precio > 0.0 && precio <100.0 && !name.equals("")&& !talla.equals("Seleccione una talla...") && precio>0.0 && !color.equals("Seleccione un color...") && !sexo.equals("") && !img.equals("")) {
 						Camiseta c = new Camiseta(id,name,talla,precio,color,sexo,img);
 						System.out.println(c);
 						JOptionPane.showMessageDialog(null, "Articulo registrado con exito", "APPROVED", JOptionPane.INFORMATION_MESSAGE);

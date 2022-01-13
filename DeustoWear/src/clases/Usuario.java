@@ -435,7 +435,7 @@ public class Usuario implements Serializable{
 	 * Metodo que usaremos para obtener la informacion del array favoritos que cargaremos al fichero de texto
 	 * @return cadena con la informacion de favoritos 
 	 */
-	
+	/**
 	private String obtenerFavorito() {
 	
 		String texto = "";
@@ -446,13 +446,13 @@ public class Usuario implements Serializable{
 		
 	}
 	
-	
+	Falta implementarlo*/
 	/** 
 	 * Metodo que guarda en un fichero de texto los articulos favoritos del usuario utilizando el metodo obtenerFavorito
 	 * @throws IOException 
 	 */
 	 
-	
+	/*
 	public void guardarFavoritosEnFicheroTxt() throws IOException {
 		PrintWriter pw = null;
 		
@@ -471,7 +471,7 @@ public class Usuario implements Serializable{
 			pw.close();
 		}
 	}
-
+Falta implementarlo*/
 
 }
 	

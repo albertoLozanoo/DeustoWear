@@ -110,7 +110,6 @@ public class VentanaInicio extends JFrame {
 	private JPanel panelCentroInsideIzquierda;
 	private JButton btnLogo;
 	private JButton btnVisualizar;
-	private JButton btnOcultar;
 	
 	//private static Logger log; 
 
@@ -328,19 +327,6 @@ public class VentanaInicio extends JFrame {
 		ImageIcon imVisualizar = new ImageIcon("imagenes/iconoVerContraseya.png");
 		ImageIcon imagenConDimensionesVisualizar = new ImageIcon(imVisualizar.getImage().getScaledInstance(40,40,ImageView.CENTER));
 		
-		ImageIcon imOcultar = new ImageIcon("imagenes/iconoOcultarContraseya.png");
-		ImageIcon imagenConDimensionesOcultar = new ImageIcon(imOcultar.getImage().getScaledInstance(40,40,ImageView.CENTER));
-		btnOcultar = new JButton();
-		btnOcultar.setBackground(new Color(255,255,255));
-		btnOcultar.setPreferredSize(new DimensionUIResource(10, 10));
-		btnOcultar.setIcon(imagenConDimensionesOcultar);
-		panelCentroInside.add(btnOcultar, "flowx,cell 0 10,alignx center,aligny top");
-		btnOcultar.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				txtContraseya.setEchoChar('*');
-			}
-		});
 		btnVisualizar = new JButton();
 		btnVisualizar.setBackground(new Color(255,255,255));
 		btnVisualizar.setPreferredSize(new DimensionUIResource(10, 10));
@@ -349,9 +335,13 @@ public class VentanaInicio extends JFrame {
 		
 		btnVisualizar.addMouseListener(new MouseAdapter() {
 			@Override
-			public void mouseClicked(MouseEvent e) {
+			public void mousePressed(MouseEvent e) {
 				if(e.getSource()==btnVisualizar)
 					txtContraseya.setEchoChar((char)0);
+			}
+			
+			public void mouseReleased(MouseEvent e) {
+				txtContraseya.setEchoChar('*');
 			}
 		});
 		

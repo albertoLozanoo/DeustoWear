@@ -243,11 +243,13 @@ public class VentanaRegistroo extends JFrame {
 				String ERnick = "[A-Za-z]{1,15}";
 				String nick = txtNick.getText();
 				String contraseya = txtContraseya.getText();
+				String ERcontraseya = "[0-9]{4,15}";
+				boolean correctoContra = Pattern.matches(ERcontraseya, contraseya);
 				String avatar = ficheroSeleccionado.getAbsolutePath();
 				System.out.println(avatar);
 				boolean correctoNick = Pattern.matches(ERnick, nick);
 				
-				if((correctoNick) && (!nick.equals("admin")) && (!nick.equals("") && !contraseya.equals("") )) {
+				if((correctoNick) && (!nick.equals("admin")) && correctoContra) {
 					Connection con = null;
 					Connection con2 = null;
 					try {
@@ -315,7 +317,7 @@ public class VentanaRegistroo extends JFrame {
 						txtNick.setText("");
 					}
 				}else {
-					JOptionPane.showMessageDialog(null, "El nombre no es correcto, recuerda que tu nick: \n\t 1. No puede contener numeros, solo letras \n\t 2. No puedes crear cuenta con nick 'admin' \n\t 3. El campo contraseña no puede estar vacio", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "El nombre no es correcto, recuerda que tu nick: \n\t 1. No puede contener numeros ni estar vacío, solo letras \n\t 2. No puedes crear cuenta con nick 'admin' \n\t 3. El campo contraseña debe tener solo números y entre 4 y 15", "¡¡ERROR!!", JOptionPane.ERROR_MESSAGE);
 					txtNick.setText("");
 				}
 				txtNick.setText("");

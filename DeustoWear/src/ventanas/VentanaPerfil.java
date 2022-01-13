@@ -203,7 +203,7 @@ public class VentanaPerfil extends JFrame {
 		btnEditar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String contra = JOptionPane.showInputDialog("Introduzca la nueva contraseña:");
-				String ERcontraseya = "[0-9]{1,15}";
+				String ERcontraseya = "[0-9]{4,15}";
 				boolean correctoContra = Pattern.matches(ERcontraseya, contra);
 				if(correctoContra && !contra.equals(u.getContraseya())) {
 					try {
@@ -227,6 +227,7 @@ public class VentanaPerfil extends JFrame {
 					JOptionPane.showMessageDialog(null, "Contraseña cambiada correctamente", "CAMBIO REALIZADO", JOptionPane.INFORMATION_MESSAGE);
 				}else {
 					JOptionPane.showMessageDialog(null, "Loading...Error", "!!ERROR!!", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "La contraseña debe estar formada solo por números y 4 como mínimo", "!!ERROR!!", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 

@@ -374,11 +374,17 @@ public class VentanaInicio extends JFrame {
 						// TODO Auto-generated catch block
 						e2.printStackTrace();
 					}
-					if((resul == 0) && !nick.equals("admin") && !c.equals("admin")){
+					if(nick.equals("")||c.equals("")){
+						JOptionPane.showMessageDialog(null, "Por favor, rellene todos los campos","��ERROR!!", JOptionPane.ERROR_MESSAGE);
+						txtNick.setText("");
+						txtContraseya.setText("");
+					}
+					else if((resul == 0) && !nick.equals("admin") && !c.equals("admin")){
 						JOptionPane.showMessageDialog(null, "Todavia no te has registrado","��ERROR!!", JOptionPane.ERROR_MESSAGE);
 						txtNick.setText("");
 						txtContraseya.setText("");
-					}else if(resul==1) {
+					}
+					else if(resul==1) {
 						JOptionPane.showMessageDialog(null, "La contrase�a no es correcta","��ERROR!!", JOptionPane.ERROR_MESSAGE);
 						
 						txtContraseya.setText("");

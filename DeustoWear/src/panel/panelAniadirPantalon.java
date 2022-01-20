@@ -227,7 +227,7 @@ public class panelAniadirPantalon extends JPanel {
 					con = BD.initBD("baseDeDatos.db");
 					int existeArticulo = BD.existeArticulo(con, id);
 					BD.closeBD(con);
-					if(correctoName && correctoUrl && id<1000 && id>0 && precio <100.0 && precio > 0.0 && existeArticulo == 0 && id!=0 && !name.equals("")&& !talla.equals("Seleccione una talla...") && precio>0.0 && !color.equals("Seleccione un color...") && !sexo.equals("") && !img.equals("")) {
+					if(id<1000 && id>0 && precio <100.0 && precio > 0.0 && existeArticulo == 0 && id!=0 && !name.equals("")&& !talla.equals("Seleccione una talla...") && precio>0.0 && !color.equals("Seleccione un color...") && !sexo.equals("") && !img.equals("")) {
 						Pantalon p = new Pantalon(id,name,talla,precio,color,sexo,img,tipoPantalon);
 						System.out.println(p);
 						JOptionPane.showMessageDialog(null, "Articulo registrado con exito", "APPROVED", JOptionPane.INFORMATION_MESSAGE);

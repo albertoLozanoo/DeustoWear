@@ -5,13 +5,19 @@ import static org.junit.Assert.assertTrue;
 
 import java.sql.Connection;
 import java.sql.SQLException;
-
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.junit.Test;
+
+
 
 
 class MiJUnit {
 
 	public Connection con;
+	private Venta vnt;
+	private ArrayList<Articulo> articulos;
 	public Camiseta c = new Camiseta(121, "camisetaPrueba", "XS", 0.99, "NEGRO", "Hombre", "imagenes/camisetas/camiseta1.png");
 	
 	/**
@@ -79,7 +85,7 @@ class MiJUnit {
 	 * @throws SQLException
 	 */
 	@Test
-	public void eliminarArticulo() throws DeustoException, SQLException {
+	public void eliminarPantalon() throws DeustoException, SQLException {
 		try {
 			con = BD.initBD("baseDeDatos.db");
 			int contAntesDeEliminar = BD.contarArticulos(con);
@@ -100,6 +106,27 @@ class MiJUnit {
 			e.printStackTrace();
 		}
 	}
-	
+	@Test
+	public void eliminarCamiseta() throws DeustoException, SQLException {
+		try {
+			con = BD.initBD("baseDeDatos.db");
+			int contAntesDeEliminar = BD.contarArticulos(con);
+			if(contAntesDeEliminar > 0) {
+				if(BD.existeArticuloBoolean(con, 123)) {
+					BD.eliminarArticuloBBDD(con, 123);
+					int contDespuesDeEliminar = BD.contarArticulos(con);
+					assertTrue(contAntesDeEliminar == contDespuesDeEliminar + 1);
+				}
+			}
+			//A�adimos el articulo que acabamos de insertar para dejar intacta la BBDD
+			Camiseta c = new Camiseta(123, "camiseta", "M", 25, "Azul","Mujer","imagenes/camisetas/camiseta1.png");
+			BD.insertarPantalonBBDD(con, c);
+			BD.closeBD(con);
+			
+		} catch (DeustoException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 
 }

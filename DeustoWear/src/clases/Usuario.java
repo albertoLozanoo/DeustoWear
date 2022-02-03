@@ -17,12 +17,18 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.TreeMap;
+import java.util.Collections;
+import java.util.List;
+
 
 import javax.swing.JOptionPane;
 
-import ventanas.VentanaInicio;
 
+import ventanas.VentanaInicio;
+import clases.Venta;
+import clases.Articulo;
 
 
 public class Usuario implements Serializable{
@@ -472,6 +478,25 @@ public class Usuario implements Serializable{
 		}
 	}
 Falta implementarlo*/
-
+	public Map<String, Float> obtenerMediaVentas(List<Articulo> articulos){
+		Map<String, Float> mapa = new TreeMap<>();
+		Map<String, Integer> mapaNum = new TreeMap<>();
+		for(Articulo in: articulos) {
+			if(!mapa.containsKey(in.getName())) {
+				mapa.put(in.getName(), (float)0);
+				mapaNum.put(in.getName(), 0);
+			}
+			float suma = (float) (mapa.get(in.getName()) + in.getPrecio());
+			mapa.put(in.getName(), suma);
+			int num = mapaNum.get(in.getName()) + 1;
+			mapaNum.put(in.getName(), num);
+		}
+		
+		for(String ed: mapa.keySet()) {
+			float media = mapa.get(ed) / mapaNum.get(ed);
+			mapa.put(ed, media);
+		}
+		return mapa;
+	}
 }
 	

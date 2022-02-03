@@ -11,6 +11,14 @@ import java.util.TreeMap;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -34,11 +42,14 @@ import clases.DeustoException;
 import clases.Usuario;
 import clases.Venta;
 
+import java.util.Map;
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -50,7 +61,6 @@ import javax.swing.JOptionPane;
 import java.awt.Font;
 import java.awt.Color;
 import java.awt.Component;
-
 import net.miginfocom.swing.MigLayout;
 import panel.panelAniadirCamiseta;
 import panel.panelAniadirPantalon;
@@ -68,12 +78,14 @@ public class VentanaAdmin extends JFrame {
 	private JMenu menuHerramientas,menuExit,menuEliminar;
 	private JMenuBar menuBar;
 	private JPanel panelCNTeliminarArticulo;
+	private JButton  btnMediaVentas;
+	private ArrayList<Articulo> articulos;
 	/*private JList<Articulo> listaArticulos;
 	private DefaultListModel<Articulo> modeloListaArticulos;*/
 	
 	private JTable tablaArticulos = new JTable();
 	private DefaultTableModel modeloTablaArticulos;
-	
+	protected Connection conn;
 	
 	/**
 	 * TreeModel
@@ -265,9 +277,36 @@ public class VentanaAdmin extends JFrame {
 		mntmSalir.setHorizontalAlignment(SwingConstants.LEFT);
 		menuExit.add(mntmSalir);
 		
+		btnMediaVentas = new JButton("MEDIA VENTAS");
+		btnMediaVentas.setForeground(new Color(255, 255, 255));
+		btnMediaVentas.setBackground(new Color(255, 153, 0));
+		panelSur.add(btnMediaVentas);
+		
 		/*modeloListaArticulos = new DefaultListModel<Articulo>();
 		listaArticulos = new JList<Articulo>(modeloListaArticulos);
 		panelCentroDerechaLista.add(listaArticulos);*/
+		btnMediaVentas.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				Usuario us = new Usuario();
+				Map<String, Float> mapa = us.obtenerMediaVentas(articulos);
+				PrintWriter pw = null;
+				String name = JOptionPane.showInputDialog("Introduce el nombre del articulo: ");
+				try {
+					pw = new PrintWriter("Deuda"+name+".txt");
+					pw.println(name + ": " +mapa.get(name) + " €");
+				} catch (FileNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} finally {
+					if(pw!=null) {
+						pw.flush();
+						pw.close();
+					}
+				}
+			}
+		});
 		
 		
 		/**
@@ -365,20 +404,6 @@ public class VentanaAdmin extends JFrame {
 				
 			}
 		});
-		
-		/*tablaArticulos.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
-			
-			@Override
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,int row, int column) {
-				Component c = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
-				if(column==3) {
-					if( Integer.parseInt(value.toString()) > 10.0){
-						c.setBackground(new Color(100,100,100) );
-					}
-				}
-				return c;
-			}
-		});*/
 		
 		
 		
@@ -526,6 +551,42 @@ public class VentanaAdmin extends JFrame {
 		}
 		listaArticulos.setModel(modeloListaArticulos);
 	}*/
+		
+		public void createTable(){
+			
+			String sent = "create table if not exists Articulos (name String, talla String, precio double, color String, sexo String, imagen String)";
+			try {
+				Statement st = conn.createStatement();
+				st.executeUpdate(sent);
+				sent = "select * from articulos";
+				ResultSet rs = st.executeQuery(sent);
+				while(rs.next()) {
+					System.out.println("Entra al while");
+					String name = rs.getString("name");
+					String talla = rs.getString("talla");
+					double precio = rs.getDouble("precio");
+					String color = rs.getString("color");
+					String sexo = rs.getString("sexo");
+					String imagen = rs.getString("imagen");
+					sent = "insert into Articulos values('"+name+"','"+talla+"','"+precio+"','"+color+"','"+sexo+"','"+imagen+"',0)";
+					Statement st2 = null;
+					try {
+						st2 = conn.createStatement();
+						st2.executeUpdate(sent);
+					}catch(SQLException ex) {
+						
+					}finally {
+						st2.close();
+					}
+				}
+				rs.close();
+				st.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
 	
 	
 }
